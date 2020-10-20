@@ -39,7 +39,7 @@ type Budget struct {
 
 func (c *Client) GetBudgetsInternal(filter string) (*[]Budget, error) {
 	selectFields := utilities.GetTaggedFieldNames("json", Budget{})
-	urlStr := fmt.Sprintf("%s/salesorder/Budgets?$select=%s", c.Http().BaseURL(), selectFields)
+	urlStr := fmt.Sprintf("%s/budget/Budgets?$select=%s", c.Http().BaseURL(), selectFields)
 	if filter != "" {
 		urlStr += fmt.Sprintf("&$filter=%s", filter)
 	}
