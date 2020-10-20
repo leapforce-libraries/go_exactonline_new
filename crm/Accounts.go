@@ -103,7 +103,7 @@ type Account struct {
 	Latitude                            float64         `json:"Latitude"`
 	LeadPurpose                         types.GUID      `json:"LeadPurpose"`
 	LeadSource                          types.GUID      `json:"LeadSource"`
-	Logo                                []byte          `json:"Logo"`
+	Logo                                json.RawMessage `json:"Logo"` //to be implemented when needed
 	LogoFileName                        string          `json:"LogoFileName"`
 	LogoThumbnailUrl                    string          `json:"LogoThumbnailUrl"`
 	LogoUrl                             string          `json:"LogoUrl"`
