@@ -25,6 +25,8 @@ func NewExactOnline(division int, clientID string, clientSecret string, bigQuery
 	if err != nil {
 		return nil, err
 	}
+	eo.BudgetClient = budget.NewClient(http)
+	eo.FinancialTransactionClient = financialtransaction.NewClient(http)
 	eo.SalesOrderClient = salesorder.NewClient(http)
 
 	return &eo, nil
