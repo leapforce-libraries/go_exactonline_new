@@ -3,6 +3,7 @@ package exactonline
 import (
 	bigquerytools "github.com/Leapforce-nl/go_bigquerytools"
 	budget "github.com/Leapforce-nl/go_exactonline_new/budget"
+	crm "github.com/Leapforce-nl/go_exactonline_new/crm"
 	financialtransaction "github.com/Leapforce-nl/go_exactonline_new/financialtransaction"
 	http "github.com/Leapforce-nl/go_exactonline_new/http"
 	salesorder "github.com/Leapforce-nl/go_exactonline_new/salesorder"
@@ -12,6 +13,7 @@ import (
 //
 type ExactOnline struct {
 	BudgetClient               *budget.Client
+	CRMClient                  *crm.Client
 	FinancialTransactionClient *financialtransaction.Client
 	SalesOrderClient           *salesorder.Client
 }
@@ -26,6 +28,7 @@ func NewExactOnline(division int, clientID string, clientSecret string, bigQuery
 		return nil, err
 	}
 	eo.BudgetClient = budget.NewClient(http)
+	eo.CRMClient = crm.NewClient(http)
 	eo.FinancialTransactionClient = financialtransaction.NewClient(http)
 	eo.SalesOrderClient = salesorder.NewClient(http)
 
