@@ -2,6 +2,8 @@ package exactonline
 
 import (
 	bigquerytools "github.com/Leapforce-nl/go_bigquerytools"
+	budget "github.com/Leapforce-nl/go_exactonline_new/budget"
+	financialtransaction "github.com/Leapforce-nl/go_exactonline_new/financialtransaction"
 	http "github.com/Leapforce-nl/go_exactonline_new/http"
 	salesorder "github.com/Leapforce-nl/go_exactonline_new/salesorder"
 )
@@ -9,7 +11,9 @@ import (
 // ExactOnline stores ExactOnline configuration
 //
 type ExactOnline struct {
-	SalesOrderClient *salesorder.Client
+	BudgetClient               *budget.Client
+	FinancialTransactionClient *financialtransaction.Client
+	SalesOrderClient           *salesorder.Client
 }
 
 // methods
