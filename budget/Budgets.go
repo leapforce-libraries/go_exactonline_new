@@ -26,7 +26,7 @@ type Budget struct {
 	GLAccount                 types.GUID  `json:"GLAccount"`
 	GLAccountCode             string      `json:"GLAccountCode"`
 	GLAccountDescription      string      `json:"GLAccountDescription"`
-	HID                       int64       `json:"HID"`
+	HID                       string      `json:"HID"`
 	Item                      types.GUID  `json:"Item"`
 	ItemCode                  string      `json:"ItemCode"`
 	ItemDescription           string      `json:"ItemDescription"`
