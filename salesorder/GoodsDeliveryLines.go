@@ -48,7 +48,7 @@ func (c *Client) GetGoodsDeliveryLinesInternal(filter string) (*[]GoodsDeliveryL
 	if filter != "" {
 		urlStr += fmt.Sprintf("&$filter=%s", filter)
 	}
-	fmt.Println(urlStr)
+	//fmt.Println(urlStr)
 
 	goodsDeliveryLines := []GoodsDeliveryLine{}
 

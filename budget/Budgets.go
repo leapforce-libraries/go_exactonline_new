@@ -43,7 +43,7 @@ func (c *Client) GetBudgetsInternal(filter string) (*[]Budget, error) {
 	if filter != "" {
 		urlStr += fmt.Sprintf("&$filter=%s", filter)
 	}
-	fmt.Println(urlStr)
+	//fmt.Println(urlStr)
 
 	budgets := []Budget{}
 

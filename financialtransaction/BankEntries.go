@@ -37,7 +37,7 @@ func (c *Client) GetBankEntriesInternal(filter string) (*[]BankEntry, error) {
 	if filter != "" {
 		urlStr += fmt.Sprintf("&$filter=%s", filter)
 	}
-	fmt.Println(urlStr)
+	//fmt.Println(urlStr)
 
 	bankEntries := []BankEntry{}
 

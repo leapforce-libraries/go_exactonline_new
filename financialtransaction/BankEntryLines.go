@@ -62,7 +62,7 @@ func (c *Client) GetBankEntryLinesInternal(filter string) (*[]BankEntryLine, err
 	if filter != "" {
 		urlStr += fmt.Sprintf("&$filter=%s", filter)
 	}
-	fmt.Println(urlStr)
+	//fmt.Println(urlStr)
 
 	bankEntryLines := []BankEntryLine{}
 
