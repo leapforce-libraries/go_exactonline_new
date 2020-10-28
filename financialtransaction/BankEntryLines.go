@@ -84,8 +84,8 @@ func (c *Client) GetBankEntryLinesInternal(filter string) (*[]BankEntryLine, err
 	return &bankEntryLines, nil
 }
 
-func (c *Client) GetBankEntryLines() (*[]BankEntryLine, error) {
-	acc, err := c.GetBankEntryLinesInternal("")
+func (c *Client) GetBankEntryLines(filter string) (*[]BankEntryLine, error) {
+	acc, err := c.GetBankEntryLinesInternal(filter)
 	if err != nil {
 		return nil, err
 	}

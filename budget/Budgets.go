@@ -65,8 +65,8 @@ func (c *Client) GetBudgetsInternal(filter string) (*[]Budget, error) {
 	return &budgets, nil
 }
 
-func (c *Client) GetBudgets() (*[]Budget, error) {
-	acc, err := c.GetBudgetsInternal("")
+func (c *Client) GetBudgets(filter string) (*[]Budget, error) {
+	acc, err := c.GetBudgetsInternal(filter)
 	if err != nil {
 		return nil, err
 	}

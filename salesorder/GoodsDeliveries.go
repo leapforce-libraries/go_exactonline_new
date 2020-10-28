@@ -70,8 +70,8 @@ func (c *Client) GetGoodsDeliveriesInternal(filter string) (*[]GoodsDelivery, er
 	return &goodsDeliveries, nil
 }
 
-func (c *Client) GetGoodsDeliveries() (*[]GoodsDelivery, error) {
-	acc, err := c.GetGoodsDeliveriesInternal("")
+func (c *Client) GetGoodsDeliveries(filter string) (*[]GoodsDelivery, error) {
+	acc, err := c.GetGoodsDeliveriesInternal(filter)
 	if err != nil {
 		return nil, err
 	}

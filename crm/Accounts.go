@@ -189,8 +189,8 @@ func (c *Client) GetAccountsInternal(filter string) (*[]Account, error) {
 	return &accounts, nil
 }
 
-func (c *Client) GetAccounts() (*[]Account, error) {
-	acc, err := c.GetAccountsInternal("")
+func (c *Client) GetAccounts(filter string) (*[]Account, error) {
+	acc, err := c.GetAccountsInternal(filter)
 	if err != nil {
 		return nil, err
 	}

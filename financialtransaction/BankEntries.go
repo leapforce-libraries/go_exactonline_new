@@ -59,8 +59,8 @@ func (c *Client) GetBankEntriesInternal(filter string) (*[]BankEntry, error) {
 	return &bankEntries, nil
 }
 
-func (c *Client) GetBankEntries() (*[]BankEntry, error) {
-	acc, err := c.GetBankEntriesInternal("")
+func (c *Client) GetBankEntries(filter string) (*[]BankEntry, error) {
+	acc, err := c.GetBankEntriesInternal(filter)
 	if err != nil {
 		return nil, err
 	}
