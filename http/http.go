@@ -77,6 +77,7 @@ type ResponseSingle struct {
 type Results struct {
 	Results json.RawMessage `json:"results"`
 	Next    string          `json:"__next"`
+	Count   string          `json:"__count"`
 }
 
 // wait assures the maximum of 300(?) api calls per minute dictated by exactonline's rate-limit
@@ -130,24 +131,46 @@ func (h *Http) printError(res *http.Response) error {
 	return &types.ErrorString{message}
 }
 
+func (h *Http) GetResponse(url string) (*Response, error) {
+	response := Response{}
+	res, err := h.oAuth2.Get(url, &response)
+	if err != nil {
+		if res != nil {
+			return nil, h.printError(res)
+		} else {
+			return nil, err
+		}
+
+	}
+
+	h.readRateLimitHeaders(res)
+
+	return &response, nil
+}
+
 func (h *Http) Get(url string, model interface{}) (string, error) {
 	err := h.wait()
 	if err != nil {
 		return "", err
 	}
 
-	response := Response{}
-	res, err := h.oAuth2.Get(url, &response)
+	response, err := h.GetResponse(url)
 	if err != nil {
-		if res != nil {
-			return "", h.printError(res)
-		} else {
-			return "", err
+		return "", err
+	}
+	/*
+		response := Response{}
+		res, err := h.oAuth2.Get(url, &response)
+		if err != nil {
+			if res != nil {
+				return "", h.printError(res)
+			} else {
+				return "", err
+			}
+
 		}
 
-	}
-
-	h.readRateLimitHeaders(res)
+		h.readRateLimitHeaders(res)*/
 
 	err = json.Unmarshal(response.Data.Results, &model)
 	if err != nil {
