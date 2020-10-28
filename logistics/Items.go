@@ -154,13 +154,14 @@ func (c *Client) GetItemsCount(filter string) (int64, error) {
 	if filter != "" {
 		urlStr += fmt.Sprintf("&$filter=%s", filter)
 	}
-	//fmt.Println(urlStr)
+	fmt.Println(urlStr)
 
 	response, err := c.Http().GetResponse(urlStr)
 	if err != nil {
 		return 0, err
 	}
 
+	fmt.Println("response.Data.Count", response.Data.Count)
 	count, err := strconv.ParseInt(response.Data.Count, 10, 64)
 	if err != nil {
 		return 0, err
