@@ -150,7 +150,7 @@ func (c *Client) GetItems(filter string) (*[]Item, error) {
 }
 
 func (c *Client) GetItemsCount(filter string) (int64, error) {
-	urlStr := fmt.Sprintf("%s/logistics/Items?$top=0?$inlinecount=allpages", c.Http().BaseURL())
+	urlStr := fmt.Sprintf("%s/logistics/Items?$top=0&$inlinecount=allpages", c.Http().BaseURL())
 	if filter != "" {
 		urlStr += fmt.Sprintf("&$filter=%s", filter)
 	}
