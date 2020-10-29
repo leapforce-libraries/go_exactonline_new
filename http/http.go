@@ -153,13 +153,22 @@ func (h *Http) GetResponse(url string) (*Response, error) {
 	return &response, nil
 }
 
-func (h *Http) GetCount(endpoint string, modifiedBefore *time.Time) (int64, error) {
+func (h *Http) DateFilter(field string, comparer string, time *time.Time, includeParameter bool, prefix string) string {
+	filter := ""
+	if time != nil {
+		if includeParameter {
+			filter = prefix + "$filter="
+		}
 
-	urlStr := fmt.Sprintf("%s/%s?$top=0&$inlinecount=allpages", h.BaseURL(), endpoint)
-	if modifiedBefore != nil {
-		filter := fmt.Sprintf("Modified lt DateTime'%s'", modifiedBefore.Format(h.LastModifiedFormat()))
-		urlStr += fmt.Sprintf("&$filter=%s", filter)
+		filter = fmt.Sprintf("%s%s %s DateTime'%s'", filter, field, comparer, time.Format(h.LastModifiedFormat()))
+
 	}
+
+	return filter
+}
+
+func (h *Http) GetCount(endpoint string, modifiedBefore *time.Time) (int64, error) {
+	urlStr := fmt.Sprintf("%s/%s?$top=0&$inlinecount=allpages%s", h.BaseURL(), endpoint, h.DateFilter("Modified", "lt", modifiedBefore, true, "&"))
 
 	response, err := h.GetResponse(urlStr)
 	if err != nil {

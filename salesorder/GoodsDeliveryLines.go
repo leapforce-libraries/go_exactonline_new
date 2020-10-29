@@ -71,8 +71,8 @@ func (c *Client) GetGoodsDeliveryLinesInternal(filter string) (*[]GoodsDeliveryL
 	return &goodsDeliveryLines, nil
 }
 
-func (c *Client) GetGoodsDeliveryLines(filter string) (*[]GoodsDeliveryLine, error) {
-	acc, err := c.GetGoodsDeliveryLinesInternal(filter)
+func (c *Client) GetGoodsDeliveryLines(modifiedAfter *time.Time) (*[]GoodsDeliveryLine, error) {
+	acc, err := c.GetGoodsDeliveryLinesInternal(c.Http().DateFilter("Modified", "gt", modifiedAfter, false, ""))
 	if err != nil {
 		return nil, err
 	}

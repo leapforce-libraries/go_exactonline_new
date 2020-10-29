@@ -85,8 +85,8 @@ func (c *Client) GetBankEntryLinesInternal(filter string) (*[]BankEntryLine, err
 	return &bankEntryLines, nil
 }
 
-func (c *Client) GetBankEntryLines(filter string) (*[]BankEntryLine, error) {
-	acc, err := c.GetBankEntryLinesInternal(filter)
+func (c *Client) GetBankEntryLines(modifiedAfter *time.Time) (*[]BankEntryLine, error) {
+	acc, err := c.GetBankEntryLinesInternal(c.Http().DateFilter("Modified", "gt", modifiedAfter, false, ""))
 	if err != nil {
 		return nil, err
 	}

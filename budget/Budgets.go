@@ -66,8 +66,8 @@ func (c *Client) GetBudgetsInternal(filter string) (*[]Budget, error) {
 	return &budgets, nil
 }
 
-func (c *Client) GetBudgets(filter string) (*[]Budget, error) {
-	acc, err := c.GetBudgetsInternal(filter)
+func (c *Client) GetBudgets(modifiedAfter *time.Time) (*[]Budget, error) {
+	acc, err := c.GetBudgetsInternal(c.Http().DateFilter("Modified", "gt", modifiedAfter, false, ""))
 	if err != nil {
 		return nil, err
 	}

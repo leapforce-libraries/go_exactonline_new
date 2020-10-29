@@ -190,8 +190,8 @@ func (c *Client) GetAccountsInternal(filter string) (*[]Account, error) {
 	return &accounts, nil
 }
 
-func (c *Client) GetAccounts(filter string) (*[]Account, error) {
-	acc, err := c.GetAccountsInternal(filter)
+func (c *Client) GetAccounts(modifiedAfter *time.Time) (*[]Account, error) {
+	acc, err := c.GetAccountsInternal(c.Http().DateFilter("Modified", "gt", modifiedAfter, false, ""))
 	if err != nil {
 		return nil, err
 	}

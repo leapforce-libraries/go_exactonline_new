@@ -140,8 +140,8 @@ func (c *Client) GetItemsInternal(filter string) (*[]Item, error) {
 	return &items, nil
 }
 
-func (c *Client) GetItems(filter string) (*[]Item, error) {
-	acc, err := c.GetItemsInternal(filter)
+func (c *Client) GetItems(modifiedAfter *time.Time) (*[]Item, error) {
+	acc, err := c.GetItemsInternal(c.Http().DateFilter("Modified", "gt", modifiedAfter, false, ""))
 	if err != nil {
 		return nil, err
 	}
