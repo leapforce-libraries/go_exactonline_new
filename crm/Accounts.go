@@ -3,6 +3,7 @@ package exactonline
 import (
 	"encoding/json"
 	"fmt"
+	"time"
 
 	types "github.com/Leapforce-nl/go_types"
 	utilities "github.com/Leapforce-nl/go_utilities"
@@ -196,4 +197,8 @@ func (c *Client) GetAccounts(filter string) (*[]Account, error) {
 	}
 
 	return acc, nil
+}
+
+func (c *Client) GetAccountsCount(modifiedBefore *time.Time) (int64, error) {
+	return c.Http().GetCount("crm/Accounts", modifiedBefore)
 }

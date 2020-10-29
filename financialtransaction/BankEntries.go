@@ -3,6 +3,7 @@ package exactonline
 import (
 	"encoding/json"
 	"fmt"
+	"time"
 
 	types "github.com/Leapforce-nl/go_types"
 	utilities "github.com/Leapforce-nl/go_utilities"
@@ -66,4 +67,8 @@ func (c *Client) GetBankEntries(filter string) (*[]BankEntry, error) {
 	}
 
 	return acc, nil
+}
+
+func (c *Client) GetBankEntriesCount(modifiedBefore *time.Time) (int64, error) {
+	return c.Http().GetCount("financialtransaction/BankEntries", modifiedBefore)
 }

@@ -10,10 +10,6 @@ import (
 	salesorder "github.com/Leapforce-nl/go_exactonline_new/salesorder"
 )
 
-const (
-	lastModifiedFormat string = "2006-01-02T15:04:05"
-)
-
 // ExactOnline stores ExactOnline configuration
 //
 type ExactOnline struct {
@@ -40,8 +36,4 @@ func NewExactOnline(division int, clientID string, clientSecret string, bigQuery
 	eo.SalesOrderClient = salesorder.NewClient(http)
 
 	return &eo, nil
-}
-
-func (eo *ExactOnline) LastModifiedFormat() string {
-	return lastModifiedFormat
 }

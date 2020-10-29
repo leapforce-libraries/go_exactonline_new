@@ -15,12 +15,13 @@ import (
 )
 
 const (
-	apiName         string = "ExactOnline"
-	apiURL          string = "https://start.exactonline.nl/api/v1"
-	authURL         string = "https://start.exactonline.nl/api/oauth2/auth"
-	tokenURL        string = "https://start.exactonline.nl/api/oauth2/token"
-	tokenHttpMethod string = http.MethodPost
-	redirectURL     string = "http://localhost:8080/oauth/redirect"
+	apiName            string = "ExactOnline"
+	apiURL             string = "https://start.exactonline.nl/api/v1"
+	authURL            string = "https://start.exactonline.nl/api/oauth2/auth"
+	tokenURL           string = "https://start.exactonline.nl/api/oauth2/token"
+	tokenHttpMethod    string = http.MethodPost
+	redirectURL        string = "http://localhost:8080/oauth/redirect"
+	lastModifiedFormat string = "2006-01-02T15:04:05"
 )
 
 // ExactOnline stores ExactOnline configuration
@@ -54,6 +55,10 @@ func NewHttp(division int, clientID string, clientSecret string, bigQuery *bigqu
 
 func (h *Http) BaseURL() string {
 	return fmt.Sprintf("%s/%v", apiURL, h.division)
+}
+
+func (h *Http) LastModifiedFormat() string {
+	return lastModifiedFormat
 }
 
 func (h *Http) InitToken() error {
@@ -146,6 +151,27 @@ func (h *Http) GetResponse(url string) (*Response, error) {
 	h.readRateLimitHeaders(res)
 
 	return &response, nil
+}
+
+func (h *Http) GetCount(endpoint string, modifiedBefore *time.Time) (int64, error) {
+
+	urlStr := fmt.Sprintf("%s/%s?$top=0&$inlinecount=allpages", h.BaseURL(), endpoint)
+	if modifiedBefore != nil {
+		filter := fmt.Sprintf("Modified lt DateTime'%s'", modifiedBefore.Format(h.LastModifiedFormat()))
+		urlStr += fmt.Sprintf("&$filter=%s", filter)
+	}
+
+	response, err := h.GetResponse(urlStr)
+	if err != nil {
+		return 0, err
+	}
+
+	count, err := strconv.ParseInt(response.Data.Count, 10, 64)
+	if err != nil {
+		return 0, err
+	}
+
+	return count, nil
 }
 
 func (h *Http) Get(url string, model interface{}) (string, error) {

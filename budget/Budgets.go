@@ -2,6 +2,7 @@ package exactonline
 
 import (
 	"fmt"
+	"time"
 
 	types "github.com/Leapforce-nl/go_types"
 	utilities "github.com/Leapforce-nl/go_utilities"
@@ -72,4 +73,8 @@ func (c *Client) GetBudgets(filter string) (*[]Budget, error) {
 	}
 
 	return acc, nil
+}
+
+func (c *Client) GetBudgetsCount(modifiedBefore *time.Time) (int64, error) {
+	return c.Http().GetCount("budget/Budgets", modifiedBefore)
 }

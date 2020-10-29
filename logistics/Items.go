@@ -2,7 +2,7 @@ package exactonline
 
 import (
 	"fmt"
-	"strconv"
+	"time"
 
 	types "github.com/Leapforce-nl/go_types"
 	utilities "github.com/Leapforce-nl/go_utilities"
@@ -149,23 +149,6 @@ func (c *Client) GetItems(filter string) (*[]Item, error) {
 	return acc, nil
 }
 
-func (c *Client) GetItemsCount(filter string) (int64, error) {
-	urlStr := fmt.Sprintf("%s/logistics/Items?$top=0&$inlinecount=allpages", c.Http().BaseURL())
-	if filter != "" {
-		urlStr += fmt.Sprintf("&$filter=%s", filter)
-	}
-	fmt.Println(urlStr)
-
-	response, err := c.Http().GetResponse(urlStr)
-	if err != nil {
-		return 0, err
-	}
-
-	fmt.Println("response.Data.Count", response.Data.Count)
-	count, err := strconv.ParseInt(response.Data.Count, 10, 64)
-	if err != nil {
-		return 0, err
-	}
-
-	return count, nil
+func (c *Client) GetItemsCount(modifiedBefore *time.Time) (int64, error) {
+	return c.Http().GetCount("logistics/Items", modifiedBefore)
 }

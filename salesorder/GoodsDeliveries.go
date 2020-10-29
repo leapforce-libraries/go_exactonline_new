@@ -3,6 +3,7 @@ package exactonline
 import (
 	"encoding/json"
 	"fmt"
+	"time"
 
 	types "github.com/Leapforce-nl/go_types"
 	utilities "github.com/Leapforce-nl/go_utilities"
@@ -77,4 +78,8 @@ func (c *Client) GetGoodsDeliveries(filter string) (*[]GoodsDelivery, error) {
 	}
 
 	return acc, nil
+}
+
+func (c *Client) GetGoodsDeliveriesCount(modifiedBefore *time.Time) (int64, error) {
+	return c.Http().GetCount("salesorder/GoodsDeliveries", modifiedBefore)
 }
