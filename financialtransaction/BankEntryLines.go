@@ -94,6 +94,6 @@ func (c *Client) GetBankEntryLines(modifiedAfter *time.Time) (*[]BankEntryLine, 
 	return acc, nil
 }
 
-func (c *Client) GetBankEntryLinesCount(modifiedBefore *time.Time) (int64, error) {
-	return c.Http().GetCount("financialtransaction/BankEntryLines", modifiedBefore)
+func (c *Client) GetBankEntryLinesCount(createdBefore *time.Time) (int64, error) {
+	return c.Http().GetCount("financialtransaction/BankEntryLines", createdBefore)
 }

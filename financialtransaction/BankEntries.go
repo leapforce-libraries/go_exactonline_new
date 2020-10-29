@@ -69,6 +69,6 @@ func (c *Client) GetBankEntries(modifiedAfter *time.Time) (*[]BankEntry, error) 
 	return acc, nil
 }
 
-func (c *Client) GetBankEntriesCount(modifiedBefore *time.Time) (int64, error) {
-	return c.Http().GetCount("financialtransaction/BankEntries", modifiedBefore)
+func (c *Client) GetBankEntriesCount(createdBefore *time.Time) (int64, error) {
+	return c.Http().GetCount("financialtransaction/BankEntries", createdBefore)
 }

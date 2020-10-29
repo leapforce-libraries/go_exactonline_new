@@ -199,6 +199,6 @@ func (c *Client) GetAccounts(modifiedAfter *time.Time) (*[]Account, error) {
 	return acc, nil
 }
 
-func (c *Client) GetAccountsCount(modifiedBefore *time.Time) (int64, error) {
-	return c.Http().GetCount("crm/Accounts", modifiedBefore)
+func (c *Client) GetAccountsCount(createdBefore *time.Time) (int64, error) {
+	return c.Http().GetCount("crm/Accounts", createdBefore)
 }

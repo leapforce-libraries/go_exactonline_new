@@ -167,8 +167,8 @@ func (h *Http) DateFilter(field string, comparer string, time *time.Time, includ
 	return filter
 }
 
-func (h *Http) GetCount(endpoint string, modifiedBefore *time.Time) (int64, error) {
-	urlStr := fmt.Sprintf("%s/%s?$top=0&$inlinecount=allpages%s", h.BaseURL(), endpoint, h.DateFilter("Modified", "lt", modifiedBefore, true, "&"))
+func (h *Http) GetCount(endpoint string, createdBefore *time.Time) (int64, error) {
+	urlStr := fmt.Sprintf("%s/%s?$top=0&$inlinecount=allpages%s", h.BaseURL(), endpoint, h.DateFilter("Created", "lt", createdBefore, true, "&"))
 
 	response, err := h.GetResponse(urlStr)
 	if err != nil {

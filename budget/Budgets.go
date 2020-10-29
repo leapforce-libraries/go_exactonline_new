@@ -75,6 +75,6 @@ func (c *Client) GetBudgets(modifiedAfter *time.Time) (*[]Budget, error) {
 	return acc, nil
 }
 
-func (c *Client) GetBudgetsCount(modifiedBefore *time.Time) (int64, error) {
-	return c.Http().GetCount("budget/Budgets", modifiedBefore)
+func (c *Client) GetBudgetsCount(createdBefore *time.Time) (int64, error) {
+	return c.Http().GetCount("budget/Budgets", createdBefore)
 }

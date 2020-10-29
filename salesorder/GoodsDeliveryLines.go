@@ -80,6 +80,6 @@ func (c *Client) GetGoodsDeliveryLines(modifiedAfter *time.Time) (*[]GoodsDelive
 	return acc, nil
 }
 
-func (c *Client) GetGoodsDeliveryLinesCount(modifiedBefore *time.Time) (int64, error) {
-	return c.Http().GetCount("salesorder/GoodsDeliveryLines", modifiedBefore)
+func (c *Client) GetGoodsDeliveryLinesCount(createdBefore *time.Time) (int64, error) {
+	return c.Http().GetCount("salesorder/GoodsDeliveryLines", createdBefore)
 }

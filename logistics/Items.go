@@ -149,6 +149,6 @@ func (c *Client) GetItems(modifiedAfter *time.Time) (*[]Item, error) {
 	return acc, nil
 }
 
-func (c *Client) GetItemsCount(modifiedBefore *time.Time) (int64, error) {
-	return c.Http().GetCount("logistics/Items", modifiedBefore)
+func (c *Client) GetItemsCount(createdBefore *time.Time) (int64, error) {
+	return c.Http().GetCount("logistics/Items", createdBefore)
 }
