@@ -11,6 +11,7 @@ import (
 // TransactionLine stores TransactionLine from exactonline
 //
 type TransactionLine struct {
+	ID                        types.GUID  `json:"ID"`
 	Account                   types.GUID  `json:"Account"`
 	AccountCode               string      `json:"AccountCode"`
 	AccountName               string      `json:"AccountName"`
