@@ -93,7 +93,7 @@ func (c *Client) NewGetTransactionLinesCall(modifiedAfter *time.Time) *GetTransa
 	call.client = c
 
 	selectFields := utilities.GetTaggedFieldNames("json", TransactionLine{})
-	call.urlNext = fmt.Sprintf("%s/financialtransaction/TransactionLines?$select=%s", c.Http().BaseURL(), selectFields)
+	call.urlNext = fmt.Sprintf("%s/financialtransaction/TransactionLines?$top=%v$select=%s", c.Http().BaseURL(), 100, selectFields)
 	if modifiedAfter != nil {
 		call.urlNext += c.Http().DateFilter("Modified", "gt", modifiedAfter, true, "&")
 	}
