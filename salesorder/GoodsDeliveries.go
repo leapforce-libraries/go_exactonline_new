@@ -16,9 +16,9 @@ type GoodsDelivery struct {
 	Created                       *types.Date     `json:"Created"`
 	Creator                       types.GUID      `json:"Creator"`
 	CreatorFullName               string          `json:"CreatorFullName"`
-	DeliveryGoodsDelivery         types.GUID      `json:"DeliveryGoodsDelivery"`
-	DeliveryGoodsDeliveryCode     string          `json:"DeliveryGoodsDeliveryCode"`
-	DeliveryGoodsDeliveryName     string          `json:"DeliveryGoodsDeliveryName"`
+	DeliveryAccount               types.GUID      `json:"DeliveryAccount"`
+	DeliveryAccountCode           string          `json:"DeliveryAccountCode"`
+	DeliveryAccountName           string          `json:"DeliveryAccountName"`
 	DeliveryAddress               types.GUID      `json:"DeliveryAddress"`
 	DeliveryContact               types.GUID      `json:"DeliveryContact"`
 	DeliveryContactPersonFullName string          `json:"DeliveryContactPersonFullName"`
