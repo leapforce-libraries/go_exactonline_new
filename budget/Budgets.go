@@ -28,9 +28,9 @@ type Budget struct {
 	GLAccountCode             string      `json:"GLAccountCode"`
 	GLAccountDescription      string      `json:"GLAccountDescription"`
 	HID                       string      `json:"HID"`
-	Budget                    types.GUID  `json:"Budget"`
-	BudgetCode                string      `json:"BudgetCode"`
-	BudgetDescription         string      `json:"BudgetDescription"`
+	Item                      types.GUID  `json:"Item"`
+	ItemCode                  string      `json:"ItemCode"`
+	ItemDescription           string      `json:"ItemDescription"`
 	Modified                  *types.Date `json:"Modified"`
 	Modifier                  types.GUID  `json:"Modifier"`
 	ModifierFullName          string      `json:"ModifierFullName"`
