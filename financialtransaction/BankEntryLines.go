@@ -57,41 +57,41 @@ type BankEntryLine struct {
 	VATType               string      `json:"VATType"`
 }
 
-func (c *Client) GetBankEntryLinesInternal(filter string) (*[]BankEntryLine, error) {
+type GetBankEntryLinesCall struct {
+	modifiedAfter *time.Time
+	urlNext       string
+	client        *Client
+}
+
+func (c *Client) NewGetBankEntryLinesCall(modifiedAfter *time.Time) *GetBankEntryLinesCall {
+	call := GetBankEntryLinesCall{}
+	call.modifiedAfter = modifiedAfter
+	call.client = c
+
 	selectFields := utilities.GetTaggedFieldNames("json", BankEntryLine{})
-	urlStr := fmt.Sprintf("%s/financialtransaction/BankEntryLines?$select=%s", c.Http().BaseURL(), selectFields)
-	if filter != "" {
-		urlStr += fmt.Sprintf("&$filter=%s", filter)
+	call.urlNext = fmt.Sprintf("%s/financialtransaction/BankEntryLines?$select=%s", c.Http().BaseURL(), selectFields)
+	if modifiedAfter != nil {
+		call.urlNext += c.Http().DateFilter("Modified", "gt", modifiedAfter, true, "&")
 	}
-	//fmt.Println(urlStr)
+
+	return &call
+}
+
+func (call *GetBankEntryLinesCall) Do() (*[]BankEntryLine, error) {
+	if call.urlNext == "" {
+		return nil, nil
+	}
 
 	bankEntryLines := []BankEntryLine{}
 
-	for urlStr != "" {
-		ac := []BankEntryLine{}
-
-		next, err := c.Http().Get(urlStr, &ac)
-		if err != nil {
-			fmt.Println("ERROR in GetBankEntryLinesInternal:", err)
-			fmt.Println("url:", urlStr)
-			return nil, err
-		}
-
-		bankEntryLines = append(bankEntryLines, ac...)
-
-		urlStr = next
-	}
-
-	return &bankEntryLines, nil
-}
-
-func (c *Client) GetBankEntryLines(modifiedAfter *time.Time) (*[]BankEntryLine, error) {
-	acc, err := c.GetBankEntryLinesInternal(c.Http().DateFilter("Modified", "gt", modifiedAfter, false, ""))
+	next, err := call.client.Http().Get(call.urlNext, &bankEntryLines)
 	if err != nil {
 		return nil, err
 	}
 
-	return acc, nil
+	call.urlNext = next
+
+	return &bankEntryLines, nil
 }
 
 func (c *Client) GetBankEntryLinesCount(createdBefore *time.Time) (int64, error) {

@@ -81,41 +81,41 @@ type TransactionLine struct {
 	YourRef                   string      `json:"YourRef"`
 }
 
-func (c *Client) GetTransactionLinesInternal(filter string) (*[]TransactionLine, error) {
-	selectFields := utilities.GetTaggedFieldNames("json", TransactionLine{})
-	urlStr := fmt.Sprintf("%s/financialtransaction/TransactionLines?$select=%s", c.Http().BaseURL(), selectFields)
-	if filter != "" {
-		urlStr += fmt.Sprintf("&$filter=%s", filter)
-	}
-	//fmt.Println(urlStr)
-
-	bankEntryLines := []TransactionLine{}
-
-	for urlStr != "" {
-		ac := []TransactionLine{}
-
-		next, err := c.Http().Get(urlStr, &ac)
-		if err != nil {
-			fmt.Println("ERROR in GetTransactionLinesInternal:", err)
-			fmt.Println("url:", urlStr)
-			return nil, err
-		}
-
-		bankEntryLines = append(bankEntryLines, ac...)
-
-		urlStr = next
-	}
-
-	return &bankEntryLines, nil
+type GetTransactionLinesCall struct {
+	modifiedAfter *time.Time
+	urlNext       string
+	client        *Client
 }
 
-func (c *Client) GetTransactionLines(modifiedAfter *time.Time) (*[]TransactionLine, error) {
-	acc, err := c.GetTransactionLinesInternal(c.Http().DateFilter("Modified", "gt", modifiedAfter, false, ""))
+func (c *Client) NewGetTransactionLinesCall(modifiedAfter *time.Time) *GetTransactionLinesCall {
+	call := GetTransactionLinesCall{}
+	call.modifiedAfter = modifiedAfter
+	call.client = c
+
+	selectFields := utilities.GetTaggedFieldNames("json", TransactionLine{})
+	call.urlNext = fmt.Sprintf("%s/financialtransaction/TransactionLines?$select=%s", c.Http().BaseURL(), selectFields)
+	if modifiedAfter != nil {
+		call.urlNext += c.Http().DateFilter("Modified", "gt", modifiedAfter, true, "&")
+	}
+
+	return &call
+}
+
+func (call *GetTransactionLinesCall) Do() (*[]TransactionLine, error) {
+	if call.urlNext == "" {
+		return nil, nil
+	}
+
+	transactionLines := []TransactionLine{}
+
+	next, err := call.client.Http().Get(call.urlNext, &transactionLines)
 	if err != nil {
 		return nil, err
 	}
 
-	return acc, nil
+	call.urlNext = next
+
+	return &transactionLines, nil
 }
 
 func (c *Client) GetTransactionLinesCount(createdBefore *time.Time) (int64, error) {

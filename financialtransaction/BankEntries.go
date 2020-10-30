@@ -32,41 +32,41 @@ type BankEntry struct {
 	StatusDescription            string          `json:"StatusDescription"`
 }
 
-func (c *Client) GetBankEntriesInternal(filter string) (*[]BankEntry, error) {
+type GetBankEntriesCall struct {
+	modifiedAfter *time.Time
+	urlNext       string
+	client        *Client
+}
+
+func (c *Client) NewGetBankEntriesCall(modifiedAfter *time.Time) *GetBankEntriesCall {
+	call := GetBankEntriesCall{}
+	call.modifiedAfter = modifiedAfter
+	call.client = c
+
 	selectFields := utilities.GetTaggedFieldNames("json", BankEntry{})
-	urlStr := fmt.Sprintf("%s/financialtransaction/BankEntries?$select=%s", c.Http().BaseURL(), selectFields)
-	if filter != "" {
-		urlStr += fmt.Sprintf("&$filter=%s", filter)
+	call.urlNext = fmt.Sprintf("%s/financialtransaction/BankEntries?$select=%s", c.Http().BaseURL(), selectFields)
+	if modifiedAfter != nil {
+		call.urlNext += c.Http().DateFilter("Modified", "gt", modifiedAfter, true, "&")
 	}
-	//fmt.Println(urlStr)
+
+	return &call
+}
+
+func (call *GetBankEntriesCall) Do() (*[]BankEntry, error) {
+	if call.urlNext == "" {
+		return nil, nil
+	}
 
 	bankEntries := []BankEntry{}
 
-	for urlStr != "" {
-		ac := []BankEntry{}
-
-		next, err := c.Http().Get(urlStr, &ac)
-		if err != nil {
-			fmt.Println("ERROR in GetBankEntriesInternal:", err)
-			fmt.Println("url:", urlStr)
-			return nil, err
-		}
-
-		bankEntries = append(bankEntries, ac...)
-
-		urlStr = next
-	}
-
-	return &bankEntries, nil
-}
-
-func (c *Client) GetBankEntries(modifiedAfter *time.Time) (*[]BankEntry, error) {
-	acc, err := c.GetBankEntriesInternal(c.Http().DateFilter("Modified", "gt", modifiedAfter, false, ""))
+	next, err := call.client.Http().Get(call.urlNext, &bankEntries)
 	if err != nil {
 		return nil, err
 	}
 
-	return acc, nil
+	call.urlNext = next
+
+	return &bankEntries, nil
 }
 
 func (c *Client) GetBankEntriesCount(createdBefore *time.Time) (int64, error) {
