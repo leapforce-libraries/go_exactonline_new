@@ -28,9 +28,9 @@ type Budget struct {
 	GLAccountCode             string      `json:"GLAccountCode"`
 	GLAccountDescription      string      `json:"GLAccountDescription"`
 	HID                       string      `json:"HID"`
-	Item                      types.GUID  `json:"Item"`
-	ItemCode                  string      `json:"ItemCode"`
-	ItemDescription           string      `json:"ItemDescription"`
+	Budget                    types.GUID  `json:"Budget"`
+	BudgetCode                string      `json:"BudgetCode"`
+	BudgetDescription         string      `json:"BudgetDescription"`
 	Modified                  *types.Date `json:"Modified"`
 	Modifier                  types.GUID  `json:"Modifier"`
 	ModifierFullName          string      `json:"ModifierFullName"`
@@ -38,41 +38,41 @@ type Budget struct {
 	ReportingYear             int16       `json:"ReportingYear"`
 }
 
-func (c *Client) GetBudgetsInternal(filter string) (*[]Budget, error) {
+type GetBudgetsCall struct {
+	modifiedAfter *time.Time
+	urlNext       string
+	client        *Client
+}
+
+func (c *Client) NewGetBudgetsCall(modifiedAfter *time.Time) *GetBudgetsCall {
+	call := GetBudgetsCall{}
+	call.modifiedAfter = modifiedAfter
+	call.client = c
+
 	selectFields := utilities.GetTaggedFieldNames("json", Budget{})
-	urlStr := fmt.Sprintf("%s/budget/Budgets?$select=%s", c.Http().BaseURL(), selectFields)
-	if filter != "" {
-		urlStr += fmt.Sprintf("&$filter=%s", filter)
+	call.urlNext = fmt.Sprintf("%s/budget/Budgets?$select=%s", c.Http().BaseURL(), selectFields)
+	if modifiedAfter != nil {
+		call.urlNext += c.Http().DateFilter("Modified", "gt", modifiedAfter, true, "&")
 	}
-	//fmt.Println(urlStr)
+
+	return &call
+}
+
+func (call *GetBudgetsCall) Do() (*[]Budget, error) {
+	if call.urlNext == "" {
+		return nil, nil
+	}
 
 	budgets := []Budget{}
 
-	for urlStr != "" {
-		ac := []Budget{}
-
-		next, err := c.Http().Get(urlStr, &ac)
-		if err != nil {
-			fmt.Println("ERROR in GetBudgetsInternal:", err)
-			fmt.Println("url:", urlStr)
-			return nil, err
-		}
-
-		budgets = append(budgets, ac...)
-
-		urlStr = next
-	}
-
-	return &budgets, nil
-}
-
-func (c *Client) GetBudgets(modifiedAfter *time.Time) (*[]Budget, error) {
-	acc, err := c.GetBudgetsInternal(c.Http().DateFilter("Modified", "gt", modifiedAfter, false, ""))
+	next, err := call.client.Http().Get(call.urlNext, &budgets)
 	if err != nil {
 		return nil, err
 	}
 
-	return acc, nil
+	call.urlNext = next
+
+	return &budgets, nil
 }
 
 func (c *Client) GetBudgetsCount(createdBefore *time.Time) (int64, error) {

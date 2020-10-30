@@ -162,41 +162,41 @@ type Account struct {
 	Website                             string          `json:"Website"`
 }
 
-func (c *Client) GetAccountsInternal(filter string) (*[]Account, error) {
+type GetAccountsCall struct {
+	modifiedAfter *time.Time
+	urlNext       string
+	client        *Client
+}
+
+func (c *Client) NewGetAccountsCall(modifiedAfter *time.Time) *GetAccountsCall {
+	call := GetAccountsCall{}
+	call.modifiedAfter = modifiedAfter
+	call.client = c
+
 	selectFields := utilities.GetTaggedFieldNames("json", Account{})
-	urlStr := fmt.Sprintf("%s/crm/Accounts?$select=%s", c.Http().BaseURL(), selectFields)
-	if filter != "" {
-		urlStr += fmt.Sprintf("&$filter=%s", filter)
+	call.urlNext = fmt.Sprintf("%s/crm/Accounts?$select=%s", c.Http().BaseURL(), selectFields)
+	if modifiedAfter != nil {
+		call.urlNext += c.Http().DateFilter("Modified", "gt", modifiedAfter, true, "&")
 	}
-	//fmt.Println(urlStr)
+
+	return &call
+}
+
+func (call *GetAccountsCall) Do() (*[]Account, error) {
+	if call.urlNext == "" {
+		return nil, nil
+	}
 
 	accounts := []Account{}
 
-	for urlStr != "" {
-		ac := []Account{}
-
-		next, err := c.Http().Get(urlStr, &ac)
-		if err != nil {
-			fmt.Println("ERROR in GetAccountsInternal:", err)
-			fmt.Println("url:", urlStr)
-			return nil, err
-		}
-
-		accounts = append(accounts, ac...)
-
-		urlStr = next
-	}
-
-	return &accounts, nil
-}
-
-func (c *Client) GetAccounts(modifiedAfter *time.Time) (*[]Account, error) {
-	acc, err := c.GetAccountsInternal(c.Http().DateFilter("Modified", "gt", modifiedAfter, false, ""))
+	next, err := call.client.Http().Get(call.urlNext, &accounts)
 	if err != nil {
 		return nil, err
 	}
 
-	return acc, nil
+	call.urlNext = next
+
+	return &accounts, nil
 }
 
 func (c *Client) GetAccountsCount(createdBefore *time.Time) (int64, error) {

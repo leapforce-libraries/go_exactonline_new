@@ -16,9 +16,9 @@ type GoodsDelivery struct {
 	Created                       *types.Date     `json:"Created"`
 	Creator                       types.GUID      `json:"Creator"`
 	CreatorFullName               string          `json:"CreatorFullName"`
-	DeliveryAccount               types.GUID      `json:"DeliveryAccount"`
-	DeliveryAccountCode           string          `json:"DeliveryAccountCode"`
-	DeliveryAccountName           string          `json:"DeliveryAccountName"`
+	DeliveryGoodsDelivery         types.GUID      `json:"DeliveryGoodsDelivery"`
+	DeliveryGoodsDeliveryCode     string          `json:"DeliveryGoodsDeliveryCode"`
+	DeliveryGoodsDeliveryName     string          `json:"DeliveryGoodsDeliveryName"`
 	DeliveryAddress               types.GUID      `json:"DeliveryAddress"`
 	DeliveryContact               types.GUID      `json:"DeliveryContact"`
 	DeliveryContactPersonFullName string          `json:"DeliveryContactPersonFullName"`
@@ -43,41 +43,41 @@ type GoodsDelivery struct {
 	WarehouseDescription          string          `json:"WarehouseDescription"`
 }
 
-func (c *Client) GetGoodsDeliveriesInternal(filter string) (*[]GoodsDelivery, error) {
+type GetGoodsDeliveriesCall struct {
+	modifiedAfter *time.Time
+	urlNext       string
+	client        *Client
+}
+
+func (c *Client) NewGetGoodsDeliveriesCall(modifiedAfter *time.Time) *GetGoodsDeliveriesCall {
+	call := GetGoodsDeliveriesCall{}
+	call.modifiedAfter = modifiedAfter
+	call.client = c
+
 	selectFields := utilities.GetTaggedFieldNames("json", GoodsDelivery{})
-	urlStr := fmt.Sprintf("%s/salesorder/GoodsDeliveries?$select=%s", c.Http().BaseURL(), selectFields)
-	if filter != "" {
-		urlStr += fmt.Sprintf("&$filter=%s", filter)
+	call.urlNext = fmt.Sprintf("%s/salesorder/GoodsDeliveries?$select=%s", c.Http().BaseURL(), selectFields)
+	if modifiedAfter != nil {
+		call.urlNext += c.Http().DateFilter("Modified", "gt", modifiedAfter, true, "&")
 	}
-	//fmt.Println(urlStr)
+
+	return &call
+}
+
+func (call *GetGoodsDeliveriesCall) Do() (*[]GoodsDelivery, error) {
+	if call.urlNext == "" {
+		return nil, nil
+	}
 
 	goodsDeliveries := []GoodsDelivery{}
 
-	for urlStr != "" {
-		ac := []GoodsDelivery{}
-
-		next, err := c.Http().Get(urlStr, &ac)
-		if err != nil {
-			fmt.Println("ERROR in GetGoodsDeliveriesInternal:", err)
-			fmt.Println("url:", urlStr)
-			return nil, err
-		}
-
-		goodsDeliveries = append(goodsDeliveries, ac...)
-
-		urlStr = next
-	}
-
-	return &goodsDeliveries, nil
-}
-
-func (c *Client) GetGoodsDeliveries(modifiedAfter *time.Time) (*[]GoodsDelivery, error) {
-	acc, err := c.GetGoodsDeliveriesInternal(c.Http().DateFilter("Modified", "gt", modifiedAfter, false, ""))
+	next, err := call.client.Http().Get(call.urlNext, &goodsDeliveries)
 	if err != nil {
 		return nil, err
 	}
 
-	return acc, nil
+	call.urlNext = next
+
+	return &goodsDeliveries, nil
 }
 
 func (c *Client) GetGoodsDeliveriesCount(createdBefore *time.Time) (int64, error) {

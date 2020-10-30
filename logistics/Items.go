@@ -111,42 +111,41 @@ type Item struct {
 	UnitType                string      `json:"UnitType"`
 }
 
-func (c *Client) GetItemsInternal(filter string) (*[]Item, error) {
+type GetItemsCall struct {
+	modifiedAfter *time.Time
+	urlNext       string
+	client        *Client
+}
+
+func (c *Client) NewGetItemsCall(modifiedAfter *time.Time) *GetItemsCall {
+	call := GetItemsCall{}
+	call.modifiedAfter = modifiedAfter
+	call.client = c
+
 	selectFields := utilities.GetTaggedFieldNames("json", Item{})
-	urlStr := fmt.Sprintf("%s/logistics/Items?$select=%s", c.Http().BaseURL(), selectFields)
-	if filter != "" {
-		urlStr += fmt.Sprintf("&$filter=%s", filter)
+	call.urlNext = fmt.Sprintf("%s/logistics/Items?$select=%s", c.Http().BaseURL(), selectFields)
+	if modifiedAfter != nil {
+		call.urlNext += c.Http().DateFilter("Modified", "gt", modifiedAfter, true, "&")
 	}
-	//fmt.Println(urlStr)
+
+	return &call
+}
+
+func (call *GetItemsCall) Do() (*[]Item, error) {
+	if call.urlNext == "" {
+		return nil, nil
+	}
 
 	items := []Item{}
 
-	for urlStr != "" {
-		its := []Item{}
-
-		str, err := c.Http().Get(urlStr, &its)
-		if err != nil {
-			fmt.Println("ERROR in GetItemsInternal:", err)
-			fmt.Println("url:", urlStr)
-			return nil, err
-		}
-
-		items = append(items, its...)
-
-		urlStr = str
-		//urlStr = ""
-	}
-
-	return &items, nil
-}
-
-func (c *Client) GetItems(modifiedAfter *time.Time) (*[]Item, error) {
-	acc, err := c.GetItemsInternal(c.Http().DateFilter("Modified", "gt", modifiedAfter, false, ""))
+	next, err := call.client.Http().Get(call.urlNext, &items)
 	if err != nil {
 		return nil, err
 	}
 
-	return acc, nil
+	call.urlNext = next
+
+	return &items, nil
 }
 
 func (c *Client) GetItemsCount(createdBefore *time.Time) (int64, error) {

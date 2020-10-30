@@ -43,43 +43,42 @@ type GoodsDeliveryLine struct {
 	Unitcode                   string          `json:"Unitcode"`
 }
 
-func (c *Client) GetGoodsDeliveryLinesInternal(filter string) (*[]GoodsDeliveryLine, error) {
+type GetGoodsDeliveryLinesCall struct {
+	modifiedAfter *time.Time
+	urlNext       string
+	client        *Client
+}
+
+func (c *Client) NewGetGoodsDeliveryLinesCall(modifiedAfter *time.Time) *GetGoodsDeliveryLinesCall {
+	call := GetGoodsDeliveryLinesCall{}
+	call.modifiedAfter = modifiedAfter
+	call.client = c
+
 	selectFields := utilities.GetTaggedFieldNames("json", GoodsDeliveryLine{})
-	urlStr := fmt.Sprintf("%s/salesorder/GoodsDeliveryLines?$select=%s", c.Http().BaseURL(), selectFields)
-	if filter != "" {
-		urlStr += fmt.Sprintf("&$filter=%s", filter)
+	call.urlNext = fmt.Sprintf("%s/salesorder/GoodsDeliveryLines?$select=%s", c.Http().BaseURL(), selectFields)
+	if modifiedAfter != nil {
+		call.urlNext += c.Http().DateFilter("Modified", "gt", modifiedAfter, true, "&")
 	}
-	//fmt.Println(urlStr)
+
+	return &call
+}
+
+func (call *GetGoodsDeliveryLinesCall) Do() (*[]GoodsDeliveryLine, error) {
+	if call.urlNext == "" {
+		return nil, nil
+	}
 
 	goodsDeliveryLines := []GoodsDeliveryLine{}
 
-	for urlStr != "" {
-		ac := []GoodsDeliveryLine{}
-
-		next, err := c.Http().Get(urlStr, &ac)
-		if err != nil {
-			fmt.Println("ERROR in GetGoodsDeliveryLinesInternal:", err)
-			fmt.Println("url:", urlStr)
-			return nil, err
-		}
-
-		goodsDeliveryLines = append(goodsDeliveryLines, ac...)
-
-		urlStr = next
-	}
-
-	return &goodsDeliveryLines, nil
-}
-
-func (c *Client) GetGoodsDeliveryLines(modifiedAfter *time.Time) (*[]GoodsDeliveryLine, error) {
-	acc, err := c.GetGoodsDeliveryLinesInternal(c.Http().DateFilter("Modified", "gt", modifiedAfter, false, ""))
+	next, err := call.client.Http().Get(call.urlNext, &goodsDeliveryLines)
 	if err != nil {
 		return nil, err
 	}
 
-	return acc, nil
-}
+	call.urlNext = next
 
+	return &goodsDeliveryLines, nil
+}
 func (c *Client) GetGoodsDeliveryLinesCount(createdBefore *time.Time) (int64, error) {
 	return c.Http().GetCount("salesorder/GoodsDeliveryLines", createdBefore)
 }
