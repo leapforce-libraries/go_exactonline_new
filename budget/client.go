@@ -1,7 +1,7 @@
 package exactonline
 
 import (
-	http "github.com/Leapforce-nl/go_exactonline_new/http"
+	http "github.com/leapforce-libraries/go_exactonline_new/http"
 )
 
 type Client struct {

@@ -1,13 +1,13 @@
 package exactonline
 
 import (
-	bigquerytools "github.com/Leapforce-nl/go_bigquerytools"
-	budget "github.com/Leapforce-nl/go_exactonline_new/budget"
-	crm "github.com/Leapforce-nl/go_exactonline_new/crm"
-	financialtransaction "github.com/Leapforce-nl/go_exactonline_new/financialtransaction"
-	http "github.com/Leapforce-nl/go_exactonline_new/http"
-	logistics "github.com/Leapforce-nl/go_exactonline_new/logistics"
-	salesorder "github.com/Leapforce-nl/go_exactonline_new/salesorder"
+	bigquerytools "github.com/leapforce-libraries/go_bigquerytools"
+	budget "github.com/leapforce-libraries/go_exactonline_new/budget"
+	crm "github.com/leapforce-libraries/go_exactonline_new/crm"
+	financialtransaction "github.com/leapforce-libraries/go_exactonline_new/financialtransaction"
+	http "github.com/leapforce-libraries/go_exactonline_new/http"
+	logistics "github.com/leapforce-libraries/go_exactonline_new/logistics"
+	salesorder "github.com/leapforce-libraries/go_exactonline_new/salesorder"
 )
 
 // ExactOnline stores ExactOnline configuration
