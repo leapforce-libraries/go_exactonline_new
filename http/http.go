@@ -192,6 +192,8 @@ func (h *Http) Get(url string, model interface{}) (string, error) {
 	if err != nil {
 		return "", err
 	}
+
+	fmt.Println(url)
 	/*
 		response := Response{}
 		res, err := h.oAuth2.Get(url, &response)
