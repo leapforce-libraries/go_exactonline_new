@@ -27,7 +27,7 @@ const (
 // ExactOnline stores ExactOnline configuration
 //
 type Http struct {
-	division                    int32
+	division                    int
 	oAuth2                      *oauth2.OAuth2
 	xRateLimitMinutelyRemaining int
 	xRateLimitMinutelyReset     int64
@@ -35,8 +35,9 @@ type Http struct {
 
 // methods
 //
-func NewHttp(clientID string, clientSecret string, bigQuery *bigquerytools.BigQuery, isLive bool) (*Http, error) {
+func NewHttp(division int, clientID string, clientSecret string, bigQuery *bigquerytools.BigQuery, isLive bool) (*Http, error) {
 	h := Http{}
+	h.division = division
 
 	config := oauth2.OAuth2Config{
 		ApiName:         apiName,
@@ -48,13 +49,6 @@ func NewHttp(clientID string, clientSecret string, bigQuery *bigquerytools.BigQu
 		TokenHTTPMethod: tokenHttpMethod,
 	}
 	h.oAuth2 = oauth2.NewOAuth(config, bigQuery, isLive)
-
-	me, err := h.getMe()
-	if err != nil {
-		return nil, err
-	}
-
-	h.division = me.CurrentDivision
 	return &h, nil
 }
 
@@ -68,23 +62,6 @@ func (h *Http) LastModifiedFormat() string {
 
 func (h *Http) InitToken() error {
 	return h.oAuth2.InitToken()
-}
-
-func (h *Http) getMe() (*Me, error) {
-	urlStr := fmt.Sprintf("%s/current/Me", apiURL)
-
-	me := []Me{}
-
-	_, err := h.Get(urlStr, &me)
-	if err != nil {
-		return nil, err
-	}
-
-	if len(me) == 0 {
-		return nil, &types.ErrorString{"Me endpoint returns empty slice."}
-	}
-
-	return &me[0], nil
 }
 
 // Response represents highest level of exactonline api response
