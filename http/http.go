@@ -27,7 +27,7 @@ const (
 // ExactOnline stores ExactOnline configuration
 //
 type Http struct {
-	division                    int
+	division                    int32
 	oAuth2                      *oauth2.OAuth2
 	xRateLimitMinutelyRemaining int
 	xRateLimitMinutelyReset     int64
@@ -35,7 +35,7 @@ type Http struct {
 
 // methods
 //
-func NewHttp(division int, clientID string, clientSecret string, bigQuery *bigquerytools.BigQuery, isLive bool) (*Http, error) {
+func NewHttp(division int32, clientID string, clientSecret string, bigQuery *bigquerytools.BigQuery, isLive bool) (*Http, error) {
 	h := Http{}
 	h.division = division
 
