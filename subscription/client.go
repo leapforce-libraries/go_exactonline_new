@@ -1,13 +1,14 @@
 package exactonline
 
 import (
+	"bytes"
 	"fmt"
 	"time"
 
 	http "github.com/leapforce-libraries/go_exactonline_new/http"
 )
 
-const path string = "crm"
+const path string = "subscription"
 
 type Client struct {
 	http *http.Http
@@ -19,6 +20,18 @@ func NewClient(http *http.Http) *Client {
 
 func (c *Client) Get(url string, model interface{}) (string, error) {
 	return c.http.Get(url, model)
+}
+
+func (c *Client) Post(url string, buf *bytes.Buffer, model interface{}) error {
+	return c.http.Post(url, buf, model)
+}
+
+func (c *Client) Put(url string, buf *bytes.Buffer) error {
+	return c.http.Put(url, buf)
+}
+
+func (c *Client) Delete(url string) error {
+	return c.http.Delete(url)
 }
 
 func (c *Client) GetCount(endpoint string, createdBefore *time.Time) (int64, error) {

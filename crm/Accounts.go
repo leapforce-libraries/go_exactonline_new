@@ -174,9 +174,9 @@ func (c *Client) NewGetAccountsCall(modifiedAfter *time.Time) *GetAccountsCall {
 	call.client = c
 
 	selectFields := utilities.GetTaggedFieldNames("json", Account{})
-	call.urlNext = fmt.Sprintf("%s/crm/Accounts?$select=%s", c.Http().BaseURL(), selectFields)
+	call.urlNext = fmt.Sprintf("%s/Accounts?$select=%s", c.BaseURL(), selectFields)
 	if modifiedAfter != nil {
-		call.urlNext += c.Http().DateFilter("Modified", "gt", modifiedAfter, true, "&")
+		call.urlNext += c.DateFilter("Modified", "gt", modifiedAfter, true, "&")
 	}
 
 	return &call
@@ -189,7 +189,7 @@ func (call *GetAccountsCall) Do() (*[]Account, error) {
 
 	accounts := []Account{}
 
-	next, err := call.client.Http().Get(call.urlNext, &accounts)
+	next, err := call.client.Get(call.urlNext, &accounts)
 	if err != nil {
 		return nil, err
 	}
@@ -200,5 +200,5 @@ func (call *GetAccountsCall) Do() (*[]Account, error) {
 }
 
 func (c *Client) GetAccountsCount(createdBefore *time.Time) (int64, error) {
-	return c.Http().GetCount("crm/Accounts", createdBefore)
+	return c.GetCount("Accounts", createdBefore)
 }

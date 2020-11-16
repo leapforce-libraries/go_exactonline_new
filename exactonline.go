@@ -8,6 +8,7 @@ import (
 	http "github.com/leapforce-libraries/go_exactonline_new/http"
 	logistics "github.com/leapforce-libraries/go_exactonline_new/logistics"
 	salesorder "github.com/leapforce-libraries/go_exactonline_new/salesorder"
+	subscription "github.com/leapforce-libraries/go_exactonline_new/subscription"
 )
 
 // ExactOnline stores ExactOnline configuration
@@ -18,6 +19,7 @@ type ExactOnline struct {
 	FinancialTransactionClient *financialtransaction.Client
 	LogisticsClient            *logistics.Client
 	SalesOrderClient           *salesorder.Client
+	SubscriptionClient         *subscription.Client
 }
 
 // methods
@@ -34,6 +36,7 @@ func NewExactOnline(division int32, clientID string, clientSecret string, bigQue
 	eo.FinancialTransactionClient = financialtransaction.NewClient(http)
 	eo.LogisticsClient = logistics.NewClient(http)
 	eo.SalesOrderClient = salesorder.NewClient(http)
+	eo.SubscriptionClient = subscription.NewClient(http)
 
 	return &eo, nil
 }

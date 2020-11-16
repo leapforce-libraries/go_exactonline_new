@@ -50,9 +50,9 @@ func (c *Client) NewGetBudgetsCall(modifiedAfter *time.Time) *GetBudgetsCall {
 	call.client = c
 
 	selectFields := utilities.GetTaggedFieldNames("json", Budget{})
-	call.urlNext = fmt.Sprintf("%s/budget/Budgets?$select=%s", c.Http().BaseURL(), selectFields)
+	call.urlNext = fmt.Sprintf("%s/Budgets?$select=%s", c.BaseURL(), selectFields)
 	if modifiedAfter != nil {
-		call.urlNext += c.Http().DateFilter("Modified", "gt", modifiedAfter, true, "&")
+		call.urlNext += c.DateFilter("Modified", "gt", modifiedAfter, true, "&")
 	}
 
 	return &call
@@ -65,7 +65,7 @@ func (call *GetBudgetsCall) Do() (*[]Budget, error) {
 
 	budgets := []Budget{}
 
-	next, err := call.client.Http().Get(call.urlNext, &budgets)
+	next, err := call.client.Get(call.urlNext, &budgets)
 	if err != nil {
 		return nil, err
 	}
@@ -76,5 +76,5 @@ func (call *GetBudgetsCall) Do() (*[]Budget, error) {
 }
 
 func (c *Client) GetBudgetsCount(createdBefore *time.Time) (int64, error) {
-	return c.Http().GetCount("budget/Budgets", createdBefore)
+	return c.GetCount("Budgets", createdBefore)
 }

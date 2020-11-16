@@ -52,8 +52,8 @@ func NewHttp(division int32, clientID string, clientSecret string, bigQuery *big
 	return &h, nil
 }
 
-func (h *Http) BaseURL() string {
-	return fmt.Sprintf("%s/%v", apiURL, h.division)
+func (h *Http) BaseURL(path string) string {
+	return fmt.Sprintf("%s/%v/%s", apiURL, h.division, path)
 }
 
 func (h *Http) LastModifiedFormat() string {
@@ -166,8 +166,8 @@ func (h *Http) DateFilter(field string, comparer string, time *time.Time, includ
 	return filter
 }
 
-func (h *Http) GetCount(endpoint string, createdBefore *time.Time) (int64, error) {
-	urlStr := fmt.Sprintf("%s/%s?$top=0&$inlinecount=allpages%s", h.BaseURL(), endpoint, h.DateFilter("Created", "lt", createdBefore, true, "&"))
+func (h *Http) GetCount(path string, createdBefore *time.Time) (int64, error) {
+	urlStr := fmt.Sprintf("%s?$top=0&$inlinecount=allpages%s", h.BaseURL(path), h.DateFilter("Created", "lt", createdBefore, true, "&"))
 
 	response, err := h.GetResponse(urlStr)
 	if err != nil {

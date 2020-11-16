@@ -44,9 +44,9 @@ func (c *Client) NewGetBankEntriesCall(modifiedAfter *time.Time) *GetBankEntries
 	call.client = c
 
 	selectFields := utilities.GetTaggedFieldNames("json", BankEntry{})
-	call.urlNext = fmt.Sprintf("%s/financialtransaction/BankEntries?$select=%s", c.Http().BaseURL(), selectFields)
+	call.urlNext = fmt.Sprintf("%s/BankEntries?$select=%s", c.BaseURL(), selectFields)
 	if modifiedAfter != nil {
-		call.urlNext += c.Http().DateFilter("Modified", "gt", modifiedAfter, true, "&")
+		call.urlNext += c.DateFilter("Modified", "gt", modifiedAfter, true, "&")
 	}
 
 	return &call
@@ -59,7 +59,7 @@ func (call *GetBankEntriesCall) Do() (*[]BankEntry, error) {
 
 	bankEntries := []BankEntry{}
 
-	next, err := call.client.Http().Get(call.urlNext, &bankEntries)
+	next, err := call.client.Get(call.urlNext, &bankEntries)
 	if err != nil {
 		return nil, err
 	}
@@ -70,5 +70,5 @@ func (call *GetBankEntriesCall) Do() (*[]BankEntry, error) {
 }
 
 func (c *Client) GetBankEntriesCount(createdBefore *time.Time) (int64, error) {
-	return c.Http().GetCount("financialtransaction/BankEntries", createdBefore)
+	return c.GetCount("BankEntries", createdBefore)
 }

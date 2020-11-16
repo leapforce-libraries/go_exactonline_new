@@ -55,9 +55,9 @@ func (c *Client) NewGetGoodsDeliveryLinesCall(modifiedAfter *time.Time) *GetGood
 	call.client = c
 
 	selectFields := utilities.GetTaggedFieldNames("json", GoodsDeliveryLine{})
-	call.urlNext = fmt.Sprintf("%s/salesorder/GoodsDeliveryLines?$select=%s", c.Http().BaseURL(), selectFields)
+	call.urlNext = fmt.Sprintf("%s/GoodsDeliveryLines?$select=%s", c.BaseURL(), selectFields)
 	if modifiedAfter != nil {
-		call.urlNext += c.Http().DateFilter("Modified", "gt", modifiedAfter, true, "&")
+		call.urlNext += c.DateFilter("Modified", "gt", modifiedAfter, true, "&")
 	}
 
 	return &call
@@ -70,7 +70,7 @@ func (call *GetGoodsDeliveryLinesCall) Do() (*[]GoodsDeliveryLine, error) {
 
 	goodsDeliveryLines := []GoodsDeliveryLine{}
 
-	next, err := call.client.Http().Get(call.urlNext, &goodsDeliveryLines)
+	next, err := call.client.Get(call.urlNext, &goodsDeliveryLines)
 	if err != nil {
 		return nil, err
 	}
@@ -80,5 +80,5 @@ func (call *GetGoodsDeliveryLinesCall) Do() (*[]GoodsDeliveryLine, error) {
 	return &goodsDeliveryLines, nil
 }
 func (c *Client) GetGoodsDeliveryLinesCount(createdBefore *time.Time) (int64, error) {
-	return c.Http().GetCount("salesorder/GoodsDeliveryLines", createdBefore)
+	return c.GetCount("GoodsDeliveryLines", createdBefore)
 }
