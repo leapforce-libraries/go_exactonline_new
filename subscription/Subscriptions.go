@@ -90,9 +90,9 @@ type GetSubscriptionsCall struct {
 }
 
 type GetSubscriptionsCallParams struct {
-	SubscriptionID *types.GUID
-	OrderedBy      *types.GUID
-	ModifiedAfter  *time.Time
+	EntryID       *types.GUID
+	OrderedBy     *types.GUID
+	ModifiedAfter *time.Time
 }
 
 func (c *Client) NewGetSubscriptionsCall(params GetSubscriptionsCallParams) *GetSubscriptionsCall {
@@ -100,8 +100,8 @@ func (c *Client) NewGetSubscriptionsCall(params GetSubscriptionsCallParams) *Get
 	call.client = c
 
 	subscription := ""
-	if params.SubscriptionID != nil {
-		subscription = fmt.Sprintf("(guid'%s')", params.SubscriptionID.String())
+	if params.EntryID != nil {
+		subscription = fmt.Sprintf("(guid'%s')", params.EntryID.String())
 	}
 	selectFields := utilities.GetTaggedFieldNames("json", Subscription{})
 	call.urlNext = fmt.Sprintf("%s/Subscriptions%s?$select=%s", c.BaseURL(), subscription, selectFields)
