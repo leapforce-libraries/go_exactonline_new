@@ -1,6 +1,7 @@
 package exactonline
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"strings"
@@ -163,6 +164,144 @@ type Account struct {
 	Website                             string          `json:"Website"`
 }
 
+// AccountUpdate stores Account value to insert/update
+//
+type AccountUpdate struct {
+	Accountant                          *string  `json:"Accountant,omitempty"`
+	AccountManager                      *string  `json:"AccountManager,omitempty"`
+	ActivitySector                      *string  `json:"ActivitySector,omitempty"`
+	ActivitySubSector                   *string  `json:"ActivitySubSector,omitempty"`
+	AddressLine1                        *string  `json:"AddressLine1,omitempty"`
+	AddressLine2                        *string  `json:"AddressLine2,omitempty"`
+	AddressLine3                        **string `json:"AddressLine3,omitempty"`
+	Blocked                             *bool    `json:"Blocked,omitempty"`
+	BRIN                                *string  `json:"BRIN,omitempty"`
+	BSN                                 *string  `json:"BSN,omitempty"`
+	BusinessType                        *string  `json:"BusinessType,omitempty"`
+	CanDropShip                         *bool    `json:"CanDropShip,omitempty"`
+	ChamberOfCommerce                   *string  `json:"ChamberOfCommerce,omitempty"`
+	City                                *string  `json:"City,omitempty"`
+	Classification                      *string  `json:"Classification,omitempty"`
+	Classification1                     *string  `json:"Classification1,omitempty"`
+	Classification2                     *string  `json:"Classification2,omitempty"`
+	Classification3                     *string  `json:"Classification3,omitempty"`
+	Classification4                     *string  `json:"Classification4,omitempty"`
+	Classification5                     *string  `json:"Classification5,omitempty"`
+	Classification6                     *string  `json:"Classification6,omitempty"`
+	Classification7                     *string  `json:"Classification7,omitempty"`
+	Classification8                     *string  `json:"Classification8,omitempty"`
+	ClassificationDescription           *string  `json:"ClassificationDescription,omitempty"`
+	Code                                *string  `json:"Code,omitempty"`
+	CodeAtSupplier                      *string  `json:"CodeAtSupplier,omitempty"`
+	CompanySize                         *string  `json:"CompanySize,omitempty"`
+	ConsolidationScenario               *byte    `json:"ConsolidationScenario,omitempty"`
+	ControlledDate                      *string  `json:"ControlledDate,omitempty"`
+	Costcenter                          *string  `json:"Costcenter,omitempty"`
+	CostcenterDescription               *string  `json:"CostcenterDescription,omitempty"`
+	CostPaid                            *byte    `json:"CostPaid,omitempty"`
+	Country                             *string  `json:"Country,omitempty"`
+	CountryName                         *string  `json:"CountryName,omitempty"`
+	Created                             *string  `json:"Created,omitempty"`
+	CreditLinePurchase                  *float64 `json:"CreditLinePurchase,omitempty"`
+	CreditLineSales                     *float64 `json:"CreditLineSales,omitempty"`
+	Currency                            *string  `json:"Currency,omitempty"`
+	CustomerSince                       *string  `json:"CustomerSince,omitempty"`
+	DatevCreditorCode                   *string  `json:"DatevCreditorCode,omitempty"`
+	DatevDebtorCode                     *string  `json:"DatevDebtorCode,omitempty"`
+	DiscountPurchase                    *float64 `json:"DiscountPurchase,omitempty"`
+	DiscountSales                       *float64 `json:"DiscountSales,omitempty"`
+	Division                            *int32   `json:"Division,omitempty"`
+	Document                            *string  `json:"Document,omitempty"`
+	DunsNumber                          *string  `json:"DunsNumber,omitempty"`
+	Email                               *string  `json:"Email,omitempty"`
+	EndDate                             *string  `json:"EndDate,omitempty"`
+	EstablishedDate                     *string  `json:"EstablishedDate,omitempty"`
+	Fax                                 *string  `json:"Fax,omitempty"`
+	GLAccountPurchase                   *string  `json:"GLAccountPurchase,omitempty"`
+	GLAccountSales                      *string  `json:"GLAccountSales,omitempty"`
+	GLAP                                *string  `json:"GLAP,omitempty"`
+	GLAR                                *string  `json:"GLAR,omitempty"`
+	GlnNumber                           *string  `json:"GlnNumber,omitempty"`
+	HasWithholdingTaxSales              *bool    `json:"HasWithholdingTaxSales,omitempty"`
+	IgnoreDatevWarningMessage           *bool    `json:"IgnoreDatevWarningMessage,omitempty"`
+	IntraStatArea                       *string  `json:"IntraStatArea,omitempty"`
+	IntraStatDeliveryTerm               *string  `json:"IntraStatDeliveryTerm,omitempty"`
+	IntraStatSystem                     *string  `json:"IntraStatSystem,omitempty"`
+	IntraStatTransactionA               *string  `json:"IntraStatTransactionA,omitempty"`
+	IntraStatTransactionB               *string  `json:"IntraStatTransactionB,omitempty"`
+	IntraStatTransportMethod            *string  `json:"IntraStatTransportMethod,omitempty"`
+	InvoiceAccount                      *string  `json:"InvoiceAccount,omitempty"`
+	InvoiceAttachmentType               *int32   `json:"InvoiceAttachmentType,omitempty"`
+	InvoicingMethod                     *int32   `json:"InvoicingMethod,omitempty"`
+	IsAccountant                        *byte    `json:"IsAccountant,omitempty"`
+	IsAgency                            *byte    `json:"IsAgency,omitempty"`
+	IsAnonymised                        *byte    `json:"IsAnonymised,omitempty"`
+	IsBank                              *bool    `json:"IsBank,omitempty"`
+	IsCompetitor                        *byte    `json:"IsCompetitor,omitempty"`
+	IsExtraDuty                         *bool    `json:"IsExtraDuty,omitempty"`
+	IsMailing                           *byte    `json:"IsMailing,omitempty"`
+	IsMember                            *bool    `json:"IsMember,omitempty"`
+	IsPilot                             *bool    `json:"IsPilot,omitempty"`
+	IsPurchase                          *bool    `json:"IsPurchase,omitempty"`
+	IsReseller                          *bool    `json:"IsReseller,omitempty"`
+	IsSales                             *bool    `json:"IsSales,omitempty"`
+	IsSupplier                          *bool    `json:"IsSupplier,omitempty"`
+	Language                            *string  `json:"Language,omitempty"`
+	LanguageDescription                 *string  `json:"LanguageDescription,omitempty"`
+	Latitude                            *float64 `json:"Latitude,omitempty"`
+	LeadPurpose                         *string  `json:"LeadPurpose,omitempty"`
+	LeadSource                          *string  `json:"LeadSource,omitempty"`
+	LogoFileName                        *string  `json:"LogoFileName,omitempty"`
+	LogoThumbnailUrl                    *string  `json:"LogoThumbnailUrl,omitempty"`
+	LogoUrl                             *string  `json:"LogoUrl,omitempty"`
+	Longitude                           *float64 `json:"Longitude,omitempty"`
+	MainContact                         *string  `json:"MainContact,omitempty"`
+	Modified                            *string  `json:"Modified,omitempty"`
+	Name                                *string  `json:"Name,omitempty"`
+	OINNumber                           *string  `json:"OINNumber,omitempty"`
+	Parent                              *string  `json:"Parent,omitempty"`
+	PayAsYouEarn                        *string  `json:"PayAsYouEarn,omitempty"`
+	PaymentConditionPurchase            *string  `json:"PaymentConditionPurchase,omitempty"`
+	PaymentConditionPurchaseDescription *string  `json:"PaymentConditionPurchaseDescription,omitempty"`
+	PaymentConditionSales               *string  `json:"PaymentConditionSales,omitempty"`
+	PaymentConditionSalesDescription    *string  `json:"PaymentConditionSalesDescription,omitempty"`
+	Phone                               *string  `json:"Phone,omitempty"`
+	PhoneExtension                      *string  `json:"PhoneExtension,omitempty"`
+	Postcode                            *string  `json:"Postcode,omitempty"`
+	PriceList                           *string  `json:"PriceList,omitempty"`
+	PurchaseCurrency                    *string  `json:"PurchaseCurrency,omitempty"`
+	PurchaseCurrencyDescription         *string  `json:"PurchaseCurrencyDescription,omitempty"`
+	PurchaseLeadDays                    *int32   `json:"PurchaseLeadDays,omitempty"`
+	PurchaseVATCode                     *string  `json:"PurchaseVATCode,omitempty"`
+	PurchaseVATCodeDescription          *string  `json:"PurchaseVATCodeDescription,omitempty"`
+	RecepientOfCommissions              *bool    `json:"RecepientOfCommissions,omitempty"`
+	Remarks                             *string  `json:"Remarks,omitempty"`
+	Reseller                            *string  `json:"Reseller,omitempty"`
+	RSIN                                *string  `json:"RSIN,omitempty"`
+	SalesCurrency                       *string  `json:"SalesCurrency,omitempty"`
+	SalesCurrencyDescription            *string  `json:"SalesCurrencyDescription,omitempty"`
+	SalesTaxSchedule                    *string  `json:"SalesTaxSchedule,omitempty"`
+	SalesVATCode                        *string  `json:"SalesVATCode,omitempty"`
+	SalesVATCodeDescription             *string  `json:"SalesVATCodeDescription,omitempty"`
+	SearchCode                          *string  `json:"SearchCode,omitempty"`
+	SecurityLevel                       *int32   `json:"SecurityLevel,omitempty"`
+	SeparateInvPerProject               *byte    `json:"SeparateInvPerProject,omitempty"`
+	SeparateInvPerSubscription          *byte    `json:"SeparateInvPerSubscription,omitempty"`
+	ShippingLeadDays                    *int32   `json:"ShippingLeadDays,omitempty"`
+	ShippingMethod                      *string  `json:"ShippingMethod,omitempty"`
+	StartDate                           *string  `json:"StartDate,omitempty"`
+	State                               *string  `json:"State,omitempty"`
+	StateName                           *string  `json:"StateName,omitempty"`
+	Status                              *string  `json:"Status,omitempty"`
+	StatusSince                         *string  `json:"StatusSince,omitempty"`
+	TradeName                           *string  `json:"TradeName,omitempty"`
+	Type                                *string  `json:"Type,omitempty"`
+	UniqueTaxpayerReference             *string  `json:"UniqueTaxpayerReference,omitempty"`
+	VATLiability                        *string  `json:"VATLiability,omitempty"`
+	VATNumber                           *string  `json:"VATNumber,omitempty"`
+	Website                             *string  `json:"Website,omitempty"`
+}
+
 type GetAccountsCall struct {
 	urlNext string
 	client  *Client
@@ -210,6 +349,48 @@ func (call *GetAccountsCall) Do() (*[]Account, error) {
 	call.urlNext = next
 
 	return &accounts, nil
+}
+
+func (c *Client) CreateAccount(account *AccountUpdate) (*Account, error) {
+	url := fmt.Sprintf("%s/Accounts", c.BaseURL())
+
+	b, err := json.Marshal(account)
+	if err != nil {
+		return nil, err
+	}
+
+	accountNew := Account{}
+
+	err = c.Post(url, bytes.NewBuffer(b), &accountNew)
+	if err != nil {
+		return nil, err
+	}
+	return &accountNew, nil
+}
+
+func (c *Client) UpdateAccount(id types.GUID, account *AccountUpdate) error {
+	url := fmt.Sprintf("%s/Accounts(guid'%s')", c.BaseURL(), id.String())
+
+	b, err := json.Marshal(account)
+	if err != nil {
+		return err
+	}
+
+	err = c.Put(url, bytes.NewBuffer(b))
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (c *Client) DeleteAccount(id types.GUID) error {
+	url := fmt.Sprintf("%s/Accounts(guid'%s')", c.BaseURL(), id.String())
+
+	err := c.Delete(url)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func (c *Client) GetAccountsCount(createdBefore *time.Time) (int64, error) {
