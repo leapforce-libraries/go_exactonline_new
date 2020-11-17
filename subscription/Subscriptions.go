@@ -90,7 +90,6 @@ type GetSubscriptionsCall struct {
 }
 
 type GetSubscriptionsCallParams struct {
-	EntryID       *types.GUID
 	OrderedBy     *types.GUID
 	ModifiedAfter *time.Time
 }
@@ -99,12 +98,8 @@ func (c *Client) NewGetSubscriptionsCall(params GetSubscriptionsCallParams) *Get
 	call := GetSubscriptionsCall{}
 	call.client = c
 
-	subscription := ""
-	if params.EntryID != nil {
-		subscription = fmt.Sprintf("(guid'%s')", params.EntryID.String())
-	}
 	selectFields := utilities.GetTaggedFieldNames("json", Subscription{})
-	call.urlNext = fmt.Sprintf("%s/Subscriptions%s?$select=%s", c.BaseURL(), subscription, selectFields)
+	call.urlNext = fmt.Sprintf("%s/Subscriptions?$select=%s", c.BaseURL(), selectFields)
 	filter := []string{}
 
 	if params.OrderedBy != nil {
@@ -128,6 +123,8 @@ func (call *GetSubscriptionsCall) Do() (*[]Subscription, error) {
 
 	subscriptions := []Subscription{}
 
+	fmt.Println(call.urlNext)
+
 	next, err := call.client.Get(call.urlNext, &subscriptions)
 	if err != nil {
 		return nil, err
@@ -136,6 +133,20 @@ func (call *GetSubscriptionsCall) Do() (*[]Subscription, error) {
 	call.urlNext = next
 
 	return &subscriptions, nil
+}
+
+func (c *Client) GetSubscription(entryID types.GUID) (*Subscription, error) {
+	url := fmt.Sprintf("%s/Subscriptions(guid'%s')", c.BaseURL(), entryID.String())
+
+	fmt.Println(url)
+
+	subscription := Subscription{}
+
+	err := c.GetSingle(url, &subscription)
+	if err != nil {
+		return nil, err
+	}
+	return &subscription, nil
 }
 
 func (c *Client) CreateSubscription(subscription *SubscriptionUpdate) (*Subscription, error) {

@@ -135,7 +135,24 @@ func (h *Http) printError(res *http.Response) error {
 	return &types.ErrorString{message}
 }
 
-func (h *Http) GetResponse(url string) (*Response, error) {
+func (h *Http) getResponseSingle(url string) (*ResponseSingle, error) {
+	response := ResponseSingle{}
+	res, err := h.oAuth2.Get(url, &response)
+	if err != nil {
+		if res != nil {
+			return nil, h.printError(res)
+		} else {
+			return nil, err
+		}
+
+	}
+
+	h.readRateLimitHeaders(res)
+
+	return &response, nil
+}
+
+func (h *Http) getResponse(url string) (*Response, error) {
 	response := Response{}
 	res, err := h.oAuth2.Get(url, &response)
 	if err != nil {
@@ -169,7 +186,7 @@ func (h *Http) DateFilter(field string, comparer string, time *time.Time, includ
 func (h *Http) GetCount(path string, createdBefore *time.Time) (int64, error) {
 	urlStr := fmt.Sprintf("%s?$top=0&$inlinecount=allpages%s", h.BaseURL(path), h.DateFilter("Created", "lt", createdBefore, true, "&"))
 
-	response, err := h.GetResponse(urlStr)
+	response, err := h.getResponse(urlStr)
 	if err != nil {
 		return 0, err
 	}
@@ -181,6 +198,24 @@ func (h *Http) GetCount(path string, createdBefore *time.Time) (int64, error) {
 
 	return count, nil
 }
+func (h *Http) GetSingle(url string, model interface{}) error {
+	err := h.wait()
+	if err != nil {
+		return err
+	}
+
+	response, err := h.getResponseSingle(url)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(response.Data, &model)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
 
 func (h *Http) Get(url string, model interface{}) (string, error) {
 	err := h.wait()
@@ -188,23 +223,10 @@ func (h *Http) Get(url string, model interface{}) (string, error) {
 		return "", err
 	}
 
-	response, err := h.GetResponse(url)
+	response, err := h.getResponse(url)
 	if err != nil {
 		return "", err
 	}
-	/*
-		response := Response{}
-		res, err := h.oAuth2.Get(url, &response)
-		if err != nil {
-			if res != nil {
-				return "", h.printError(res)
-			} else {
-				return "", err
-			}
-
-		}
-
-		h.readRateLimitHeaders(res)*/
 
 	err = json.Unmarshal(response.Data.Results, &model)
 	if err != nil {

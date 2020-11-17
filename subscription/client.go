@@ -18,6 +18,10 @@ func NewClient(http *http.Http) *Client {
 	return &Client{http}
 }
 
+func (c *Client) GetSingle(url string, model interface{}) error {
+	return c.http.GetSingle(url, model)
+}
+
 func (c *Client) Get(url string, model interface{}) (string, error) {
 	return c.http.Get(url, model)
 }
