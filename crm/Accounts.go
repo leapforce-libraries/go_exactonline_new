@@ -3,6 +3,7 @@ package exactonline
 import (
 	"encoding/json"
 	"fmt"
+	"strings"
 	"time"
 
 	types "github.com/leapforce-libraries/go_types"
@@ -163,20 +164,32 @@ type Account struct {
 }
 
 type GetAccountsCall struct {
-	modifiedAfter *time.Time
-	urlNext       string
-	client        *Client
+	urlNext string
+	client  *Client
 }
 
-func (c *Client) NewGetAccountsCall(modifiedAfter *time.Time) *GetAccountsCall {
+type GetAccountsCallParams struct {
+	ChamberOfCommerce *string
+	ModifiedAfter     *time.Time
+}
+
+func (c *Client) NewGetAccountsCall(params GetAccountsCallParams) *GetAccountsCall {
 	call := GetAccountsCall{}
-	call.modifiedAfter = modifiedAfter
 	call.client = c
 
 	selectFields := utilities.GetTaggedFieldNames("json", Account{})
 	call.urlNext = fmt.Sprintf("%s/Accounts?$select=%s", c.BaseURL(), selectFields)
-	if modifiedAfter != nil {
-		call.urlNext += c.DateFilter("Modified", "gt", modifiedAfter, true, "&")
+	filter := []string{}
+
+	if params.ChamberOfCommerce != nil {
+		filter = append(filter, fmt.Sprintf("ChamberOfCommerce eq '%s'", *params.ChamberOfCommerce))
+	}
+	if params.ModifiedAfter != nil {
+		filter = append(filter, c.DateFilter("Modified", "gt", params.ModifiedAfter, true, "&"))
+	}
+
+	if len(filter) > 0 {
+		call.urlNext = fmt.Sprintf("%s&$filter=%s", call.urlNext, strings.Join(filter, " AND "))
 	}
 
 	return &call
