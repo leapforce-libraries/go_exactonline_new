@@ -123,8 +123,6 @@ func (call *GetSubscriptionsCall) Do() (*[]Subscription, error) {
 
 	subscriptions := []Subscription{}
 
-	fmt.Println(call.urlNext)
-
 	next, err := call.client.Get(call.urlNext, &subscriptions)
 	if err != nil {
 		return nil, err
