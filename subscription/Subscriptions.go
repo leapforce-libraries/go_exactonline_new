@@ -138,8 +138,6 @@ func (call *GetSubscriptionsCall) Do() (*[]Subscription, error) {
 func (c *Client) GetSubscription(entryID types.GUID) (*Subscription, error) {
 	url := fmt.Sprintf("%s/Subscriptions(guid'%s')", c.BaseURL(), entryID.String())
 
-	fmt.Println(url)
-
 	subscription := Subscription{}
 
 	err := c.GetSingle(url, &subscription)
