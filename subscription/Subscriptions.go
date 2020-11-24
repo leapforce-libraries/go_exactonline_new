@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	errortools "github.com/leapforce-libraries/go_errortools"
 	types "github.com/leapforce-libraries/go_types"
 	utilities "github.com/leapforce-libraries/go_utilities"
 )
@@ -116,7 +117,7 @@ func (c *Client) NewGetSubscriptionsCall(params GetSubscriptionsCallParams) *Get
 	return &call
 }
 
-func (call *GetSubscriptionsCall) Do() (*[]Subscription, error) {
+func (call *GetSubscriptionsCall) Do() (*[]Subscription, *errortools.Error) {
 	if call.urlNext == "" {
 		return nil, nil
 	}
@@ -133,7 +134,7 @@ func (call *GetSubscriptionsCall) Do() (*[]Subscription, error) {
 	return &subscriptions, nil
 }
 
-func (c *Client) GetSubscription(entryID types.GUID) (*Subscription, error) {
+func (c *Client) GetSubscription(entryID types.GUID) (*Subscription, *errortools.Error) {
 	url := fmt.Sprintf("%s/Subscriptions(guid'%s')", c.BaseURL(), entryID.String())
 
 	subscription := Subscription{}
@@ -145,39 +146,39 @@ func (c *Client) GetSubscription(entryID types.GUID) (*Subscription, error) {
 	return &subscription, nil
 }
 
-func (c *Client) CreateSubscription(subscription *SubscriptionUpdate) (*Subscription, error) {
+func (c *Client) CreateSubscription(subscription *SubscriptionUpdate) (*Subscription, *errortools.Error) {
 	url := fmt.Sprintf("%s/Subscriptions", c.BaseURL())
 
 	b, err := json.Marshal(subscription)
 	if err != nil {
-		return nil, err
+		return nil, errortools.ErrorMessage(err)
 	}
 
 	subscriptionNew := Subscription{}
 
-	err = c.Post(url, bytes.NewBuffer(b), &subscriptionNew)
-	if err != nil {
-		return nil, err
+	e := c.Post(url, bytes.NewBuffer(b), &subscriptionNew)
+	if e != nil {
+		return nil, e
 	}
 	return &subscriptionNew, nil
 }
 
-func (c *Client) UpdateSubscription(entryID types.GUID, subscription *SubscriptionUpdate) error {
+func (c *Client) UpdateSubscription(entryID types.GUID, subscription *SubscriptionUpdate) *errortools.Error {
 	url := fmt.Sprintf("%s/Subscriptions(guid'%s')", c.BaseURL(), entryID.String())
 
 	b, err := json.Marshal(subscription)
 	if err != nil {
-		return err
+		return errortools.ErrorMessage(err)
 	}
 
-	err = c.Put(url, bytes.NewBuffer(b))
-	if err != nil {
-		return err
+	e := c.Put(url, bytes.NewBuffer(b))
+	if e != nil {
+		return e
 	}
 	return nil
 }
 
-func (c *Client) DeleteSubscription(entryID types.GUID) error {
+func (c *Client) DeleteSubscription(entryID types.GUID) *errortools.Error {
 	url := fmt.Sprintf("%s/Subscriptions(guid'%s')", c.BaseURL(), entryID.String())
 
 	err := c.Delete(url)
@@ -187,6 +188,6 @@ func (c *Client) DeleteSubscription(entryID types.GUID) error {
 	return nil
 }
 
-func (c *Client) GetSubscriptionsCount(createdBefore *time.Time) (int64, error) {
+func (c *Client) GetSubscriptionsCount(createdBefore *time.Time) (int64, *errortools.Error) {
 	return c.GetCount("Subscriptions", createdBefore)
 }

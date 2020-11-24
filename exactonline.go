@@ -2,6 +2,7 @@ package exactonline
 
 import (
 	bigquerytools "github.com/leapforce-libraries/go_bigquerytools"
+	errortools "github.com/leapforce-libraries/go_errortools"
 	budget "github.com/leapforce-libraries/go_exactonline_new/budget"
 	crm "github.com/leapforce-libraries/go_exactonline_new/crm"
 	financialtransaction "github.com/leapforce-libraries/go_exactonline_new/financialtransaction"
@@ -24,7 +25,7 @@ type ExactOnline struct {
 
 // methods
 //
-func NewExactOnline(division int32, clientID string, clientSecret string, bigQuery *bigquerytools.BigQuery, isLive bool) (*ExactOnline, error) {
+func NewExactOnline(division int32, clientID string, clientSecret string, bigQuery *bigquerytools.BigQuery, isLive bool) (*ExactOnline, *errortools.Error) {
 	eo := ExactOnline{}
 
 	http, err := http.NewHttp(division, clientID, clientSecret, bigQuery, isLive)

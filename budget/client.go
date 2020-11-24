@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"time"
 
+	errortools "github.com/leapforce-libraries/go_errortools"
 	http "github.com/leapforce-libraries/go_exactonline_new/http"
 )
 
@@ -17,11 +18,11 @@ func NewClient(http *http.Http) *Client {
 	return &Client{http}
 }
 
-func (c *Client) Get(url string, model interface{}) (string, error) {
+func (c *Client) Get(url string, model interface{}) (string, *errortools.Error) {
 	return c.http.Get(url, model)
 }
 
-func (c *Client) GetCount(endpoint string, createdBefore *time.Time) (int64, error) {
+func (c *Client) GetCount(endpoint string, createdBefore *time.Time) (int64, *errortools.Error) {
 	return c.http.GetCount(fmt.Sprintf("%s/%s", path, endpoint), createdBefore)
 }
 

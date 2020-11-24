@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"time"
 
+	errortools "github.com/leapforce-libraries/go_errortools"
 	types "github.com/leapforce-libraries/go_types"
 	utilities "github.com/leapforce-libraries/go_utilities"
 )
@@ -131,7 +132,7 @@ func (c *Client) NewGetItemsCall(modifiedAfter *time.Time) *GetItemsCall {
 	return &call
 }
 
-func (call *GetItemsCall) Do() (*[]Item, error) {
+func (call *GetItemsCall) Do() (*[]Item, *errortools.Error) {
 	if call.urlNext == "" {
 		return nil, nil
 	}
@@ -148,6 +149,6 @@ func (call *GetItemsCall) Do() (*[]Item, error) {
 	return &items, nil
 }
 
-func (c *Client) GetItemsCount(createdBefore *time.Time) (int64, error) {
+func (c *Client) GetItemsCount(createdBefore *time.Time) (int64, *errortools.Error) {
 	return c.GetCount("Items", createdBefore)
 }

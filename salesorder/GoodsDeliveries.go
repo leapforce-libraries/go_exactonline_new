@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"time"
 
+	errortools "github.com/leapforce-libraries/go_errortools"
 	types "github.com/leapforce-libraries/go_types"
 	utilities "github.com/leapforce-libraries/go_utilities"
 )
@@ -63,7 +64,7 @@ func (c *Client) NewGetGoodsDeliveriesCall(modifiedAfter *time.Time) *GetGoodsDe
 	return &call
 }
 
-func (call *GetGoodsDeliveriesCall) Do() (*[]GoodsDelivery, error) {
+func (call *GetGoodsDeliveriesCall) Do() (*[]GoodsDelivery, *errortools.Error) {
 	if call.urlNext == "" {
 		return nil, nil
 	}
@@ -80,6 +81,6 @@ func (call *GetGoodsDeliveriesCall) Do() (*[]GoodsDelivery, error) {
 	return &goodsDeliveries, nil
 }
 
-func (c *Client) GetGoodsDeliveriesCount(createdBefore *time.Time) (int64, error) {
+func (c *Client) GetGoodsDeliveriesCount(createdBefore *time.Time) (int64, *errortools.Error) {
 	return c.GetCount("GoodsDeliveries", createdBefore)
 }

@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	errortools "github.com/leapforce-libraries/go_errortools"
 	types "github.com/leapforce-libraries/go_types"
 	utilities "github.com/leapforce-libraries/go_utilities"
 )
@@ -334,7 +335,7 @@ func (c *Client) NewGetAccountsCall(params GetAccountsCallParams) *GetAccountsCa
 	return &call
 }
 
-func (call *GetAccountsCall) Do() (*[]Account, error) {
+func (call *GetAccountsCall) Do() (*[]Account, *errortools.Error) {
 	if call.urlNext == "" {
 		return nil, nil
 	}
@@ -351,39 +352,39 @@ func (call *GetAccountsCall) Do() (*[]Account, error) {
 	return &accounts, nil
 }
 
-func (c *Client) CreateAccount(account *AccountUpdate) (*Account, error) {
+func (c *Client) CreateAccount(account *AccountUpdate) (*Account, *errortools.Error) {
 	url := fmt.Sprintf("%s/Accounts", c.BaseURL())
 
 	b, err := json.Marshal(account)
 	if err != nil {
-		return nil, err
+		return nil, errortools.ErrorMessage(err)
 	}
 
 	accountNew := Account{}
 
-	err = c.Post(url, bytes.NewBuffer(b), &accountNew)
-	if err != nil {
-		return nil, err
+	e := c.Post(url, bytes.NewBuffer(b), &accountNew)
+	if e != nil {
+		return nil, e
 	}
 	return &accountNew, nil
 }
 
-func (c *Client) UpdateAccount(id types.GUID, account *AccountUpdate) error {
+func (c *Client) UpdateAccount(id types.GUID, account *AccountUpdate) *errortools.Error {
 	url := fmt.Sprintf("%s/Accounts(guid'%s')", c.BaseURL(), id.String())
 
 	b, err := json.Marshal(account)
 	if err != nil {
-		return err
+		return errortools.ErrorMessage(err)
 	}
 
-	err = c.Put(url, bytes.NewBuffer(b))
-	if err != nil {
-		return err
+	e := c.Put(url, bytes.NewBuffer(b))
+	if e != nil {
+		return e
 	}
 	return nil
 }
 
-func (c *Client) DeleteAccount(id types.GUID) error {
+func (c *Client) DeleteAccount(id types.GUID) *errortools.Error {
 	url := fmt.Sprintf("%s/Accounts(guid'%s')", c.BaseURL(), id.String())
 
 	err := c.Delete(url)
@@ -393,6 +394,6 @@ func (c *Client) DeleteAccount(id types.GUID) error {
 	return nil
 }
 
-func (c *Client) GetAccountsCount(createdBefore *time.Time) (int64, error) {
+func (c *Client) GetAccountsCount(createdBefore *time.Time) (int64, *errortools.Error) {
 	return c.GetCount("Accounts", createdBefore)
 }

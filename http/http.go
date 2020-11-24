@@ -3,6 +3,7 @@ package exactonline
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -10,8 +11,8 @@ import (
 	"time"
 
 	bigquerytools "github.com/leapforce-libraries/go_bigquerytools"
+	errortools "github.com/leapforce-libraries/go_errortools"
 	oauth2 "github.com/leapforce-libraries/go_oauth2"
-	types "github.com/leapforce-libraries/go_types"
 )
 
 const (
@@ -35,7 +36,7 @@ type Http struct {
 
 // methods
 //
-func NewHttp(division int32, clientID string, clientSecret string, bigQuery *bigquerytools.BigQuery, isLive bool) (*Http, error) {
+func NewHttp(division int32, clientID string, clientSecret string, bigQuery *bigquerytools.BigQuery, isLive bool) (*Http, *errortools.Error) {
 	h := Http{}
 	h.division = division
 
@@ -60,7 +61,7 @@ func (h *Http) LastModifiedFormat() string {
 	return lastModifiedFormat
 }
 
-func (h *Http) InitToken() error {
+func (h *Http) InitToken() *errortools.Error {
 	return h.oAuth2.InitToken()
 }
 
@@ -113,38 +114,31 @@ func (h *Http) readRateLimitHeaders(res *http.Response) {
 	}
 }
 
-func (h *Http) printError(res *http.Response) error {
-	fmt.Println("Status", res.Status)
-
+func unmarshalError(res *http.Response) error {
 	b, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		//fmt.Println("errUnmarshal1")
-		return err
+		return nil
 	}
 
 	ee := ExactOnlineError{}
 
 	err = json.Unmarshal(b, &ee)
 	if err != nil {
-		//fmt.Println("errUnmarshal1")
-		return err
+		return nil
 	}
 
-	//fmt.Println(ee.Err.Message.Value)
-	message := fmt.Sprintf("Server returned statuscode %v, error:%s", res.StatusCode, ee.Err.Message.Value)
-	return &types.ErrorString{message}
+	return errors.New(fmt.Sprintf("Server returned statuscode %v, error:%s", res.StatusCode, ee.Err.Message.Value))
 }
 
-func (h *Http) getResponseSingle(url string) (*ResponseSingle, error) {
+func (h *Http) getResponseSingle(url string) (*ResponseSingle, *errortools.Error) {
 	response := ResponseSingle{}
-	res, err := h.oAuth2.Get(url, &response)
-	if err != nil {
-		if res != nil {
-			return nil, h.printError(res)
-		} else {
-			return nil, err
+	_, res, e := h.oAuth2.Get(url, &response)
+	if e != nil {
+		message := unmarshalError(res)
+		if message != nil {
+			e.SetMessage(e)
 		}
-
+		return nil, e
 	}
 
 	h.readRateLimitHeaders(res)
@@ -152,16 +146,15 @@ func (h *Http) getResponseSingle(url string) (*ResponseSingle, error) {
 	return &response, nil
 }
 
-func (h *Http) getResponse(url string) (*Response, error) {
+func (h *Http) getResponse(url string) (*Response, *errortools.Error) {
 	response := Response{}
-	res, err := h.oAuth2.Get(url, &response)
-	if err != nil {
-		if res != nil {
-			return nil, h.printError(res)
-		} else {
-			return nil, err
+	_, res, e := h.oAuth2.Get(url, &response)
+	if e != nil {
+		message := unmarshalError(res)
+		if message != nil {
+			e.SetMessage(e)
 		}
-
+		return nil, e
 	}
 
 	h.readRateLimitHeaders(res)
@@ -183,78 +176,80 @@ func (h *Http) DateFilter(field string, comparer string, time *time.Time, includ
 	return filter
 }
 
-func (h *Http) GetCount(path string, createdBefore *time.Time) (int64, error) {
+func (h *Http) GetCount(path string, createdBefore *time.Time) (int64, *errortools.Error) {
 	urlStr := fmt.Sprintf("%s?$top=0&$inlinecount=allpages%s", h.BaseURL(path), h.DateFilter("Created", "lt", createdBefore, true, "&"))
 
-	response, err := h.getResponse(urlStr)
-	if err != nil {
-		return 0, err
+	response, e := h.getResponse(urlStr)
+	if e != nil {
+		return 0, e
 	}
 
 	count, err := strconv.ParseInt(response.Data.Count, 10, 64)
 	if err != nil {
-		return 0, err
+		return 0, errortools.ErrorMessage(err)
 	}
 
 	return count, nil
 }
-func (h *Http) GetSingle(url string, model interface{}) error {
+
+func (h *Http) GetSingle(url string, model interface{}) *errortools.Error {
 	err := h.wait()
 	if err != nil {
-		return err
+		return errortools.ErrorMessage(err)
 	}
 
-	response, err := h.getResponseSingle(url)
-	if err != nil {
-		return err
+	response, e := h.getResponseSingle(url)
+	if e != nil {
+		return e
 	}
 
 	err = json.Unmarshal(response.Data, &model)
 	if err != nil {
-		return err
+		return errortools.ErrorMessage(err)
 	}
 
 	return nil
 }
 
-func (h *Http) Get(url string, model interface{}) (string, error) {
+func (h *Http) Get(url string, model interface{}) (string, *errortools.Error) {
 	err := h.wait()
 	if err != nil {
-		return "", err
+		return "", errortools.ErrorMessage(err)
 	}
 
-	response, err := h.getResponse(url)
-	if err != nil {
-		return "", err
+	response, e := h.getResponse(url)
+	if e != nil {
+		return "", e
 	}
 
 	err = json.Unmarshal(response.Data.Results, &model)
 	if err != nil {
-		return "", err
+		e.SetMessage(err)
+		return "", e
 	}
 
 	return response.Data.Next, nil
 }
 
-func (h *Http) PutValues(url string, values map[string]string) error {
+func (h *Http) PutValues(url string, values map[string]string) *errortools.Error {
 	buf := new(bytes.Buffer)
 	json.NewEncoder(buf).Encode(values)
 
 	return h.Put(url, buf)
 }
 
-func (h *Http) PutBytes(url string, b []byte) error {
+func (h *Http) PutBytes(url string, b []byte) *errortools.Error {
 	return h.Put(url, bytes.NewBuffer(b))
 }
 
-func (h *Http) Put(url string, buf *bytes.Buffer) error {
-	res, err := h.oAuth2.Put(url, buf, nil)
-	if err != nil {
-		if res != nil {
-			return h.printError(res)
-		} else {
-			return err
+func (h *Http) Put(url string, buf *bytes.Buffer) *errortools.Error {
+	_, res, e := h.oAuth2.Put(url, buf, nil)
+	if e != nil {
+		message := unmarshalError(res)
+		if message != nil {
+			e.SetMessage(e)
 		}
+		return e
 	}
 
 	h.readRateLimitHeaders(res)
@@ -262,48 +257,49 @@ func (h *Http) Put(url string, buf *bytes.Buffer) error {
 	return nil
 }
 
-func (h *Http) PostValues(url string, values map[string]string, model interface{}) error {
+func (h *Http) PostValues(url string, values map[string]string, model interface{}) *errortools.Error {
 	buf := new(bytes.Buffer)
 	json.NewEncoder(buf).Encode(values)
 
 	return h.Post(url, buf, model)
 }
 
-func (h *Http) PostBytes(url string, b []byte, model interface{}) error {
+func (h *Http) PostBytes(url string, b []byte, model interface{}) *errortools.Error {
 	return h.Post(url, bytes.NewBuffer(b), model)
 }
 
-func (h *Http) Post(url string, buf *bytes.Buffer, model interface{}) error {
+func (h *Http) Post(url string, buf *bytes.Buffer, model interface{}) *errortools.Error {
 	response := ResponseSingle{}
-	res, err := h.oAuth2.Post(url, buf, &response)
-	if err != nil {
-		if res != nil {
-			return h.printError(res)
-		} else {
-			return err
+	_, res, e := h.oAuth2.Post(url, buf, &response)
+	if e != nil {
+		message := unmarshalError(res)
+		if message != nil {
+			e.SetMessage(e)
 		}
+		return e
 	}
 
 	h.readRateLimitHeaders(res)
 
 	defer res.Body.Close()
 
-	err = json.Unmarshal(response.Data, &model)
+	err := json.Unmarshal(response.Data, &model)
 	if err != nil {
-		return err
+		e.SetMessage(err)
+		return e
 	}
 
 	return nil
 }
 
-func (h *Http) Delete(url string) error {
-	res, err := h.oAuth2.Delete(url, nil, nil)
-	if err != nil {
-		if res != nil {
-			return h.printError(res)
-		} else {
-			return err
+func (h *Http) Delete(url string) *errortools.Error {
+	_, res, e := h.oAuth2.Delete(url, nil, nil)
+	if e != nil {
+		message := unmarshalError(res)
+		if message != nil {
+			e.SetMessage(e)
 		}
+		return e
 	}
 
 	h.readRateLimitHeaders(res)

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"time"
 
+	errortools "github.com/leapforce-libraries/go_errortools"
 	types "github.com/leapforce-libraries/go_types"
 	utilities "github.com/leapforce-libraries/go_utilities"
 )
@@ -52,7 +53,7 @@ func (c *Client) NewGetBankEntriesCall(modifiedAfter *time.Time) *GetBankEntries
 	return &call
 }
 
-func (call *GetBankEntriesCall) Do() (*[]BankEntry, error) {
+func (call *GetBankEntriesCall) Do() (*[]BankEntry, *errortools.Error) {
 	if call.urlNext == "" {
 		return nil, nil
 	}
@@ -69,6 +70,6 @@ func (call *GetBankEntriesCall) Do() (*[]BankEntry, error) {
 	return &bankEntries, nil
 }
 
-func (c *Client) GetBankEntriesCount(createdBefore *time.Time) (int64, error) {
+func (c *Client) GetBankEntriesCount(createdBefore *time.Time) (int64, *errortools.Error) {
 	return c.GetCount("BankEntries", createdBefore)
 }

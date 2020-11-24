@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"time"
 
+	errortools "github.com/leapforce-libraries/go_errortools"
 	http "github.com/leapforce-libraries/go_exactonline_new/http"
 )
 
@@ -18,27 +19,27 @@ func NewClient(http *http.Http) *Client {
 	return &Client{http}
 }
 
-func (c *Client) GetSingle(url string, model interface{}) error {
+func (c *Client) GetSingle(url string, model interface{}) *errortools.Error {
 	return c.http.GetSingle(url, model)
 }
 
-func (c *Client) Get(url string, model interface{}) (string, error) {
+func (c *Client) Get(url string, model interface{}) (string, *errortools.Error) {
 	return c.http.Get(url, model)
 }
 
-func (c *Client) Post(url string, buf *bytes.Buffer, model interface{}) error {
+func (c *Client) Post(url string, buf *bytes.Buffer, model interface{}) *errortools.Error {
 	return c.http.Post(url, buf, model)
 }
 
-func (c *Client) Put(url string, buf *bytes.Buffer) error {
+func (c *Client) Put(url string, buf *bytes.Buffer) *errortools.Error {
 	return c.http.Put(url, buf)
 }
 
-func (c *Client) Delete(url string) error {
+func (c *Client) Delete(url string) *errortools.Error {
 	return c.http.Delete(url)
 }
 
-func (c *Client) GetCount(endpoint string, createdBefore *time.Time) (int64, error) {
+func (c *Client) GetCount(endpoint string, createdBefore *time.Time) (int64, *errortools.Error) {
 	return c.http.GetCount(fmt.Sprintf("%s/%s", path, endpoint), createdBefore)
 }
 

@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	errortools "github.com/leapforce-libraries/go_errortools"
 	types "github.com/leapforce-libraries/go_types"
 	utilities "github.com/leapforce-libraries/go_utilities"
 )
@@ -102,7 +103,7 @@ func (c *Client) NewGetSubscriptionLinesCall(params GetSubscriptionLinesCallPara
 	return &call
 }
 
-func (call *GetSubscriptionLinesCall) Do() (*[]SubscriptionLine, error) {
+func (call *GetSubscriptionLinesCall) Do() (*[]SubscriptionLine, *errortools.Error) {
 	if call.urlNext == "" {
 		return nil, nil
 	}
@@ -119,39 +120,39 @@ func (call *GetSubscriptionLinesCall) Do() (*[]SubscriptionLine, error) {
 	return &subscriptionLines, nil
 }
 
-func (c *Client) CreateSubscriptionLine(subscriptionLine *SubscriptionLineUpdate) (*SubscriptionLine, error) {
+func (c *Client) CreateSubscriptionLine(subscriptionLine *SubscriptionLineUpdate) (*SubscriptionLine, *errortools.Error) {
 	url := fmt.Sprintf("%s/SubscriptionLines", c.BaseURL())
 
 	b, err := json.Marshal(subscriptionLine)
 	if err != nil {
-		return nil, err
+		return nil, errortools.ErrorMessage(err)
 	}
 
 	subscriptionLineNew := SubscriptionLine{}
 
-	err = c.Post(url, bytes.NewBuffer(b), &subscriptionLineNew)
-	if err != nil {
-		return nil, err
+	e := c.Post(url, bytes.NewBuffer(b), &subscriptionLineNew)
+	if e != nil {
+		return nil, e
 	}
 	return &subscriptionLineNew, nil
 }
 
-func (c *Client) UpdateSubscriptionLine(id types.GUID, subscriptionLine *SubscriptionLineUpdate) error {
+func (c *Client) UpdateSubscriptionLine(id types.GUID, subscriptionLine *SubscriptionLineUpdate) *errortools.Error {
 	url := fmt.Sprintf("%s/SubscriptionLines(guid'%s')", c.BaseURL(), id.String())
 
 	b, err := json.Marshal(subscriptionLine)
 	if err != nil {
-		return err
+		return errortools.ErrorMessage(err)
 	}
 
-	err = c.Put(url, bytes.NewBuffer(b))
-	if err != nil {
-		return err
+	e := c.Put(url, bytes.NewBuffer(b))
+	if e != nil {
+		return e
 	}
 	return nil
 }
 
-func (c *Client) DeleteSubscriptionLine(id types.GUID) error {
+func (c *Client) DeleteSubscriptionLine(id types.GUID) *errortools.Error {
 	url := fmt.Sprintf("%s/SubscriptionLines(guid'%s')", c.BaseURL(), id.String())
 
 	err := c.Delete(url)
@@ -161,6 +162,6 @@ func (c *Client) DeleteSubscriptionLine(id types.GUID) error {
 	return nil
 }
 
-func (c *Client) GetSubscriptionLinesCount(createdBefore *time.Time) (int64, error) {
+func (c *Client) GetSubscriptionLinesCount(createdBefore *time.Time) (int64, *errortools.Error) {
 	return c.GetCount("SubscriptionLines", createdBefore)
 }

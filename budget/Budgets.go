@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"time"
 
+	errortools "github.com/leapforce-libraries/go_errortools"
 	types "github.com/leapforce-libraries/go_types"
 	utilities "github.com/leapforce-libraries/go_utilities"
 )
@@ -58,7 +59,7 @@ func (c *Client) NewGetBudgetsCall(modifiedAfter *time.Time) *GetBudgetsCall {
 	return &call
 }
 
-func (call *GetBudgetsCall) Do() (*[]Budget, error) {
+func (call *GetBudgetsCall) Do() (*[]Budget, *errortools.Error) {
 	if call.urlNext == "" {
 		return nil, nil
 	}
@@ -75,6 +76,6 @@ func (call *GetBudgetsCall) Do() (*[]Budget, error) {
 	return &budgets, nil
 }
 
-func (c *Client) GetBudgetsCount(createdBefore *time.Time) (int64, error) {
+func (c *Client) GetBudgetsCount(createdBefore *time.Time) (int64, *errortools.Error) {
 	return c.GetCount("Budgets", createdBefore)
 }
