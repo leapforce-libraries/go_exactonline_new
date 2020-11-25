@@ -329,7 +329,7 @@ func (c *Client) NewGetAccountsCall(params GetAccountsCallParams) *GetAccountsCa
 	}
 
 	if len(filter) > 0 {
-		call.urlNext = fmt.Sprintf("%s&$filter=%s", call.urlNext, strings.Join(filter, " AND "))
+		call.urlNext = fmt.Sprintf("%s&$filter=%s", call.urlNext, strings.Join(filter, " and "))
 	}
 
 	return &call

@@ -3,7 +3,6 @@ package exactonline
 import (
 	"bytes"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -114,7 +113,7 @@ func (h *Http) readRateLimitHeaders(res *http.Response) {
 	}
 }
 
-func unmarshalError(res *http.Response) error {
+func unmarshalError(res *http.Response) *string {
 	b, err := ioutil.ReadAll(res.Body)
 	if err != nil {
 		return nil
@@ -127,7 +126,8 @@ func unmarshalError(res *http.Response) error {
 		return nil
 	}
 
-	return errors.New(fmt.Sprintf("Server returned statuscode %v, error:%s", res.StatusCode, ee.Err.Message.Value))
+	message := fmt.Sprintf("Server returned statuscode %v, error:%s", res.StatusCode, ee.Err.Message.Value)
+	return &message
 }
 
 func (h *Http) getResponseSingle(url string) (*ResponseSingle, *errortools.Error) {
@@ -136,7 +136,7 @@ func (h *Http) getResponseSingle(url string) (*ResponseSingle, *errortools.Error
 	if e != nil {
 		message := unmarshalError(res)
 		if message != nil {
-			e.SetMessage(e)
+			e.SetMessage(message)
 		}
 		return nil, e
 	}
@@ -152,7 +152,7 @@ func (h *Http) getResponse(url string) (*Response, *errortools.Error) {
 	if e != nil {
 		message := unmarshalError(res)
 		if message != nil {
-			e.SetMessage(e)
+			e.SetMessage(message)
 		}
 		return nil, e
 	}
@@ -247,7 +247,7 @@ func (h *Http) Put(url string, buf *bytes.Buffer) *errortools.Error {
 	if e != nil {
 		message := unmarshalError(res)
 		if message != nil {
-			e.SetMessage(e)
+			e.SetMessage(message)
 		}
 		return e
 	}
@@ -274,7 +274,7 @@ func (h *Http) Post(url string, buf *bytes.Buffer, model interface{}) *errortool
 	if e != nil {
 		message := unmarshalError(res)
 		if message != nil {
-			e.SetMessage(e)
+			e.SetMessage(message)
 		}
 		return e
 	}
@@ -297,7 +297,7 @@ func (h *Http) Delete(url string) *errortools.Error {
 	if e != nil {
 		message := unmarshalError(res)
 		if message != nil {
-			e.SetMessage(e)
+			e.SetMessage(message)
 		}
 		return e
 	}
