@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"strconv"
 	"time"
@@ -113,30 +112,14 @@ func (h *Http) readRateLimitHeaders(res *http.Response) {
 	}
 }
 
-func unmarshalError(res *http.Response) *string {
-	b, err := ioutil.ReadAll(res.Body)
-	if err != nil {
-		return nil
-	}
-
-	ee := ExactOnlineError{}
-
-	err = json.Unmarshal(b, &ee)
-	if err != nil {
-		return nil
-	}
-
-	message := fmt.Sprintf("Server returned statuscode %v, error:%s", res.StatusCode, ee.Err.Message.Value)
-	return &message
-}
-
 func (h *Http) getResponseSingle(url string) (*ResponseSingle, *errortools.Error) {
+	ee := ExactOnlineError{}
 	response := ResponseSingle{}
-	_, res, e := h.oAuth2.Get(url, &response)
+	_, res, e := h.oAuth2.Get(url, &response, &ee)
+
 	if e != nil {
-		message := unmarshalError(res)
-		if message != nil {
-			e.SetMessage(message)
+		if ee.Err.Message.Value != "" {
+			e.SetMessage(ee.Err.Message.Value)
 		}
 		return nil, e
 	}
@@ -147,12 +130,12 @@ func (h *Http) getResponseSingle(url string) (*ResponseSingle, *errortools.Error
 }
 
 func (h *Http) getResponse(url string) (*Response, *errortools.Error) {
+	ee := ExactOnlineError{}
 	response := Response{}
-	_, res, e := h.oAuth2.Get(url, &response)
+	_, res, e := h.oAuth2.Get(url, &response, &ee)
 	if e != nil {
-		message := unmarshalError(res)
-		if message != nil {
-			e.SetMessage(message)
+		if ee.Err.Message.Value != "" {
+			e.SetMessage(ee.Err.Message.Value)
 		}
 		return nil, e
 	}
@@ -243,11 +226,11 @@ func (h *Http) PutBytes(url string, b []byte) *errortools.Error {
 }
 
 func (h *Http) Put(url string, buf *bytes.Buffer) *errortools.Error {
-	_, res, e := h.oAuth2.Put(url, buf, nil)
+	ee := ExactOnlineError{}
+	_, res, e := h.oAuth2.Put(url, buf, nil, &ee)
 	if e != nil {
-		message := unmarshalError(res)
-		if message != nil {
-			e.SetMessage(message)
+		if ee.Err.Message.Value != "" {
+			e.SetMessage(ee.Err.Message.Value)
 		}
 		return e
 	}
@@ -269,12 +252,12 @@ func (h *Http) PostBytes(url string, b []byte, model interface{}) *errortools.Er
 }
 
 func (h *Http) Post(url string, buf *bytes.Buffer, model interface{}) *errortools.Error {
+	ee := ExactOnlineError{}
 	response := ResponseSingle{}
-	_, res, e := h.oAuth2.Post(url, buf, &response)
+	_, res, e := h.oAuth2.Post(url, buf, &response, &ee)
 	if e != nil {
-		message := unmarshalError(res)
-		if message != nil {
-			e.SetMessage(message)
+		if ee.Err.Message.Value != "" {
+			e.SetMessage(ee.Err.Message.Value)
 		}
 		return e
 	}
@@ -293,11 +276,11 @@ func (h *Http) Post(url string, buf *bytes.Buffer, model interface{}) *errortool
 }
 
 func (h *Http) Delete(url string) *errortools.Error {
-	_, res, e := h.oAuth2.Delete(url, nil, nil)
+	ee := ExactOnlineError{}
+	_, res, e := h.oAuth2.Delete(url, nil, nil, &ee)
 	if e != nil {
-		message := unmarshalError(res)
-		if message != nil {
-			e.SetMessage(message)
+		if ee.Err.Message.Value != "" {
+			e.SetMessage(ee.Err.Message.Value)
 		}
 		return e
 	}
