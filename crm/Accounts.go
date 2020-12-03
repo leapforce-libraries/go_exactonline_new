@@ -352,6 +352,18 @@ func (call *GetAccountsCall) Do() (*[]Account, *errortools.Error) {
 	return &accounts, nil
 }
 
+func (c *Client) GetAccount(id types.GUID) (*Account, *errortools.Error) {
+	url := fmt.Sprintf("%s/Accounts(guid'%s')", c.BaseURL(), id.String())
+
+	accountNew := Account{}
+
+	_, e := c.Get(url, &accountNew)
+	if e != nil {
+		return nil, e
+	}
+	return &accountNew, nil
+}
+
 func (c *Client) CreateAccount(account *AccountUpdate) (*Account, *errortools.Error) {
 	url := fmt.Sprintf("%s/Accounts", c.BaseURL())
 
