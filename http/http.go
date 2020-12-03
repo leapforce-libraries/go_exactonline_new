@@ -210,7 +210,7 @@ func (h *Http) Get(url string, model interface{}) (string, *errortools.Error) {
 
 	err = json.Unmarshal(response.Data.Results, &model)
 	if err != nil {
-		return errortools.ErrorMessage(err)
+		return "", errortools.ErrorMessage(err)
 	}
 
 	return response.Data.Next, nil
