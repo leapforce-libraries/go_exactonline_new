@@ -104,6 +104,9 @@ func (h *Http) wait() error {
 //
 
 func (h *Http) readRateLimitHeaders(res *http.Response) {
+	if res == nil {
+		return
+	}
 	remaining, errRem := strconv.Atoi(res.Header.Get("X-RateLimit-Minutely-Remaining"))
 	reset, errRes := strconv.ParseInt(res.Header.Get("X-RateLimit-Minutely-Reset"), 10, 64)
 	if errRem == nil && errRes == nil {
