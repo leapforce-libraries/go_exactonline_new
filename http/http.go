@@ -34,7 +34,7 @@ type Http struct {
 
 // methods
 //
-func NewHttp(division int32, clientID string, clientSecret string, bigQuery *bigquerytools.BigQuery, isLive bool) (*Http, *errortools.Error) {
+func NewHttp(division int32, clientID string, clientSecret string, bigQuery *bigquerytools.BigQuery) (*Http, *errortools.Error) {
 	h := Http{}
 	h.division = division
 
@@ -47,7 +47,7 @@ func NewHttp(division int32, clientID string, clientSecret string, bigQuery *big
 		TokenURL:        tokenURL,
 		TokenHTTPMethod: tokenHttpMethod,
 	}
-	h.oAuth2 = oauth2.NewOAuth(config, bigQuery, isLive)
+	h.oAuth2 = oauth2.NewOAuth(config, bigQuery)
 	return &h, nil
 }
 
