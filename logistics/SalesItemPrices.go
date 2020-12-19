@@ -37,19 +37,19 @@ type SalesItemPrice struct {
 	UnitDescription            string      `json:"UnitDescription"`
 }
 
-type GetSalesSalesItemPricesCall struct {
+type GetSalesItemPricesCall struct {
 	modifiedAfter *time.Time
 	urlNext       string
 	client        *Client
 }
 
-func (c *Client) NewGetSalesSalesItemPricesCall(modifiedAfter *time.Time) *GetSalesSalesItemPricesCall {
-	call := GetSalesSalesItemPricesCall{}
+func (c *Client) NewGetSalesItemPricesCall(modifiedAfter *time.Time) *GetSalesItemPricesCall {
+	call := GetSalesItemPricesCall{}
 	call.modifiedAfter = modifiedAfter
 	call.client = c
 
 	selectFields := utilities.GetTaggedFieldNames("json", SalesItemPrice{})
-	call.urlNext = fmt.Sprintf("%s/SalesSalesItemPrices?$select=%s", c.BaseURL(), selectFields)
+	call.urlNext = fmt.Sprintf("%s/SalesItemPrices?$select=%s", c.BaseURL(), selectFields)
 	if modifiedAfter != nil {
 		call.urlNext += c.DateFilter("Modified", "gt", modifiedAfter, true, "&")
 	}
@@ -57,7 +57,7 @@ func (c *Client) NewGetSalesSalesItemPricesCall(modifiedAfter *time.Time) *GetSa
 	return &call
 }
 
-func (call *GetSalesSalesItemPricesCall) Do() (*[]SalesItemPrice, *errortools.Error) {
+func (call *GetSalesItemPricesCall) Do() (*[]SalesItemPrice, *errortools.Error) {
 	if call.urlNext == "" {
 		return nil, nil
 	}
@@ -74,6 +74,6 @@ func (call *GetSalesSalesItemPricesCall) Do() (*[]SalesItemPrice, *errortools.Er
 	return &salesItemPrices, nil
 }
 
-func (c *Client) GetSalesSalesItemPricesCount(createdBefore *time.Time) (int64, *errortools.Error) {
-	return c.GetCount("SalesSalesItemPrices", createdBefore)
+func (c *Client) GetSalesItemPricesCount(createdBefore *time.Time) (int64, *errortools.Error) {
+	return c.GetCount("SalesItemPrices", createdBefore)
 }
