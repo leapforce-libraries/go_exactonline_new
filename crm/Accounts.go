@@ -325,7 +325,7 @@ func (c *Client) NewGetAccountsCall(params GetAccountsCallParams) *GetAccountsCa
 		filter = append(filter, fmt.Sprintf("ChamberOfCommerce eq '%s'", *params.ChamberOfCommerce))
 	}
 	if params.ModifiedAfter != nil {
-		filter = append(filter, c.DateFilter("Modified", "gt", params.ModifiedAfter, true, "&"))
+		filter = append(filter, c.DateFilter("Modified", "gt", params.ModifiedAfter, false, ""))
 	}
 
 	if len(filter) > 0 {

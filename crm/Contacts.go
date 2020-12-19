@@ -173,7 +173,7 @@ func (c *Client) NewGetContactsCall(params GetContactsCallParams) *GetContactsCa
 		filter = append(filter, fmt.Sprintf("FullName eq '%s'", *params.FullName))
 	}
 	if params.ModifiedAfter != nil {
-		filter = append(filter, c.DateFilter("Modified", "gt", params.ModifiedAfter, true, "&"))
+		filter = append(filter, c.DateFilter("Modified", "gt", params.ModifiedAfter, false, ""))
 	}
 
 	if len(filter) > 0 {

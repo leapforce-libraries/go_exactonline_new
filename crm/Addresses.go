@@ -86,7 +86,7 @@ func (c *Client) NewGetAddressesCall(params GetAddressesCallParams) *GetAddresse
 	filter := []string{}
 
 	if params.ModifiedAfter != nil {
-		filter = append(filter, c.DateFilter("Modified", "gt", params.ModifiedAfter, true, "&"))
+		filter = append(filter, c.DateFilter("Modified", "gt", params.ModifiedAfter, false, ""))
 	}
 
 	if len(filter) > 0 {
