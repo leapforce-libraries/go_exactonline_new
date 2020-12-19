@@ -30,7 +30,7 @@ func NewExactOnline(division int32, clientID string, clientSecret string, bigQue
 
 	http, err := http.NewHttp(division, clientID, clientSecret, bigQuery)
 	if err != nil {
-		return nil, err
+		return nil, errortools.ErrorMessage(err)
 	}
 	eo.BudgetClient = budget.NewClient(http)
 	eo.CRMClient = crm.NewClient(http)
