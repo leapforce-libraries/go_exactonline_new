@@ -25,10 +25,10 @@ type ExactOnline struct {
 
 // methods
 //
-func NewExactOnline(division int32, clientID string, clientSecret string, bigQuery *bigquerytools.BigQuery, isLive bool) (*ExactOnline, *errortools.Error) {
+func NewExactOnline(division int32, clientID string, clientSecret string, bigQuery *bigquerytools.BigQuery) (*ExactOnline, *errortools.Error) {
 	eo := ExactOnline{}
 
-	http, err := http.NewHttp(division, clientID, clientSecret, bigQuery, isLive)
+	http, err := http.NewHttp(division, clientID, clientSecret, bigQuery)
 	if err != nil {
 		return nil, err
 	}

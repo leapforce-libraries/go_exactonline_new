@@ -39,7 +39,7 @@ func NewHttp(division int32, clientID string, clientSecret string, bigQuery *big
 	h.division = division
 
 	config := oauth2.OAuth2Config{
-		ApiName:         apiName,
+		APIName:         apiName,
 		ClientID:        clientID,
 		ClientSecret:    clientSecret,
 		RedirectURL:     redirectURL,
