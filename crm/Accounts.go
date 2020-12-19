@@ -317,7 +317,7 @@ func (c *Client) NewGetAccountsCall(params GetAccountsCallParams) *GetAccountsCa
 	call := GetAccountsCall{}
 	call.client = c
 
-	selectFields := utilities.GetTaggedFieldNames("json", Account{})
+	selectFields := utilities.GetTaggedTagNames("json", Account{})
 	call.urlNext = fmt.Sprintf("%s/Accounts?$select=%s", c.BaseURL(), selectFields)
 	filter := []string{}
 

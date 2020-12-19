@@ -81,7 +81,7 @@ func (c *Client) NewGetAddressesCall(params GetAddressesCallParams) *GetAddresse
 	call := GetAddressesCall{}
 	call.client = c
 
-	selectFields := utilities.GetTaggedFieldNames("json", Address{})
+	selectFields := utilities.GetTaggedTagNames("json", Address{})
 	call.urlNext = fmt.Sprintf("%s/Addresses?$select=%s", c.BaseURL(), selectFields)
 	filter := []string{}
 

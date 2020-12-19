@@ -159,7 +159,7 @@ func (c *Client) NewGetContactsCall(params GetContactsCallParams) *GetContactsCa
 	call := GetContactsCall{}
 	call.client = c
 
-	selectFields := utilities.GetTaggedFieldNames("json", Contact{})
+	selectFields := utilities.GetTaggedTagNames("json", Contact{})
 	call.urlNext = fmt.Sprintf("%s/Contacts?$select=%s", c.BaseURL(), selectFields)
 	filter := []string{}
 

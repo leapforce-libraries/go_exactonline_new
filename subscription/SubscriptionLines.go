@@ -84,7 +84,7 @@ func (c *Client) NewGetSubscriptionLinesCall(params GetSubscriptionLinesCallPara
 	call := GetSubscriptionLinesCall{}
 	call.client = c
 
-	selectFields := utilities.GetTaggedFieldNames("json", SubscriptionLine{})
+	selectFields := utilities.GetTaggedTagNames("json", SubscriptionLine{})
 	call.urlNext = fmt.Sprintf("%s/SubscriptionLines?$select=%s", c.BaseURL(), selectFields)
 
 	filter := []string{}

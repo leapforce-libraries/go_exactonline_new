@@ -99,7 +99,7 @@ func (c *Client) NewGetSubscriptionsCall(params GetSubscriptionsCallParams) *Get
 	call := GetSubscriptionsCall{}
 	call.client = c
 
-	selectFields := utilities.GetTaggedFieldNames("json", Subscription{})
+	selectFields := utilities.GetTaggedTagNames("json", Subscription{})
 	call.urlNext = fmt.Sprintf("%s/Subscriptions?$select=%s", c.BaseURL(), selectFields)
 	filter := []string{}
 

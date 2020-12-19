@@ -55,7 +55,7 @@ func (c *Client) NewGetGoodsDeliveryLinesCall(modifiedAfter *time.Time) *GetGood
 	call.modifiedAfter = modifiedAfter
 	call.client = c
 
-	selectFields := utilities.GetTaggedFieldNames("json", GoodsDeliveryLine{})
+	selectFields := utilities.GetTaggedTagNames("json", GoodsDeliveryLine{})
 	call.urlNext = fmt.Sprintf("%s/GoodsDeliveryLines?$select=%s", c.BaseURL(), selectFields)
 	if modifiedAfter != nil {
 		call.urlNext += c.DateFilter("Modified", "gt", modifiedAfter, true, "&")

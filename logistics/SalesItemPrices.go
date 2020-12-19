@@ -48,7 +48,7 @@ func (c *Client) NewGetSalesItemPricesCall(modifiedAfter *time.Time) *GetSalesIt
 	call.modifiedAfter = modifiedAfter
 	call.client = c
 
-	selectFields := utilities.GetTaggedFieldNames("json", SalesItemPrice{})
+	selectFields := utilities.GetTaggedTagNames("json", SalesItemPrice{})
 	call.urlNext = fmt.Sprintf("%s/SalesItemPrices?$select=%s", c.BaseURL(), selectFields)
 	if modifiedAfter != nil {
 		call.urlNext += c.DateFilter("Modified", "gt", modifiedAfter, true, "&")
