@@ -12,19 +12,19 @@ import (
 // Item stores Item from exactonline
 //
 type Item struct {
-	ID                      types.GUID  `json:"ID "`
+	ID                      types.GUID  `json:"ID"`
 	AverageCost             float64     `json:"AverageCost"`
 	Barcode                 string      `json:"Barcode"`
-	Class_01                string      `json:"Class_01"`
-	Class_02                string      `json:"Class_02"`
-	Class_03                string      `json:"Class_03"`
-	Class_04                string      `json:"Class_04"`
-	Class_05                string      `json:"Class_05"`
-	Class_06                string      `json:"Class_06"`
-	Class_07                string      `json:"Class_07"`
-	Class_08                string      `json:"Class_08"`
-	Class_09                string      `json:"Class_09"`
-	Class_10                string      `json:"Class_10"`
+	Class01                 string      `json:"Class_01"`
+	Class02                 string      `json:"Class_02"`
+	Class03                 string      `json:"Class_03"`
+	Class04                 string      `json:"Class_04"`
+	Class05                 string      `json:"Class_05"`
+	Class06                 string      `json:"Class_06"`
+	Class07                 string      `json:"Class_07"`
+	Class08                 string      `json:"Class_08"`
+	Class09                 string      `json:"Class_09"`
+	Class10                 string      `json:"Class_10"`
 	Code                    string      `json:"Code"`
 	CopyRemarks             byte        `json:"CopyRemarks"`
 	CostPriceCurrency       string      `json:"CostPriceCurrency"`
@@ -37,34 +37,34 @@ type Item struct {
 	Division                int32       `json:"Division"`
 	EndDate                 *types.Date `json:"EndDate"`
 	ExtraDescription        string      `json:"ExtraDescription"`
-	FreeBoolField_01        bool        `json:"FreeBoolField_01"`
-	FreeBoolField_02        bool        `json:"FreeBoolField_02"`
-	FreeBoolField_03        bool        `json:"FreeBoolField_03"`
-	FreeBoolField_04        bool        `json:"FreeBoolField_04"`
-	FreeBoolField_05        bool        `json:"FreeBoolField_05"`
-	FreeDateField_01        *types.Date `json:"FreeDateField_01"`
-	FreeDateField_02        *types.Date `json:"FreeDateField_02"`
-	FreeDateField_03        *types.Date `json:"FreeDateField_03"`
-	FreeDateField_04        *types.Date `json:"FreeDateField_04"`
-	FreeDateField_05        *types.Date `json:"FreeDateField_05"`
-	FreeNumberField_01      float64     `json:"FreeNumberField_01"`
-	FreeNumberField_02      float64     `json:"FreeNumberField_02"`
-	FreeNumberField_03      float64     `json:"FreeNumberField_03"`
-	FreeNumberField_04      float64     `json:"FreeNumberField_04"`
-	FreeNumberField_05      float64     `json:"FreeNumberField_05"`
-	FreeNumberField_06      float64     `json:"FreeNumberField_06"`
-	FreeNumberField_07      float64     `json:"FreeNumberField_07"`
-	FreeNumberField_08      float64     `json:"FreeNumberField_08"`
-	FreeTextField_01        string      `json:"FreeTextField_01"`
-	FreeTextField_02        string      `json:"FreeTextField_02"`
-	FreeTextField_03        string      `json:"FreeTextField_03"`
-	FreeTextField_04        string      `json:"FreeTextField_04"`
-	FreeTextField_05        string      `json:"FreeTextField_05"`
-	FreeTextField_06        string      `json:"FreeTextField_06"`
-	FreeTextField_07        string      `json:"FreeTextField_07"`
-	FreeTextField_08        string      `json:"FreeTextField_08"`
-	FreeTextField_09        string      `json:"FreeTextField_09"`
-	FreeTextField_10        string      `json:"FreeTextField_10"`
+	FreeBoolField01         bool        `json:"FreeBoolField_01"`
+	FreeBoolField02         bool        `json:"FreeBoolField_02"`
+	FreeBoolField03         bool        `json:"FreeBoolField_03"`
+	FreeBoolField04         bool        `json:"FreeBoolField_04"`
+	FreeBoolField05         bool        `json:"FreeBoolField_05"`
+	FreeDateField01         *types.Date `json:"FreeDateField_01"`
+	FreeDateField02         *types.Date `json:"FreeDateField_02"`
+	FreeDateField03         *types.Date `json:"FreeDateField_03"`
+	FreeDateField04         *types.Date `json:"FreeDateField_04"`
+	FreeDateField05         *types.Date `json:"FreeDateField_05"`
+	FreeNumberField01       float64     `json:"FreeNumberField_01"`
+	FreeNumberField02       float64     `json:"FreeNumberField_02"`
+	FreeNumberField03       float64     `json:"FreeNumberField_03"`
+	FreeNumberField04       float64     `json:"FreeNumberField_04"`
+	FreeNumberField05       float64     `json:"FreeNumberField_05"`
+	FreeNumberField06       float64     `json:"FreeNumberField_06"`
+	FreeNumberField07       float64     `json:"FreeNumberField_07"`
+	FreeNumberField08       float64     `json:"FreeNumberField_08"`
+	FreeTextField01         string      `json:"FreeTextField_01"`
+	FreeTextField02         string      `json:"FreeTextField_02"`
+	FreeTextField03         string      `json:"FreeTextField_03"`
+	FreeTextField04         string      `json:"FreeTextField_04"`
+	FreeTextField05         string      `json:"FreeTextField_05"`
+	FreeTextField06         string      `json:"FreeTextField_06"`
+	FreeTextField07         string      `json:"FreeTextField_07"`
+	FreeTextField08         string      `json:"FreeTextField_08"`
+	FreeTextField09         string      `json:"FreeTextField_09"`
+	FreeTextField10         string      `json:"FreeTextField_10"`
 	GLCosts                 types.GUID  `json:"GLCosts"`
 	GLCostsCode             string      `json:"GLCostsCode"`
 	GLCostsDescription      string      `json:"GLCostsDescription"`
@@ -99,8 +99,8 @@ type Item struct {
 	NetWeightUnit           string      `json:"NetWeightUnit"`
 	Notes                   string      `json:"Notes"`
 	PictureName             string      `json:"PictureName"`
-	PictureThumbnailUrl     string      `json:"PictureThumbnailUrl"`
-	PictureUrl              string      `json:"PictureUrl"`
+	PictureThumbnailURL     string      `json:"PictureThumbnailUrl"`
+	PictureURL              string      `json:"PictureUrl"`
 	SalesVatCode            string      `json:"SalesVatCode"`
 	SalesVatCodeDescription string      `json:"SalesVatCodeDescription"`
 	SearchCode              string      `json:"SearchCode"`
