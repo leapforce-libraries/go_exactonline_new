@@ -1,7 +1,6 @@
 package exactonline
 
 import (
-	bigquerytools "github.com/leapforce-libraries/go_bigquerytools"
 	errortools "github.com/leapforce-libraries/go_errortools"
 	budget "github.com/leapforce-libraries/go_exactonline_new/budget"
 	crm "github.com/leapforce-libraries/go_exactonline_new/crm"
@@ -10,6 +9,7 @@ import (
 	logistics "github.com/leapforce-libraries/go_exactonline_new/logistics"
 	salesorder "github.com/leapforce-libraries/go_exactonline_new/salesorder"
 	subscription "github.com/leapforce-libraries/go_exactonline_new/subscription"
+	google "github.com/leapforce-libraries/go_google"
 )
 
 // ExactOnline stores ExactOnline configuration
@@ -25,7 +25,7 @@ type ExactOnline struct {
 
 // methods
 //
-func NewExactOnline(division int32, clientID string, clientSecret string, bigQuery *bigquerytools.BigQuery) (*ExactOnline, *errortools.Error) {
+func NewExactOnline(division int32, clientID string, clientSecret string, bigQuery *google.BigQuery) (*ExactOnline, *errortools.Error) {
 	eo := ExactOnline{}
 
 	http, err := http.NewHttp(division, clientID, clientSecret, bigQuery)

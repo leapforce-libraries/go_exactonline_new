@@ -8,19 +8,19 @@ import (
 	"strconv"
 	"time"
 
-	bigquerytools "github.com/leapforce-libraries/go_bigquerytools"
 	errortools "github.com/leapforce-libraries/go_errortools"
+	google "github.com/leapforce-libraries/go_google"
 	oauth2 "github.com/leapforce-libraries/go_oauth2"
 )
 
 const (
-	apiName            string = "ExactOnline"
-	apiURL             string = "https://start.exactonline.nl/api/v1"
-	authURL            string = "https://start.exactonline.nl/api/oauth2/auth"
-	tokenURL           string = "https://start.exactonline.nl/api/oauth2/token"
-	tokenHttpMethod    string = http.MethodPost
-	redirectURL        string = "http://localhost:8080/oauth/redirect"
-	lastModifiedFormat string = "2006-01-02T15:04:05"
+	APIName            string = "ExactOnline"
+	APIURL             string = "https://start.exactonline.nl/api/v1"
+	AuthURL            string = "https://start.exactonline.nl/api/oauth2/auth"
+	TokenURL           string = "https://start.exactonline.nl/api/oauth2/token"
+	TokenHttpMethod    string = http.MethodPost
+	RedirectURL        string = "http://localhost:8080/oauth/redirect"
+	LastModifiedFormat string = "2006-01-02T15:04:05"
 )
 
 // ExactOnline stores ExactOnline configuration
@@ -34,29 +34,38 @@ type Http struct {
 
 // methods
 //
-func NewHttp(division int32, clientID string, clientSecret string, bigQuery *bigquerytools.BigQuery) (*Http, *errortools.Error) {
-	h := Http{}
-	h.division = division
+func NewHttp(division int32, clientID string, clientSecret string, bigQuery *google.BigQuery) (*Http, *errortools.Error) {
+	getTokenFunction := func() (*oauth2.Token, *errortools.Error) {
+		return google.GetToken(APIName, clientID, bigQuery)
+	}
+
+	saveTokenFunction := func(token *oauth2.Token) *errortools.Error {
+		return google.SaveToken(APIName, clientID, token, bigQuery)
+	}
 
 	config := oauth2.OAuth2Config{
-		APIName:         apiName,
-		ClientID:        clientID,
-		ClientSecret:    clientSecret,
-		RedirectURL:     redirectURL,
-		AuthURL:         authURL,
-		TokenURL:        tokenURL,
-		TokenHTTPMethod: tokenHttpMethod,
+		ClientID:          clientID,
+		ClientSecret:      clientSecret,
+		RedirectURL:       RedirectURL,
+		AuthURL:           AuthURL,
+		TokenURL:          TokenURL,
+		TokenHTTPMethod:   TokenHttpMethod,
+		GetTokenFunction:  &getTokenFunction,
+		SaveTokenFunction: &saveTokenFunction,
 	}
-	h.oAuth2 = oauth2.NewOAuth(config, bigQuery)
-	return &h, nil
+
+	return &Http{
+		division: division,
+		oAuth2:   oauth2.NewOAuth(config),
+	}, nil
 }
 
 func (h *Http) BaseURL(path string) string {
-	return fmt.Sprintf("%s/%v/%s", apiURL, h.division, path)
+	return fmt.Sprintf("%s/%v/%s", APIURL, h.division, path)
 }
 
 func (h *Http) LastModifiedFormat() string {
-	return lastModifiedFormat
+	return LastModifiedFormat
 }
 
 func (h *Http) InitToken() *errortools.Error {
