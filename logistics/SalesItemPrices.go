@@ -74,6 +74,29 @@ func (call *GetSalesItemPricesCall) Do() (*[]SalesItemPrice, *errortools.Error) 
 	return &salesItemPrices, nil
 }
 
+func (call *GetSalesItemPricesCall) DoAll() (*[]SalesItemPrice, *errortools.Error) {
+	salesItemPrices := []SalesItemPrice{}
+
+	for true {
+		_salesItemPrices, e := call.Do()
+		if e != nil {
+			return nil, e
+		}
+
+		if _salesItemPrices == nil {
+			break
+		}
+
+		if len(*_salesItemPrices) == 0 {
+			break
+		}
+
+		salesItemPrices = append(salesItemPrices, *_salesItemPrices...)
+	}
+
+	return &salesItemPrices, nil
+}
+
 func (c *Client) GetSalesItemPricesCount(createdBefore *time.Time) (int64, *errortools.Error) {
 	return c.GetCount("SalesItemPrices", createdBefore)
 }

@@ -149,6 +149,29 @@ func (call *GetItemsCall) Do() (*[]Item, *errortools.Error) {
 	return &items, nil
 }
 
+func (call *GetItemsCall) DoAll() (*[]Item, *errortools.Error) {
+	items := []Item{}
+
+	for true {
+		_items, e := call.Do()
+		if e != nil {
+			return nil, e
+		}
+
+		if _items == nil {
+			break
+		}
+
+		if len(*_items) == 0 {
+			break
+		}
+
+		items = append(items, *_items...)
+	}
+
+	return &items, nil
+}
+
 func (c *Client) GetItemsCount(createdBefore *time.Time) (int64, *errortools.Error) {
 	return c.GetCount("Items", createdBefore)
 }

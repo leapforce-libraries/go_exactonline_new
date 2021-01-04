@@ -77,7 +77,7 @@ type GetAddressesCallParams struct {
 	ModifiedAfter *time.Time
 }
 
-func (c *Client) NewGetAddressesCall(params GetAddressesCallParams) *GetAddressesCall {
+func (c *Client) NewGetAddressesCall(params *GetAddressesCallParams) *GetAddressesCall {
 	call := GetAddressesCall{}
 	call.client = c
 
@@ -85,8 +85,10 @@ func (c *Client) NewGetAddressesCall(params GetAddressesCallParams) *GetAddresse
 	call.urlNext = fmt.Sprintf("%s/Addresses?$select=%s", c.BaseURL(), selectFields)
 	filter := []string{}
 
-	if params.ModifiedAfter != nil {
-		filter = append(filter, c.DateFilter("Modified", "gt", params.ModifiedAfter, false, ""))
+	if params != nil {
+		if params.ModifiedAfter != nil {
+			filter = append(filter, c.DateFilter("Modified", "gt", params.ModifiedAfter, false, ""))
+		}
 	}
 
 	if len(filter) > 0 {
@@ -109,6 +111,29 @@ func (call *GetAddressesCall) Do() (*[]Address, *errortools.Error) {
 	}
 
 	call.urlNext = next
+
+	return &addresses, nil
+}
+
+func (call *GetAddressesCall) DoAll() (*[]Address, *errortools.Error) {
+	addresses := []Address{}
+
+	for true {
+		_addresses, e := call.Do()
+		if e != nil {
+			return nil, e
+		}
+
+		if _addresses == nil {
+			break
+		}
+
+		if len(*_addresses) == 0 {
+			break
+		}
+
+		addresses = append(addresses, *_addresses...)
+	}
 
 	return &addresses, nil
 }

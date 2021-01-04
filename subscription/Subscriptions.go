@@ -95,7 +95,7 @@ type GetSubscriptionsCallParams struct {
 	ModifiedAfter *time.Time
 }
 
-func (c *Client) NewGetSubscriptionsCall(params GetSubscriptionsCallParams) *GetSubscriptionsCall {
+func (c *Client) NewGetSubscriptionsCall(params *GetSubscriptionsCallParams) *GetSubscriptionsCall {
 	call := GetSubscriptionsCall{}
 	call.client = c
 
@@ -103,11 +103,13 @@ func (c *Client) NewGetSubscriptionsCall(params GetSubscriptionsCallParams) *Get
 	call.urlNext = fmt.Sprintf("%s/Subscriptions?$select=%s", c.BaseURL(), selectFields)
 	filter := []string{}
 
-	if params.OrderedBy != nil {
-		filter = append(filter, fmt.Sprintf("OrderedBy eq guid'%s'", params.OrderedBy.String()))
-	}
-	if params.ModifiedAfter != nil {
-		filter = append(filter, c.DateFilter("Modified", "gt", params.ModifiedAfter, true, "&"))
+	if params != nil {
+		if params.OrderedBy != nil {
+			filter = append(filter, fmt.Sprintf("OrderedBy eq guid'%s'", params.OrderedBy.String()))
+		}
+		if params.ModifiedAfter != nil {
+			filter = append(filter, c.DateFilter("Modified", "gt", params.ModifiedAfter, true, "&"))
+		}
 	}
 
 	if len(filter) > 0 {
@@ -130,6 +132,29 @@ func (call *GetSubscriptionsCall) Do() (*[]Subscription, *errortools.Error) {
 	}
 
 	call.urlNext = next
+
+	return &subscriptions, nil
+}
+
+func (call *GetSubscriptionsCall) DoAll() (*[]Subscription, *errortools.Error) {
+	subscriptions := []Subscription{}
+
+	for true {
+		_subscriptions, e := call.Do()
+		if e != nil {
+			return nil, e
+		}
+
+		if _subscriptions == nil {
+			break
+		}
+
+		if len(*_subscriptions) == 0 {
+			break
+		}
+
+		subscriptions = append(subscriptions, *_subscriptions...)
+	}
 
 	return &subscriptions, nil
 }

@@ -155,7 +155,7 @@ type GetContactsCallParams struct {
 	ModifiedAfter *time.Time
 }
 
-func (c *Client) NewGetContactsCall(params GetContactsCallParams) *GetContactsCall {
+func (c *Client) NewGetContactsCall(params *GetContactsCallParams) *GetContactsCall {
 	call := GetContactsCall{}
 	call.client = c
 
@@ -163,17 +163,19 @@ func (c *Client) NewGetContactsCall(params GetContactsCallParams) *GetContactsCa
 	call.urlNext = fmt.Sprintf("%s/Contacts?$select=%s", c.BaseURL(), selectFields)
 	filter := []string{}
 
-	if params.Account != nil {
-		filter = append(filter, fmt.Sprintf("Account eq guid'%s'", (*params.Account).String()))
-	}
-	if params.Email != nil {
-		filter = append(filter, fmt.Sprintf("Email eq '%s'", *params.Email))
-	}
-	if params.FullName != nil {
-		filter = append(filter, fmt.Sprintf("FullName eq '%s'", *params.FullName))
-	}
-	if params.ModifiedAfter != nil {
-		filter = append(filter, c.DateFilter("Modified", "gt", params.ModifiedAfter, false, ""))
+	if params != nil {
+		if params.Account != nil {
+			filter = append(filter, fmt.Sprintf("Account eq guid'%s'", (*params.Account).String()))
+		}
+		if params.Email != nil {
+			filter = append(filter, fmt.Sprintf("Email eq '%s'", *params.Email))
+		}
+		if params.FullName != nil {
+			filter = append(filter, fmt.Sprintf("FullName eq '%s'", *params.FullName))
+		}
+		if params.ModifiedAfter != nil {
+			filter = append(filter, c.DateFilter("Modified", "gt", params.ModifiedAfter, false, ""))
+		}
 	}
 
 	if len(filter) > 0 {
@@ -196,6 +198,29 @@ func (call *GetContactsCall) Do() (*[]Contact, *errortools.Error) {
 	}
 
 	call.urlNext = next
+
+	return &contacts, nil
+}
+
+func (call *GetContactsCall) DoAll() (*[]Contact, *errortools.Error) {
+	contacts := []Contact{}
+
+	for true {
+		_contacts, e := call.Do()
+		if e != nil {
+			return nil, e
+		}
+
+		if _contacts == nil {
+			break
+		}
+
+		if len(*_contacts) == 0 {
+			break
+		}
+
+		contacts = append(contacts, *_contacts...)
+	}
 
 	return &contacts, nil
 }

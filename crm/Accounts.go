@@ -313,7 +313,7 @@ type GetAccountsCallParams struct {
 	ModifiedAfter     *time.Time
 }
 
-func (c *Client) NewGetAccountsCall(params GetAccountsCallParams) *GetAccountsCall {
+func (c *Client) NewGetAccountsCall(params *GetAccountsCallParams) *GetAccountsCall {
 	call := GetAccountsCall{}
 	call.client = c
 
@@ -321,11 +321,13 @@ func (c *Client) NewGetAccountsCall(params GetAccountsCallParams) *GetAccountsCa
 	call.urlNext = fmt.Sprintf("%s/Accounts?$select=%s", c.BaseURL(), selectFields)
 	filter := []string{}
 
-	if params.ChamberOfCommerce != nil {
-		filter = append(filter, fmt.Sprintf("ChamberOfCommerce eq '%s'", *params.ChamberOfCommerce))
-	}
-	if params.ModifiedAfter != nil {
-		filter = append(filter, c.DateFilter("Modified", "gt", params.ModifiedAfter, false, ""))
+	if params != nil {
+		if params.ChamberOfCommerce != nil {
+			filter = append(filter, fmt.Sprintf("ChamberOfCommerce eq '%s'", *params.ChamberOfCommerce))
+		}
+		if params.ModifiedAfter != nil {
+			filter = append(filter, c.DateFilter("Modified", "gt", params.ModifiedAfter, false, ""))
+		}
 	}
 
 	if len(filter) > 0 {
@@ -348,6 +350,29 @@ func (call *GetAccountsCall) Do() (*[]Account, *errortools.Error) {
 	}
 
 	call.urlNext = next
+
+	return &accounts, nil
+}
+
+func (call *GetAccountsCall) DoAll() (*[]Account, *errortools.Error) {
+	accounts := []Account{}
+
+	for true {
+		_accounts, e := call.Do()
+		if e != nil {
+			return nil, e
+		}
+
+		if _accounts == nil {
+			break
+		}
+
+		if len(*_accounts) == 0 {
+			break
+		}
+
+		accounts = append(accounts, *_accounts...)
+	}
 
 	return &accounts, nil
 }

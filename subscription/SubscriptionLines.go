@@ -80,7 +80,7 @@ type GetSubscriptionLinesCallParams struct {
 	ModifiedAfter *time.Time
 }
 
-func (c *Client) NewGetSubscriptionLinesCall(params GetSubscriptionLinesCallParams) *GetSubscriptionLinesCall {
+func (c *Client) NewGetSubscriptionLinesCall(params *GetSubscriptionLinesCallParams) *GetSubscriptionLinesCall {
 	call := GetSubscriptionLinesCall{}
 	call.client = c
 
@@ -89,11 +89,13 @@ func (c *Client) NewGetSubscriptionLinesCall(params GetSubscriptionLinesCallPara
 
 	filter := []string{}
 
-	if params.EntryID != nil {
-		filter = append(filter, fmt.Sprintf("EntryID eq guid'%s'", params.EntryID.String()))
-	}
-	if params.ModifiedAfter != nil {
-		filter = append(filter, c.DateFilter("Modified", "gt", params.ModifiedAfter, true, "&"))
+	if params != nil {
+		if params.EntryID != nil {
+			filter = append(filter, fmt.Sprintf("EntryID eq guid'%s'", params.EntryID.String()))
+		}
+		if params.ModifiedAfter != nil {
+			filter = append(filter, c.DateFilter("Modified", "gt", params.ModifiedAfter, true, "&"))
+		}
 	}
 
 	if len(filter) > 0 {
@@ -116,6 +118,29 @@ func (call *GetSubscriptionLinesCall) Do() (*[]SubscriptionLine, *errortools.Err
 	}
 
 	call.urlNext = next
+
+	return &subscriptionLines, nil
+}
+
+func (call *GetSubscriptionLinesCall) DoAll() (*[]SubscriptionLine, *errortools.Error) {
+	subscriptionLines := []SubscriptionLine{}
+
+	for true {
+		_subscriptionLines, e := call.Do()
+		if e != nil {
+			return nil, e
+		}
+
+		if _subscriptionLines == nil {
+			break
+		}
+
+		if len(*_subscriptionLines) == 0 {
+			break
+		}
+
+		subscriptionLines = append(subscriptionLines, *_subscriptionLines...)
+	}
 
 	return &subscriptionLines, nil
 }
