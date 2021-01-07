@@ -21,6 +21,7 @@ type ExactOnline struct {
 	LogisticsClient            *logistics.Client
 	SalesOrderClient           *salesorder.Client
 	SubscriptionClient         *subscription.Client
+	http                       *http.Http
 }
 
 // methods
@@ -32,6 +33,7 @@ func NewExactOnline(division int32, clientID string, clientSecret string, bigQue
 	if err != nil {
 		return nil, errortools.ErrorMessage(err)
 	}
+	eo.http = http
 	eo.BudgetClient = budget.NewClient(http)
 	eo.CRMClient = crm.NewClient(http)
 	eo.FinancialTransactionClient = financialtransaction.NewClient(http)
@@ -40,4 +42,8 @@ func NewExactOnline(division int32, clientID string, clientSecret string, bigQue
 	eo.SubscriptionClient = subscription.NewClient(http)
 
 	return &eo, nil
+}
+
+func (eo *ExactOnline) InitToken() *errortools.Error {
+	return eo.http.InitToken()
 }
