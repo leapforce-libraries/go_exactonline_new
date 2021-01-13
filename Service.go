@@ -15,13 +15,13 @@ import (
 // Service stores Service configuration
 //
 type Service struct {
-	BudgetClient               *budget.Client
-	CRMClient                  *crm.Client
-	FinancialTransactionClient *financialtransaction.Client
-	LogisticsClient            *logistics.Client
-	SalesOrderClient           *salesorder.Client
-	SubscriptionClient         *subscription.Client
-	http                       *http.Http
+	BudgetService               *budget.Service
+	CRMService                  *crm.Service
+	FinancialTransactionService *financialtransaction.Service
+	LogisticsService            *logistics.Service
+	SalesOrderService           *salesorder.Service
+	SubscriptionService         *subscription.Service
+	http                        *http.Http
 }
 
 // methods
@@ -34,12 +34,12 @@ func NewService(division int32, clientID string, clientSecret string, bigQuery *
 		return nil, errortools.ErrorMessage(err)
 	}
 	eo.http = http
-	eo.BudgetClient = budget.NewClient(http)
-	eo.CRMClient = crm.NewClient(http)
-	eo.FinancialTransactionClient = financialtransaction.NewClient(http)
-	eo.LogisticsClient = logistics.NewClient(http)
-	eo.SalesOrderClient = salesorder.NewClient(http)
-	eo.SubscriptionClient = subscription.NewClient(http)
+	eo.BudgetService = budget.NewService(http)
+	eo.CRMService = crm.NewService(http)
+	eo.FinancialTransactionService = financialtransaction.NewService(http)
+	eo.LogisticsService = logistics.NewService(http)
+	eo.SalesOrderService = salesorder.NewService(http)
+	eo.SubscriptionService = subscription.NewService(http)
 
 	return &eo, nil
 }
