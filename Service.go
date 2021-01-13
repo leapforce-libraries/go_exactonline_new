@@ -12,9 +12,9 @@ import (
 	google "github.com/leapforce-libraries/go_google"
 )
 
-// ExactOnline stores ExactOnline configuration
+// Service stores Service configuration
 //
-type ExactOnline struct {
+type Service struct {
 	BudgetClient               *budget.Client
 	CRMClient                  *crm.Client
 	FinancialTransactionClient *financialtransaction.Client
@@ -26,8 +26,8 @@ type ExactOnline struct {
 
 // methods
 //
-func NewExactOnline(division int32, clientID string, clientSecret string, bigQuery *google.BigQuery) (*ExactOnline, *errortools.Error) {
-	eo := ExactOnline{}
+func NewService(division int32, clientID string, clientSecret string, bigQuery *google.BigQuery) (*Service, *errortools.Error) {
+	eo := Service{}
 
 	http, err := http.NewHttp(division, clientID, clientSecret, bigQuery)
 	if err != nil {
@@ -44,6 +44,6 @@ func NewExactOnline(division int32, clientID string, clientSecret string, bigQue
 	return &eo, nil
 }
 
-func (eo *ExactOnline) InitToken() *errortools.Error {
-	return eo.http.InitToken()
+func (service *Service) InitToken() *errortools.Error {
+	return service.http.InitToken()
 }
