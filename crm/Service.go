@@ -15,7 +15,7 @@ type Service struct {
 	http *http.Http
 }
 
-func NewClient(http *http.Http) *Service {
+func NewService(http *http.Http) *Service {
 	return &Service{http}
 }
 
