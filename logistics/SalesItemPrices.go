@@ -40,18 +40,18 @@ type SalesItemPrice struct {
 type GetSalesItemPricesCall struct {
 	modifiedAfter *time.Time
 	urlNext       string
-	client        *Client
+	service       *Service
 }
 
-func (c *Client) NewGetSalesItemPricesCall(modifiedAfter *time.Time) *GetSalesItemPricesCall {
+func (service *Service) NewGetSalesItemPricesCall(modifiedAfter *time.Time) *GetSalesItemPricesCall {
 	call := GetSalesItemPricesCall{}
 	call.modifiedAfter = modifiedAfter
-	call.client = c
+	call.service = service
 
 	selectFields := utilities.GetTaggedTagNames("json", SalesItemPrice{})
-	call.urlNext = fmt.Sprintf("%s/SalesItemPrices?$select=%s", c.BaseURL(), selectFields)
+	call.urlNext = fmt.Sprintf("%s/SalesItemPrices?$select=%s", service.BaseURL(), selectFields)
 	if modifiedAfter != nil {
-		call.urlNext += c.DateFilter("Modified", "gt", modifiedAfter, true, "&")
+		call.urlNext += service.DateFilter("Modified", "gt", modifiedAfter, true, "&")
 	}
 
 	return &call
@@ -64,7 +64,7 @@ func (call *GetSalesItemPricesCall) Do() (*[]SalesItemPrice, *errortools.Error) 
 
 	salesItemPrices := []SalesItemPrice{}
 
-	next, err := call.client.Get(call.urlNext, &salesItemPrices)
+	next, err := call.service.Get(call.urlNext, &salesItemPrices)
 	if err != nil {
 		return nil, err
 	}
@@ -97,6 +97,6 @@ func (call *GetSalesItemPricesCall) DoAll() (*[]SalesItemPrice, *errortools.Erro
 	return &salesItemPrices, nil
 }
 
-func (c *Client) GetSalesItemPricesCount(createdBefore *time.Time) (int64, *errortools.Error) {
-	return c.GetCount("SalesItemPrices", createdBefore)
+func (service *Service) GetSalesItemPricesCount(createdBefore *time.Time) (int64, *errortools.Error) {
+	return service.GetCount("SalesItemPrices", createdBefore)
 }

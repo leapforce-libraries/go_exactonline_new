@@ -70,24 +70,24 @@ type Address struct {
 
 type GetAddressesCall struct {
 	urlNext string
-	client  *Client
+	service *Service
 }
 
 type GetAddressesCallParams struct {
 	ModifiedAfter *time.Time
 }
 
-func (c *Client) NewGetAddressesCall(params *GetAddressesCallParams) *GetAddressesCall {
+func (service *Service) NewGetAddressesCall(params *GetAddressesCallParams) *GetAddressesCall {
 	call := GetAddressesCall{}
-	call.client = c
+	call.service = service
 
 	selectFields := utilities.GetTaggedTagNames("json", Address{})
-	call.urlNext = fmt.Sprintf("%s/Addresses?$select=%s", c.BaseURL(), selectFields)
+	call.urlNext = fmt.Sprintf("%s/Addresses?$select=%s", service.BaseURL(), selectFields)
 	filter := []string{}
 
 	if params != nil {
 		if params.ModifiedAfter != nil {
-			filter = append(filter, c.DateFilter("Modified", "gt", params.ModifiedAfter, false, ""))
+			filter = append(filter, service.DateFilter("Modified", "gt", params.ModifiedAfter, false, ""))
 		}
 	}
 
@@ -105,7 +105,7 @@ func (call *GetAddressesCall) Do() (*[]Address, *errortools.Error) {
 
 	addresses := []Address{}
 
-	next, err := call.client.Get(call.urlNext, &addresses)
+	next, err := call.service.Get(call.urlNext, &addresses)
 	if err != nil {
 		return nil, err
 	}
@@ -138,18 +138,18 @@ func (call *GetAddressesCall) DoAll() (*[]Address, *errortools.Error) {
 	return &addresses, nil
 }
 
-func (c *Client) GetAddress(id types.GUID) (*Address, *errortools.Error) {
-	url := fmt.Sprintf("%s/Addresses(guid'%s')", c.BaseURL(), id.String())
+func (service *Service) GetAddress(id types.GUID) (*Address, *errortools.Error) {
+	url := fmt.Sprintf("%s/Addresses(guid'%s')", service.BaseURL(), id.String())
 
 	addressNew := Address{}
 
-	_, e := c.Get(url, &addressNew)
+	_, e := service.Get(url, &addressNew)
 	if e != nil {
 		return nil, e
 	}
 	return &addressNew, nil
 }
 
-func (c *Client) GetAddressesCount(createdBefore *time.Time) (int64, *errortools.Error) {
-	return c.GetCount("Addresses", createdBefore)
+func (service *Service) GetAddressesCount(createdBefore *time.Time) (int64, *errortools.Error) {
+	return service.GetCount("Addresses", createdBefore)
 }

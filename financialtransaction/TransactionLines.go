@@ -85,18 +85,18 @@ type TransactionLine struct {
 type GetTransactionLinesCall struct {
 	modifiedAfter *time.Time
 	urlNext       string
-	client        *Client
+	service       *Service
 }
 
-func (c *Client) NewGetTransactionLinesCall(modifiedAfter *time.Time) *GetTransactionLinesCall {
+func (service *Service) NewGetTransactionLinesCall(modifiedAfter *time.Time) *GetTransactionLinesCall {
 	call := GetTransactionLinesCall{}
 	call.modifiedAfter = modifiedAfter
-	call.client = c
+	call.service = service
 
 	selectFields := utilities.GetTaggedTagNames("json", TransactionLine{})
-	call.urlNext = fmt.Sprintf("%s/TransactionLines?$select=%s", c.BaseURL(), selectFields)
+	call.urlNext = fmt.Sprintf("%s/TransactionLines?$select=%s", service.BaseURL(), selectFields)
 	if modifiedAfter != nil {
-		call.urlNext += c.DateFilter("Modified", "gt", modifiedAfter, true, "&")
+		call.urlNext += service.DateFilter("Modified", "gt", modifiedAfter, true, "&")
 	}
 
 	return &call
@@ -109,7 +109,7 @@ func (call *GetTransactionLinesCall) Do() (*[]TransactionLine, *errortools.Error
 
 	transactionLines := []TransactionLine{}
 
-	next, err := call.client.Get(call.urlNext, &transactionLines)
+	next, err := call.service.Get(call.urlNext, &transactionLines)
 	if err != nil {
 		return nil, err
 	}
@@ -119,6 +119,6 @@ func (call *GetTransactionLinesCall) Do() (*[]TransactionLine, *errortools.Error
 	return &transactionLines, nil
 }
 
-func (c *Client) GetTransactionLinesCount(createdBefore *time.Time) (int64, *errortools.Error) {
-	return c.GetCount("TransactionLines", createdBefore)
+func (service *Service) GetTransactionLinesCount(createdBefore *time.Time) (int64, *errortools.Error) {
+	return service.GetCount("TransactionLines", createdBefore)
 }

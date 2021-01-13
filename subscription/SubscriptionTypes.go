@@ -36,25 +36,25 @@ type SubscriptionTypeUpdate struct {
 
 type GetSubscriptionTypesCall struct {
 	urlNext string
-	client  *Client
+	service *Service
 }
 
 type GetSubscriptionTypesCallParams struct {
 	ModifiedAfter *time.Time
 }
 
-func (c *Client) NewGetSubscriptionTypesCall(params *GetSubscriptionTypesCallParams) *GetSubscriptionTypesCall {
+func (service *Service) NewGetSubscriptionTypesCall(params *GetSubscriptionTypesCallParams) *GetSubscriptionTypesCall {
 	call := GetSubscriptionTypesCall{}
-	call.client = c
+	call.service = service
 
 	selectFields := utilities.GetTaggedTagNames("json", SubscriptionType{})
-	call.urlNext = fmt.Sprintf("%s/SubscriptionTypes?$select=%s", c.BaseURL(), selectFields)
+	call.urlNext = fmt.Sprintf("%s/SubscriptionTypes?$select=%s", service.BaseURL(), selectFields)
 
 	filter := []string{}
 
 	if params != nil {
 		if params.ModifiedAfter != nil {
-			filter = append(filter, c.DateFilter("Modified", "gt", params.ModifiedAfter, true, "&"))
+			filter = append(filter, service.DateFilter("Modified", "gt", params.ModifiedAfter, true, "&"))
 		}
 	}
 
@@ -72,7 +72,7 @@ func (call *GetSubscriptionTypesCall) Do() (*[]SubscriptionType, *errortools.Err
 
 	subscriptionTypes := []SubscriptionType{}
 
-	next, err := call.client.Get(call.urlNext, &subscriptionTypes)
+	next, err := call.service.Get(call.urlNext, &subscriptionTypes)
 	if err != nil {
 		return nil, err
 	}
@@ -105,8 +105,8 @@ func (call *GetSubscriptionTypesCall) DoAll() (*[]SubscriptionType, *errortools.
 	return &subscriptionTypes, nil
 }
 
-func (c *Client) CreateSubscriptionType(subscriptionType *SubscriptionTypeUpdate) (*SubscriptionType, *errortools.Error) {
-	url := fmt.Sprintf("%s/SubscriptionTypes", c.BaseURL())
+func (service *Service) CreateSubscriptionType(subscriptionType *SubscriptionTypeUpdate) (*SubscriptionType, *errortools.Error) {
+	url := fmt.Sprintf("%s/SubscriptionTypes", service.BaseURL())
 
 	b, err := json.Marshal(subscriptionType)
 	if err != nil {
@@ -115,38 +115,38 @@ func (c *Client) CreateSubscriptionType(subscriptionType *SubscriptionTypeUpdate
 
 	subscriptionTypeNew := SubscriptionType{}
 
-	e := c.Post(url, bytes.NewBuffer(b), &subscriptionTypeNew)
+	e := service.Post(url, bytes.NewBuffer(b), &subscriptionTypeNew)
 	if e != nil {
 		return nil, e
 	}
 	return &subscriptionTypeNew, nil
 }
 
-func (c *Client) UpdateSubscriptionType(id types.GUID, subscriptionType *SubscriptionTypeUpdate) *errortools.Error {
-	url := fmt.Sprintf("%s/SubscriptionTypes(guid'%s')", c.BaseURL(), id.String())
+func (service *Service) UpdateSubscriptionType(id types.GUID, subscriptionType *SubscriptionTypeUpdate) *errortools.Error {
+	url := fmt.Sprintf("%s/SubscriptionTypes(guid'%s')", service.BaseURL(), id.String())
 
 	b, err := json.Marshal(subscriptionType)
 	if err != nil {
 		return errortools.ErrorMessage(err)
 	}
 
-	e := c.Put(url, bytes.NewBuffer(b))
+	e := service.Put(url, bytes.NewBuffer(b))
 	if e != nil {
 		return e
 	}
 	return nil
 }
 
-func (c *Client) DeleteSubscriptionType(id types.GUID) *errortools.Error {
-	url := fmt.Sprintf("%s/SubscriptionTypes(guid'%s')", c.BaseURL(), id.String())
+func (service *Service) DeleteSubscriptionType(id types.GUID) *errortools.Error {
+	url := fmt.Sprintf("%s/SubscriptionTypes(guid'%s')", service.BaseURL(), id.String())
 
-	err := c.Delete(url)
+	err := service.Delete(url)
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func (c *Client) GetSubscriptionTypesCount(createdBefore *time.Time) (int64, *errortools.Error) {
-	return c.GetCount("SubscriptionTypes", createdBefore)
+func (service *Service) GetSubscriptionTypesCount(createdBefore *time.Time) (int64, *errortools.Error) {
+	return service.GetCount("SubscriptionTypes", createdBefore)
 }

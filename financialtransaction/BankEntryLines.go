@@ -61,18 +61,18 @@ type BankEntryLine struct {
 type GetBankEntryLinesCall struct {
 	modifiedAfter *time.Time
 	urlNext       string
-	client        *Client
+	service       *Service
 }
 
-func (c *Client) NewGetBankEntryLinesCall(modifiedAfter *time.Time) *GetBankEntryLinesCall {
+func (service *Service) NewGetBankEntryLinesCall(modifiedAfter *time.Time) *GetBankEntryLinesCall {
 	call := GetBankEntryLinesCall{}
 	call.modifiedAfter = modifiedAfter
-	call.client = c
+	call.service = service
 
 	selectFields := utilities.GetTaggedTagNames("json", BankEntryLine{})
-	call.urlNext = fmt.Sprintf("%s/BankEntryLines?$select=%s", c.BaseURL(), selectFields)
+	call.urlNext = fmt.Sprintf("%s/BankEntryLines?$select=%s", service.BaseURL(), selectFields)
 	if modifiedAfter != nil {
-		call.urlNext += c.DateFilter("Modified", "gt", modifiedAfter, true, "&")
+		call.urlNext += service.DateFilter("Modified", "gt", modifiedAfter, true, "&")
 	}
 
 	return &call
@@ -85,7 +85,7 @@ func (call *GetBankEntryLinesCall) Do() (*[]BankEntryLine, *errortools.Error) {
 
 	bankEntryLines := []BankEntryLine{}
 
-	next, err := call.client.Get(call.urlNext, &bankEntryLines)
+	next, err := call.service.Get(call.urlNext, &bankEntryLines)
 	if err != nil {
 		return nil, err
 	}
@@ -95,6 +95,6 @@ func (call *GetBankEntryLinesCall) Do() (*[]BankEntryLine, *errortools.Error) {
 	return &bankEntryLines, nil
 }
 
-func (c *Client) GetBankEntryLinesCount(createdBefore *time.Time) (int64, *errortools.Error) {
-	return c.GetCount("BankEntryLines", createdBefore)
+func (service *Service) GetBankEntryLinesCount(createdBefore *time.Time) (int64, *errortools.Error) {
+	return service.GetCount("BankEntryLines", createdBefore)
 }

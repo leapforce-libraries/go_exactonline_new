@@ -47,18 +47,18 @@ type GoodsDelivery struct {
 type GetGoodsDeliveriesCall struct {
 	modifiedAfter *time.Time
 	urlNext       string
-	client        *Client
+	service       *Service
 }
 
-func (c *Client) NewGetGoodsDeliveriesCall(modifiedAfter *time.Time) *GetGoodsDeliveriesCall {
+func (service *Service) NewGetGoodsDeliveriesCall(modifiedAfter *time.Time) *GetGoodsDeliveriesCall {
 	call := GetGoodsDeliveriesCall{}
 	call.modifiedAfter = modifiedAfter
-	call.client = c
+	call.service = service
 
 	selectFields := utilities.GetTaggedTagNames("json", GoodsDelivery{})
-	call.urlNext = fmt.Sprintf("%s/GoodsDeliveries?$select=%s", c.BaseURL(), selectFields)
+	call.urlNext = fmt.Sprintf("%s/GoodsDeliveries?$select=%s", service.BaseURL(), selectFields)
 	if modifiedAfter != nil {
-		call.urlNext += c.DateFilter("Modified", "gt", modifiedAfter, true, "&")
+		call.urlNext += service.DateFilter("Modified", "gt", modifiedAfter, true, "&")
 	}
 
 	return &call
@@ -71,7 +71,7 @@ func (call *GetGoodsDeliveriesCall) Do() (*[]GoodsDelivery, *errortools.Error) {
 
 	goodsDeliveries := []GoodsDelivery{}
 
-	next, err := call.client.Get(call.urlNext, &goodsDeliveries)
+	next, err := call.service.Get(call.urlNext, &goodsDeliveries)
 	if err != nil {
 		return nil, err
 	}
@@ -81,6 +81,6 @@ func (call *GetGoodsDeliveriesCall) Do() (*[]GoodsDelivery, *errortools.Error) {
 	return &goodsDeliveries, nil
 }
 
-func (c *Client) GetGoodsDeliveriesCount(createdBefore *time.Time) (int64, *errortools.Error) {
-	return c.GetCount("GoodsDeliveries", createdBefore)
+func (service *Service) GetGoodsDeliveriesCount(createdBefore *time.Time) (int64, *errortools.Error) {
+	return service.GetCount("GoodsDeliveries", createdBefore)
 }

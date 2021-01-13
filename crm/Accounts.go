@@ -305,7 +305,7 @@ type AccountUpdate struct {
 
 type GetAccountsCall struct {
 	urlNext string
-	client  *Client
+	service *Service
 }
 
 type GetAccountsCallParams struct {
@@ -313,12 +313,12 @@ type GetAccountsCallParams struct {
 	ModifiedAfter     *time.Time
 }
 
-func (c *Client) NewGetAccountsCall(params *GetAccountsCallParams) *GetAccountsCall {
+func (service *Service) NewGetAccountsCall(params *GetAccountsCallParams) *GetAccountsCall {
 	call := GetAccountsCall{}
-	call.client = c
+	call.service = service
 
 	selectFields := utilities.GetTaggedTagNames("json", Account{})
-	call.urlNext = fmt.Sprintf("%s/Accounts?$select=%s", c.BaseURL(), selectFields)
+	call.urlNext = fmt.Sprintf("%s/Accounts?$select=%s", service.BaseURL(), selectFields)
 	filter := []string{}
 
 	if params != nil {
@@ -326,7 +326,7 @@ func (c *Client) NewGetAccountsCall(params *GetAccountsCallParams) *GetAccountsC
 			filter = append(filter, fmt.Sprintf("ChamberOfCommerce eq '%s'", *params.ChamberOfCommerce))
 		}
 		if params.ModifiedAfter != nil {
-			filter = append(filter, c.DateFilter("Modified", "gt", params.ModifiedAfter, false, ""))
+			filter = append(filter, service.DateFilter("Modified", "gt", params.ModifiedAfter, false, ""))
 		}
 	}
 
@@ -344,7 +344,7 @@ func (call *GetAccountsCall) Do() (*[]Account, *errortools.Error) {
 
 	accounts := []Account{}
 
-	next, err := call.client.Get(call.urlNext, &accounts)
+	next, err := call.service.Get(call.urlNext, &accounts)
 	if err != nil {
 		return nil, err
 	}
@@ -377,20 +377,20 @@ func (call *GetAccountsCall) DoAll() (*[]Account, *errortools.Error) {
 	return &accounts, nil
 }
 
-func (c *Client) GetAccount(id types.GUID) (*Account, *errortools.Error) {
-	url := fmt.Sprintf("%s/Accounts(guid'%s')", c.BaseURL(), id.String())
+func (service *Service) GetAccount(id types.GUID) (*Account, *errortools.Error) {
+	url := fmt.Sprintf("%s/Accounts(guid'%s')", service.BaseURL(), id.String())
 
 	accountNew := Account{}
 
-	_, e := c.Get(url, &accountNew)
+	_, e := service.Get(url, &accountNew)
 	if e != nil {
 		return nil, e
 	}
 	return &accountNew, nil
 }
 
-func (c *Client) CreateAccount(account *AccountUpdate) (*Account, *errortools.Error) {
-	url := fmt.Sprintf("%s/Accounts", c.BaseURL())
+func (service *Service) CreateAccount(account *AccountUpdate) (*Account, *errortools.Error) {
+	url := fmt.Sprintf("%s/Accounts", service.BaseURL())
 
 	b, err := json.Marshal(account)
 	if err != nil {
@@ -399,38 +399,38 @@ func (c *Client) CreateAccount(account *AccountUpdate) (*Account, *errortools.Er
 
 	accountNew := Account{}
 
-	e := c.Post(url, bytes.NewBuffer(b), &accountNew)
+	e := service.Post(url, bytes.NewBuffer(b), &accountNew)
 	if e != nil {
 		return nil, e
 	}
 	return &accountNew, nil
 }
 
-func (c *Client) UpdateAccount(id types.GUID, account *AccountUpdate) *errortools.Error {
-	url := fmt.Sprintf("%s/Accounts(guid'%s')", c.BaseURL(), id.String())
+func (service *Service) UpdateAccount(id types.GUID, account *AccountUpdate) *errortools.Error {
+	url := fmt.Sprintf("%s/Accounts(guid'%s')", service.BaseURL(), id.String())
 
 	b, err := json.Marshal(account)
 	if err != nil {
 		return errortools.ErrorMessage(err)
 	}
 
-	e := c.Put(url, bytes.NewBuffer(b))
+	e := service.Put(url, bytes.NewBuffer(b))
 	if e != nil {
 		return e
 	}
 	return nil
 }
 
-func (c *Client) DeleteAccount(id types.GUID) *errortools.Error {
-	url := fmt.Sprintf("%s/Accounts(guid'%s')", c.BaseURL(), id.String())
+func (service *Service) DeleteAccount(id types.GUID) *errortools.Error {
+	url := fmt.Sprintf("%s/Accounts(guid'%s')", service.BaseURL(), id.String())
 
-	err := c.Delete(url)
+	err := service.Delete(url)
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func (c *Client) GetAccountsCount(createdBefore *time.Time) (int64, *errortools.Error) {
-	return c.GetCount("Accounts", createdBefore)
+func (service *Service) GetAccountsCount(createdBefore *time.Time) (int64, *errortools.Error) {
+	return service.GetCount("Accounts", createdBefore)
 }

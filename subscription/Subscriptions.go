@@ -87,7 +87,7 @@ type SubscriptionUpdate struct {
 
 type GetSubscriptionsCall struct {
 	urlNext string
-	client  *Client
+	service *Service
 }
 
 type GetSubscriptionsCallParams struct {
@@ -95,12 +95,12 @@ type GetSubscriptionsCallParams struct {
 	ModifiedAfter *time.Time
 }
 
-func (c *Client) NewGetSubscriptionsCall(params *GetSubscriptionsCallParams) *GetSubscriptionsCall {
+func (service *Service) NewGetSubscriptionsCall(params *GetSubscriptionsCallParams) *GetSubscriptionsCall {
 	call := GetSubscriptionsCall{}
-	call.client = c
+	call.service = service
 
 	selectFields := utilities.GetTaggedTagNames("json", Subscription{})
-	call.urlNext = fmt.Sprintf("%s/Subscriptions?$select=%s", c.BaseURL(), selectFields)
+	call.urlNext = fmt.Sprintf("%s/Subscriptions?$select=%s", service.BaseURL(), selectFields)
 	filter := []string{}
 
 	if params != nil {
@@ -108,7 +108,7 @@ func (c *Client) NewGetSubscriptionsCall(params *GetSubscriptionsCallParams) *Ge
 			filter = append(filter, fmt.Sprintf("OrderedBy eq guid'%s'", params.OrderedBy.String()))
 		}
 		if params.ModifiedAfter != nil {
-			filter = append(filter, c.DateFilter("Modified", "gt", params.ModifiedAfter, true, "&"))
+			filter = append(filter, service.DateFilter("Modified", "gt", params.ModifiedAfter, true, "&"))
 		}
 	}
 
@@ -126,7 +126,7 @@ func (call *GetSubscriptionsCall) Do() (*[]Subscription, *errortools.Error) {
 
 	subscriptions := []Subscription{}
 
-	next, err := call.client.Get(call.urlNext, &subscriptions)
+	next, err := call.service.Get(call.urlNext, &subscriptions)
 	if err != nil {
 		return nil, err
 	}
@@ -159,20 +159,20 @@ func (call *GetSubscriptionsCall) DoAll() (*[]Subscription, *errortools.Error) {
 	return &subscriptions, nil
 }
 
-func (c *Client) GetSubscription(entryID types.GUID) (*Subscription, *errortools.Error) {
-	url := fmt.Sprintf("%s/Subscriptions(guid'%s')", c.BaseURL(), entryID.String())
+func (service *Service) GetSubscription(entryID types.GUID) (*Subscription, *errortools.Error) {
+	url := fmt.Sprintf("%s/Subscriptions(guid'%s')", service.BaseURL(), entryID.String())
 
 	subscription := Subscription{}
 
-	err := c.GetSingle(url, &subscription)
+	err := service.GetSingle(url, &subscription)
 	if err != nil {
 		return nil, err
 	}
 	return &subscription, nil
 }
 
-func (c *Client) CreateSubscription(subscription *SubscriptionUpdate) (*Subscription, *errortools.Error) {
-	url := fmt.Sprintf("%s/Subscriptions", c.BaseURL())
+func (service *Service) CreateSubscription(subscription *SubscriptionUpdate) (*Subscription, *errortools.Error) {
+	url := fmt.Sprintf("%s/Subscriptions", service.BaseURL())
 
 	b, err := json.Marshal(subscription)
 	if err != nil {
@@ -181,38 +181,38 @@ func (c *Client) CreateSubscription(subscription *SubscriptionUpdate) (*Subscrip
 
 	subscriptionNew := Subscription{}
 
-	e := c.Post(url, bytes.NewBuffer(b), &subscriptionNew)
+	e := service.Post(url, bytes.NewBuffer(b), &subscriptionNew)
 	if e != nil {
 		return nil, e
 	}
 	return &subscriptionNew, nil
 }
 
-func (c *Client) UpdateSubscription(entryID types.GUID, subscription *SubscriptionUpdate) *errortools.Error {
-	url := fmt.Sprintf("%s/Subscriptions(guid'%s')", c.BaseURL(), entryID.String())
+func (service *Service) UpdateSubscription(entryID types.GUID, subscription *SubscriptionUpdate) *errortools.Error {
+	url := fmt.Sprintf("%s/Subscriptions(guid'%s')", service.BaseURL(), entryID.String())
 
 	b, err := json.Marshal(subscription)
 	if err != nil {
 		return errortools.ErrorMessage(err)
 	}
 
-	e := c.Put(url, bytes.NewBuffer(b))
+	e := service.Put(url, bytes.NewBuffer(b))
 	if e != nil {
 		return e
 	}
 	return nil
 }
 
-func (c *Client) DeleteSubscription(entryID types.GUID) *errortools.Error {
-	url := fmt.Sprintf("%s/Subscriptions(guid'%s')", c.BaseURL(), entryID.String())
+func (service *Service) DeleteSubscription(entryID types.GUID) *errortools.Error {
+	url := fmt.Sprintf("%s/Subscriptions(guid'%s')", service.BaseURL(), entryID.String())
 
-	err := c.Delete(url)
+	err := service.Delete(url)
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func (c *Client) GetSubscriptionsCount(createdBefore *time.Time) (int64, *errortools.Error) {
-	return c.GetCount("Subscriptions", createdBefore)
+func (service *Service) GetSubscriptionsCount(createdBefore *time.Time) (int64, *errortools.Error) {
+	return service.GetCount("Subscriptions", createdBefore)
 }

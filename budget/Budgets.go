@@ -42,18 +42,18 @@ type Budget struct {
 type GetBudgetsCall struct {
 	modifiedAfter *time.Time
 	urlNext       string
-	client        *Client
+	service       *Service
 }
 
-func (c *Client) NewGetBudgetsCall(modifiedAfter *time.Time) *GetBudgetsCall {
+func (service *Service) NewGetBudgetsCall(modifiedAfter *time.Time) *GetBudgetsCall {
 	call := GetBudgetsCall{}
 	call.modifiedAfter = modifiedAfter
-	call.client = c
+	call.service = service
 
 	selectFields := utilities.GetTaggedTagNames("json", Budget{})
-	call.urlNext = fmt.Sprintf("%s/Budgets?$select=%s", c.BaseURL(), selectFields)
+	call.urlNext = fmt.Sprintf("%s/Budgets?$select=%s", service.BaseURL(), selectFields)
 	if modifiedAfter != nil {
-		call.urlNext += c.DateFilter("Modified", "gt", modifiedAfter, true, "&")
+		call.urlNext += service.DateFilter("Modified", "gt", modifiedAfter, true, "&")
 	}
 
 	return &call
@@ -66,7 +66,7 @@ func (call *GetBudgetsCall) Do() (*[]Budget, *errortools.Error) {
 
 	budgets := []Budget{}
 
-	next, err := call.client.Get(call.urlNext, &budgets)
+	next, err := call.service.Get(call.urlNext, &budgets)
 	if err != nil {
 		return nil, err
 	}
@@ -76,6 +76,6 @@ func (call *GetBudgetsCall) Do() (*[]Budget, *errortools.Error) {
 	return &budgets, nil
 }
 
-func (c *Client) GetBudgetsCount(createdBefore *time.Time) (int64, *errortools.Error) {
-	return c.GetCount("Budgets", createdBefore)
+func (service *Service) GetBudgetsCount(createdBefore *time.Time) (int64, *errortools.Error) {
+	return service.GetCount("Budgets", createdBefore)
 }

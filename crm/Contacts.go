@@ -145,7 +145,7 @@ type ContactUpdate struct {
 
 type GetContactsCall struct {
 	urlNext string
-	client  *Client
+	service *Service
 }
 
 type GetContactsCallParams struct {
@@ -155,12 +155,12 @@ type GetContactsCallParams struct {
 	ModifiedAfter *time.Time
 }
 
-func (c *Client) NewGetContactsCall(params *GetContactsCallParams) *GetContactsCall {
+func (service *Service) NewGetContactsCall(params *GetContactsCallParams) *GetContactsCall {
 	call := GetContactsCall{}
-	call.client = c
+	call.service = service
 
 	selectFields := utilities.GetTaggedTagNames("json", Contact{})
-	call.urlNext = fmt.Sprintf("%s/Contacts?$select=%s", c.BaseURL(), selectFields)
+	call.urlNext = fmt.Sprintf("%s/Contacts?$select=%s", service.BaseURL(), selectFields)
 	filter := []string{}
 
 	if params != nil {
@@ -174,7 +174,7 @@ func (c *Client) NewGetContactsCall(params *GetContactsCallParams) *GetContactsC
 			filter = append(filter, fmt.Sprintf("FullName eq '%s'", *params.FullName))
 		}
 		if params.ModifiedAfter != nil {
-			filter = append(filter, c.DateFilter("Modified", "gt", params.ModifiedAfter, false, ""))
+			filter = append(filter, service.DateFilter("Modified", "gt", params.ModifiedAfter, false, ""))
 		}
 	}
 
@@ -192,7 +192,7 @@ func (call *GetContactsCall) Do() (*[]Contact, *errortools.Error) {
 
 	contacts := []Contact{}
 
-	next, err := call.client.Get(call.urlNext, &contacts)
+	next, err := call.service.Get(call.urlNext, &contacts)
 	if err != nil {
 		return nil, err
 	}
@@ -225,8 +225,8 @@ func (call *GetContactsCall) DoAll() (*[]Contact, *errortools.Error) {
 	return &contacts, nil
 }
 
-func (c *Client) CreateContact(contact *ContactUpdate) (*Contact, *errortools.Error) {
-	url := fmt.Sprintf("%s/Contacts", c.BaseURL())
+func (service *Service) CreateContact(contact *ContactUpdate) (*Contact, *errortools.Error) {
+	url := fmt.Sprintf("%s/Contacts", service.BaseURL())
 
 	b, err := json.Marshal(contact)
 	if err != nil {
@@ -235,38 +235,38 @@ func (c *Client) CreateContact(contact *ContactUpdate) (*Contact, *errortools.Er
 
 	contactNew := Contact{}
 
-	e := c.Post(url, bytes.NewBuffer(b), &contactNew)
+	e := service.Post(url, bytes.NewBuffer(b), &contactNew)
 	if e != nil {
 		return nil, e
 	}
 	return &contactNew, nil
 }
 
-func (c *Client) UpdateContact(id types.GUID, contact *ContactUpdate) *errortools.Error {
-	url := fmt.Sprintf("%s/Contacts(guid'%s')", c.BaseURL(), id.String())
+func (service *Service) UpdateContact(id types.GUID, contact *ContactUpdate) *errortools.Error {
+	url := fmt.Sprintf("%s/Contacts(guid'%s')", service.BaseURL(), id.String())
 
 	b, err := json.Marshal(contact)
 	if err != nil {
 		return errortools.ErrorMessage(err)
 	}
 
-	e := c.Put(url, bytes.NewBuffer(b))
+	e := service.Put(url, bytes.NewBuffer(b))
 	if e != nil {
 		return e
 	}
 	return nil
 }
 
-func (c *Client) DeleteContact(id types.GUID) *errortools.Error {
-	url := fmt.Sprintf("%s/Contacts(guid'%s')", c.BaseURL(), id.String())
+func (service *Service) DeleteContact(id types.GUID) *errortools.Error {
+	url := fmt.Sprintf("%s/Contacts(guid'%s')", service.BaseURL(), id.String())
 
-	err := c.Delete(url)
+	err := service.Delete(url)
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func (c *Client) GetContactsCount(createdBefore *time.Time) (int64, *errortools.Error) {
-	return c.GetCount("Contacts", createdBefore)
+func (service *Service) GetContactsCount(createdBefore *time.Time) (int64, *errortools.Error) {
+	return service.GetCount("Contacts", createdBefore)
 }

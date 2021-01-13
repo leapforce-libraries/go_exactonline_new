@@ -115,18 +115,18 @@ type Item struct {
 type GetItemsCall struct {
 	modifiedAfter *time.Time
 	urlNext       string
-	client        *Client
+	service       *Service
 }
 
-func (c *Client) NewGetItemsCall(modifiedAfter *time.Time) *GetItemsCall {
+func (service *Service) NewGetItemsCall(modifiedAfter *time.Time) *GetItemsCall {
 	call := GetItemsCall{}
 	call.modifiedAfter = modifiedAfter
-	call.client = c
+	call.service = service
 
 	selectFields := utilities.GetTaggedTagNames("json", Item{})
-	call.urlNext = fmt.Sprintf("%s/Items?$select=%s", c.BaseURL(), selectFields)
+	call.urlNext = fmt.Sprintf("%s/Items?$select=%s", service.BaseURL(), selectFields)
 	if modifiedAfter != nil {
-		call.urlNext += c.DateFilter("Modified", "gt", modifiedAfter, true, "&")
+		call.urlNext += service.DateFilter("Modified", "gt", modifiedAfter, true, "&")
 	}
 
 	return &call
@@ -139,7 +139,7 @@ func (call *GetItemsCall) Do() (*[]Item, *errortools.Error) {
 
 	items := []Item{}
 
-	next, err := call.client.Get(call.urlNext, &items)
+	next, err := call.service.Get(call.urlNext, &items)
 	if err != nil {
 		return nil, err
 	}
@@ -172,6 +172,6 @@ func (call *GetItemsCall) DoAll() (*[]Item, *errortools.Error) {
 	return &items, nil
 }
 
-func (c *Client) GetItemsCount(createdBefore *time.Time) (int64, *errortools.Error) {
-	return c.GetCount("Items", createdBefore)
+func (service *Service) GetItemsCount(createdBefore *time.Time) (int64, *errortools.Error) {
+	return service.GetCount("Items", createdBefore)
 }
