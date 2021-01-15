@@ -10,6 +10,7 @@ import (
 
 	errortools "github.com/leapforce-libraries/go_errortools"
 	google "github.com/leapforce-libraries/go_google"
+	bigquery "github.com/leapforce-libraries/go_google/bigquery"
 	oauth2 "github.com/leapforce-libraries/go_oauth2"
 )
 
@@ -34,13 +35,13 @@ type Http struct {
 
 // methods
 //
-func NewHttp(division int32, clientID string, clientSecret string, bigQuery *google.BigQuery) (*Http, *errortools.Error) {
+func NewHttp(division int32, clientID string, clientSecret string, bigQueryService *bigquery.Service) (*Http, *errortools.Error) {
 	getTokenFunction := func() (*oauth2.Token, *errortools.Error) {
-		return google.GetToken(APIName, clientID, bigQuery)
+		return google.GetToken(APIName, clientID, bigQueryService)
 	}
 
 	saveTokenFunction := func(token *oauth2.Token) *errortools.Error {
-		return google.SaveToken(APIName, clientID, token, bigQuery)
+		return google.SaveToken(APIName, clientID, token, bigQueryService)
 	}
 
 	config := oauth2.OAuth2Config{
