@@ -9,7 +9,7 @@ import (
 	logistics "github.com/leapforce-libraries/go_exactonline_new/logistics"
 	salesorder "github.com/leapforce-libraries/go_exactonline_new/salesorder"
 	subscription "github.com/leapforce-libraries/go_exactonline_new/subscription"
-	google "github.com/leapforce-libraries/go_google"
+	bigquery "github.com/leapforce-libraries/go_google/bigquery"
 )
 
 // Service stores Service configuration
@@ -26,10 +26,10 @@ type Service struct {
 
 // methods
 //
-func NewService(division int32, clientID string, clientSecret string, bigQuery *google.BigQuery) (*Service, *errortools.Error) {
+func NewService(division int32, clientID string, clientSecret string, bigQueryService *bigquery.Service) (*Service, *errortools.Error) {
 	eo := Service{}
 
-	http, err := http.NewHttp(division, clientID, clientSecret, bigQuery)
+	http, err := http.NewHttp(division, clientID, clientSecret, bigQueryService)
 	if err != nil {
 		return nil, errortools.ErrorMessage(err)
 	}
