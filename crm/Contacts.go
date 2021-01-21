@@ -1,8 +1,6 @@
 package exactonline
 
 import (
-	"bytes"
-	"encoding/json"
 	"fmt"
 	"strings"
 	"time"
@@ -228,14 +226,9 @@ func (call *GetContactsCall) DoAll() (*[]Contact, *errortools.Error) {
 func (service *Service) CreateContact(contact *ContactUpdate) (*Contact, *errortools.Error) {
 	url := fmt.Sprintf("%s/Contacts", service.BaseURL())
 
-	b, err := json.Marshal(contact)
-	if err != nil {
-		return nil, errortools.ErrorMessage(err)
-	}
-
 	contactNew := Contact{}
 
-	e := service.Post(url, bytes.NewBuffer(b), &contactNew)
+	e := service.Post(url, contact, &contactNew)
 	if e != nil {
 		return nil, e
 	}
@@ -245,12 +238,7 @@ func (service *Service) CreateContact(contact *ContactUpdate) (*Contact, *errort
 func (service *Service) UpdateContact(id types.GUID, contact *ContactUpdate) *errortools.Error {
 	url := fmt.Sprintf("%s/Contacts(guid'%s')", service.BaseURL(), id.String())
 
-	b, err := json.Marshal(contact)
-	if err != nil {
-		return errortools.ErrorMessage(err)
-	}
-
-	e := service.Put(url, bytes.NewBuffer(b))
+	e := service.Put(url, contact)
 	if e != nil {
 		return e
 	}

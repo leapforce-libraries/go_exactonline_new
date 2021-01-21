@@ -126,13 +126,19 @@ func (h *Http) readRateLimitHeaders(res *http.Response) {
 }
 
 func (h *Http) getResponseSingle(url string) (*ResponseSingle, *errortools.Error) {
-	ee := ExactOnlineError{}
+	exactOnlineError := ExactOnlineError{}
 	response := ResponseSingle{}
-	_, res, e := h.oAuth2.Get(url, &response, &ee)
 
+	requestConfig := oauth2.RequestConfig{
+		URL:           url,
+		ResponseModel: &response,
+		ErrorModel:    &exactOnlineError,
+	}
+
+	_, res, e := h.oAuth2.Get(&requestConfig)
 	if e != nil {
-		if ee.Err.Message.Value != "" {
-			e.SetMessage(ee.Err.Message.Value)
+		if exactOnlineError.Err.Message.Value != "" {
+			e.SetMessage(exactOnlineError.Err.Message.Value)
 		}
 		return nil, e
 	}
@@ -143,12 +149,19 @@ func (h *Http) getResponseSingle(url string) (*ResponseSingle, *errortools.Error
 }
 
 func (h *Http) getResponse(url string) (*Response, *errortools.Error) {
-	ee := ExactOnlineError{}
+	exactOnlineError := ExactOnlineError{}
 	response := Response{}
-	_, res, e := h.oAuth2.Get(url, &response, &ee)
+
+	requestConfig := oauth2.RequestConfig{
+		URL:           url,
+		ResponseModel: &response,
+		ErrorModel:    &exactOnlineError,
+	}
+
+	_, res, e := h.oAuth2.Get(&requestConfig)
 	if e != nil {
-		if ee.Err.Message.Value != "" {
-			e.SetMessage(ee.Err.Message.Value)
+		if exactOnlineError.Err.Message.Value != "" {
+			e.SetMessage(exactOnlineError.Err.Message.Value)
 		}
 		return nil, e
 	}
@@ -226,23 +239,19 @@ func (h *Http) Get(url string, model interface{}) (string, *errortools.Error) {
 	return response.Data.Next, nil
 }
 
-func (h *Http) PutValues(url string, values map[string]string) *errortools.Error {
-	buf := new(bytes.Buffer)
-	json.NewEncoder(buf).Encode(values)
+func (h *Http) Put(url string, bodyModel interface{}) *errortools.Error {
+	exactOnlineError := ExactOnlineError{}
 
-	return h.Put(url, buf)
-}
+	requestConfig := oauth2.RequestConfig{
+		URL:        url,
+		BodyModel:  bodyModel,
+		ErrorModel: &exactOnlineError,
+	}
 
-func (h *Http) PutBytes(url string, b []byte) *errortools.Error {
-	return h.Put(url, bytes.NewBuffer(b))
-}
-
-func (h *Http) Put(url string, buf *bytes.Buffer) *errortools.Error {
-	ee := ExactOnlineError{}
-	_, res, e := h.oAuth2.Put(url, buf, nil, &ee)
+	_, res, e := h.oAuth2.Put(&requestConfig)
 	if e != nil {
-		if ee.Err.Message.Value != "" {
-			e.SetMessage(ee.Err.Message.Value)
+		if exactOnlineError.Err.Message.Value != "" {
+			e.SetMessage(exactOnlineError.Err.Message.Value)
 		}
 		return e
 	}
@@ -263,13 +272,20 @@ func (h *Http) PostBytes(url string, b []byte, model interface{}) *errortools.Er
 	return h.Post(url, bytes.NewBuffer(b), model)
 }
 
-func (h *Http) Post(url string, buf *bytes.Buffer, model interface{}) *errortools.Error {
-	ee := ExactOnlineError{}
+func (h *Http) Post(url string, bodyModel interface{}, responseModel interface{}) *errortools.Error {
+	exactOnlineError := ExactOnlineError{}
 	response := ResponseSingle{}
-	_, res, e := h.oAuth2.Post(url, buf, &response, &ee)
+
+	requestConfig := oauth2.RequestConfig{
+		URL:        url,
+		BodyModel:  bodyModel,
+		ErrorModel: &exactOnlineError,
+	}
+
+	_, res, e := h.oAuth2.Post(&requestConfig)
 	if e != nil {
-		if ee.Err.Message.Value != "" {
-			e.SetMessage(ee.Err.Message.Value)
+		if exactOnlineError.Err.Message.Value != "" {
+			e.SetMessage(exactOnlineError.Err.Message.Value)
 		}
 		return e
 	}
@@ -278,7 +294,7 @@ func (h *Http) Post(url string, buf *bytes.Buffer, model interface{}) *errortool
 
 	defer res.Body.Close()
 
-	err := json.Unmarshal(response.Data, &model)
+	err := json.Unmarshal(response.Data, responseModel)
 	if err != nil {
 		e.SetMessage(err)
 		return e
@@ -288,11 +304,17 @@ func (h *Http) Post(url string, buf *bytes.Buffer, model interface{}) *errortool
 }
 
 func (h *Http) Delete(url string) *errortools.Error {
-	ee := ExactOnlineError{}
-	_, res, e := h.oAuth2.Delete(url, nil, nil, &ee)
+	exactOnlineError := ExactOnlineError{}
+
+	requestConfig := oauth2.RequestConfig{
+		URL:        url,
+		ErrorModel: &exactOnlineError,
+	}
+
+	_, res, e := h.oAuth2.Delete(&requestConfig)
 	if e != nil {
-		if ee.Err.Message.Value != "" {
-			e.SetMessage(ee.Err.Message.Value)
+		if exactOnlineError.Err.Message.Value != "" {
+			e.SetMessage(exactOnlineError.Err.Message.Value)
 		}
 		return e
 	}

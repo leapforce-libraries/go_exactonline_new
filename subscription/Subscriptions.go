@@ -1,8 +1,6 @@
 package exactonline
 
 import (
-	"bytes"
-	"encoding/json"
 	"fmt"
 	"strings"
 	"time"
@@ -174,14 +172,9 @@ func (service *Service) GetSubscription(entryID types.GUID) (*Subscription, *err
 func (service *Service) CreateSubscription(subscription *SubscriptionUpdate) (*Subscription, *errortools.Error) {
 	url := fmt.Sprintf("%s/Subscriptions", service.BaseURL())
 
-	b, err := json.Marshal(subscription)
-	if err != nil {
-		return nil, errortools.ErrorMessage(err)
-	}
-
 	subscriptionNew := Subscription{}
 
-	e := service.Post(url, bytes.NewBuffer(b), &subscriptionNew)
+	e := service.Post(url, subscription, &subscriptionNew)
 	if e != nil {
 		return nil, e
 	}
@@ -191,12 +184,7 @@ func (service *Service) CreateSubscription(subscription *SubscriptionUpdate) (*S
 func (service *Service) UpdateSubscription(entryID types.GUID, subscription *SubscriptionUpdate) *errortools.Error {
 	url := fmt.Sprintf("%s/Subscriptions(guid'%s')", service.BaseURL(), entryID.String())
 
-	b, err := json.Marshal(subscription)
-	if err != nil {
-		return errortools.ErrorMessage(err)
-	}
-
-	e := service.Put(url, bytes.NewBuffer(b))
+	e := service.Put(url, subscription)
 	if e != nil {
 		return e
 	}

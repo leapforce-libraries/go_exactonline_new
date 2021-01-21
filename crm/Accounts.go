@@ -1,7 +1,6 @@
 package exactonline
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
 	"strings"
@@ -392,14 +391,9 @@ func (service *Service) GetAccount(id types.GUID) (*Account, *errortools.Error) 
 func (service *Service) CreateAccount(account *AccountUpdate) (*Account, *errortools.Error) {
 	url := fmt.Sprintf("%s/Accounts", service.BaseURL())
 
-	b, err := json.Marshal(account)
-	if err != nil {
-		return nil, errortools.ErrorMessage(err)
-	}
-
 	accountNew := Account{}
 
-	e := service.Post(url, bytes.NewBuffer(b), &accountNew)
+	e := service.Post(url, account, &accountNew)
 	if e != nil {
 		return nil, e
 	}
@@ -409,12 +403,7 @@ func (service *Service) CreateAccount(account *AccountUpdate) (*Account, *errort
 func (service *Service) UpdateAccount(id types.GUID, account *AccountUpdate) *errortools.Error {
 	url := fmt.Sprintf("%s/Accounts(guid'%s')", service.BaseURL(), id.String())
 
-	b, err := json.Marshal(account)
-	if err != nil {
-		return errortools.ErrorMessage(err)
-	}
-
-	e := service.Put(url, bytes.NewBuffer(b))
+	e := service.Put(url, account)
 	if e != nil {
 		return e
 	}

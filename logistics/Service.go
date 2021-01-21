@@ -18,8 +18,8 @@ func NewService(http *http.Http) *Service {
 	return &Service{http}
 }
 
-func (service *Service) Get(url string, model interface{}) (string, *errortools.Error) {
-	return service.http.Get(url, model)
+func (service *Service) Get(url string, responseModel interface{}) (string, *errortools.Error) {
+	return service.http.Get(url, responseModel)
 }
 
 func (service *Service) GetCount(endpoint string, createdBefore *time.Time) (int64, *errortools.Error) {

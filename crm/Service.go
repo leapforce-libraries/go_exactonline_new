@@ -1,7 +1,6 @@
 package exactonline
 
 import (
-	"bytes"
 	"fmt"
 	"time"
 
@@ -19,20 +18,20 @@ func NewService(http *http.Http) *Service {
 	return &Service{http}
 }
 
-func (service *Service) GetSingle(url string, model interface{}) *errortools.Error {
-	return service.http.GetSingle(url, model)
+func (service *Service) GetSingle(url string, responseModel interface{}) *errortools.Error {
+	return service.http.GetSingle(url, responseModel)
 }
 
-func (service *Service) Get(url string, model interface{}) (string, *errortools.Error) {
-	return service.http.Get(url, model)
+func (service *Service) Get(url string, responseModel interface{}) (string, *errortools.Error) {
+	return service.http.Get(url, responseModel)
 }
 
-func (service *Service) Post(url string, buf *bytes.Buffer, model interface{}) *errortools.Error {
-	return service.http.Post(url, buf, model)
+func (service *Service) Post(url string, bodyModel interface{}, responseModel interface{}) *errortools.Error {
+	return service.http.Post(url, bodyModel, responseModel)
 }
 
-func (service *Service) Put(url string, buf *bytes.Buffer) *errortools.Error {
-	return service.http.Put(url, buf)
+func (service *Service) Put(url string, bodyModel interface{}) *errortools.Error {
+	return service.http.Put(url, bodyModel)
 }
 
 func (service *Service) Delete(url string) *errortools.Error {
