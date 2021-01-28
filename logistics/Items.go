@@ -124,7 +124,7 @@ func (service *Service) NewGetItemsCall(modifiedAfter *time.Time) *GetItemsCall 
 	call.service = service
 
 	selectFields := utilities.GetTaggedTagNames("json", Item{})
-	call.urlNext = fmt.Sprintf("%s/Items?$select=%s", service.BaseURL(), selectFields)
+	call.urlNext = service.url(fmt.Sprintf("Items?$select=%s", selectFields))
 	if modifiedAfter != nil {
 		call.urlNext += service.DateFilter("Modified", "gt", modifiedAfter, true, "&")
 	}

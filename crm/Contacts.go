@@ -158,7 +158,7 @@ func (service *Service) NewGetContactsCall(params *GetContactsCallParams) *GetCo
 	call.service = service
 
 	selectFields := utilities.GetTaggedTagNames("json", Contact{})
-	call.urlNext = fmt.Sprintf("%s/Contacts?$select=%s", service.BaseURL(), selectFields)
+	call.urlNext = service.url(fmt.Sprintf("Contacts?$select=%s", selectFields))
 	filter := []string{}
 
 	if params != nil {
@@ -224,7 +224,7 @@ func (call *GetContactsCall) DoAll() (*[]Contact, *errortools.Error) {
 }
 
 func (service *Service) CreateContact(contact *ContactUpdate) (*Contact, *errortools.Error) {
-	url := fmt.Sprintf("%s/Contacts", service.BaseURL())
+	url := service.url("Contacts")
 
 	contactNew := Contact{}
 
@@ -236,7 +236,7 @@ func (service *Service) CreateContact(contact *ContactUpdate) (*Contact, *errort
 }
 
 func (service *Service) UpdateContact(id types.GUID, contact *ContactUpdate) *errortools.Error {
-	url := fmt.Sprintf("%s/Contacts(guid'%s')", service.BaseURL(), id.String())
+	url := service.url(fmt.Sprintf("Contacts(guid'%s')", id.String()))
 
 	e := service.Put(url, contact)
 	if e != nil {
@@ -246,7 +246,7 @@ func (service *Service) UpdateContact(id types.GUID, contact *ContactUpdate) *er
 }
 
 func (service *Service) DeleteContact(id types.GUID) *errortools.Error {
-	url := fmt.Sprintf("%s/Contacts(guid'%s')", service.BaseURL(), id.String())
+	url := service.url(fmt.Sprintf("Contacts(guid'%s')", id.String()))
 
 	err := service.Delete(url)
 	if err != nil {

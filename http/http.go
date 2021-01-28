@@ -9,8 +9,6 @@ import (
 	"time"
 
 	errortools "github.com/leapforce-libraries/go_errortools"
-	google "github.com/leapforce-libraries/go_google"
-	bigquery "github.com/leapforce-libraries/go_google/bigquery"
 	oauth2 "github.com/leapforce-libraries/go_oauth2"
 )
 
@@ -26,7 +24,7 @@ const (
 
 // ExactOnline stores ExactOnline configuration
 //
-type Http struct {
+type Service struct {
 	division                    int32
 	oAuth2                      *oauth2.OAuth2
 	xRateLimitMinutelyRemaining int
@@ -35,42 +33,23 @@ type Http struct {
 
 // methods
 //
-func NewHttp(division int32, clientID string, clientSecret string, bigQueryService *bigquery.Service) (*Http, *errortools.Error) {
-	getTokenFunction := func() (*oauth2.Token, *errortools.Error) {
-		return google.GetToken(APIName, clientID, bigQueryService)
-	}
-
-	saveTokenFunction := func(token *oauth2.Token) *errortools.Error {
-		return google.SaveToken(APIName, clientID, token, bigQueryService)
-	}
-
-	config := oauth2.OAuth2Config{
-		ClientID:          clientID,
-		ClientSecret:      clientSecret,
-		RedirectURL:       RedirectURL,
-		AuthURL:           AuthURL,
-		TokenURL:          TokenURL,
-		TokenHTTPMethod:   TokenHttpMethod,
-		GetTokenFunction:  &getTokenFunction,
-		SaveTokenFunction: &saveTokenFunction,
-	}
-
-	return &Http{
+func NewService(division int32, oauth2 *oauth2.OAuth2) *Service {
+	return &Service{
 		division: division,
-		oAuth2:   oauth2.NewOAuth(config),
-	}, nil
+		oAuth2:   oauth2,
+	}
 }
 
-func (h *Http) BaseURL(path string) string {
-	return fmt.Sprintf("%s/%v/%s", APIURL, h.division, path)
+func (service *Service) URL(path string) string {
+	return fmt.Sprintf("%s/%v/%s", APIURL, service.division, path)
 }
 
-func (h *Http) LastModifiedFormat() string {
+func (service *Service) LastModifiedFormat() string {
 	return LastModifiedFormat
 }
 
-func (h *Http) InitToken() *errortools.Error {
-	return h.oAuth2.InitToken()
+func (service *Service) InitToken() *errortools.Error {
+	return service.oAuth2.InitToken()
 }
 
 // Response represents highest level of exactonline api response
@@ -94,13 +73,13 @@ type Results struct {
 }
 
 // wait assures the maximum of 300(?) api calls per minute dictated by exactonline's rate-limit
-func (h *Http) wait() error {
-	if h.xRateLimitMinutelyRemaining < 1 {
-		reset := time.Unix(h.xRateLimitMinutelyReset/1000, 0)
+func (service *Service) wait() error {
+	if service.xRateLimitMinutelyRemaining < 1 {
+		reset := time.Unix(service.xRateLimitMinutelyReset/1000, 0)
 		ms := reset.Sub(time.Now()).Milliseconds()
 
 		if ms > 0 {
-			fmt.Println("eo.xRateLimitMinutelyReset:", h.xRateLimitMinutelyReset)
+			fmt.Println("eo.xRateLimitMinutelyReset:", service.xRateLimitMinutelyReset)
 			fmt.Println("reset:", reset)
 			fmt.Println("waiting ms:", ms)
 			time.Sleep(time.Duration(ms+1000) * time.Millisecond)
@@ -110,22 +89,19 @@ func (h *Http) wait() error {
 	return nil
 }
 
-// generic methods
-//
-
-func (h *Http) readRateLimitHeaders(res *http.Response) {
+func (service *Service) readRateLimitHeaders(res *http.Response) {
 	if res == nil {
 		return
 	}
 	remaining, errRem := strconv.Atoi(res.Header.Get("X-RateLimit-Minutely-Remaining"))
 	reset, errRes := strconv.ParseInt(res.Header.Get("X-RateLimit-Minutely-Reset"), 10, 64)
 	if errRem == nil && errRes == nil {
-		h.xRateLimitMinutelyRemaining = remaining
-		h.xRateLimitMinutelyReset = reset
+		service.xRateLimitMinutelyRemaining = remaining
+		service.xRateLimitMinutelyReset = reset
 	}
 }
 
-func (h *Http) getResponseSingle(url string) (*ResponseSingle, *errortools.Error) {
+func (service *Service) getResponseSingle(url string) (*ResponseSingle, *errortools.Error) {
 	exactOnlineError := ExactOnlineError{}
 	response := ResponseSingle{}
 
@@ -135,7 +111,7 @@ func (h *Http) getResponseSingle(url string) (*ResponseSingle, *errortools.Error
 		ErrorModel:    &exactOnlineError,
 	}
 
-	_, res, e := h.oAuth2.Get(&requestConfig)
+	_, res, e := service.oAuth2.Get(&requestConfig)
 	if e != nil {
 		if exactOnlineError.Err.Message.Value != "" {
 			e.SetMessage(exactOnlineError.Err.Message.Value)
@@ -143,12 +119,12 @@ func (h *Http) getResponseSingle(url string) (*ResponseSingle, *errortools.Error
 		return nil, e
 	}
 
-	h.readRateLimitHeaders(res)
+	service.readRateLimitHeaders(res)
 
 	return &response, nil
 }
 
-func (h *Http) getResponse(url string) (*Response, *errortools.Error) {
+func (service *Service) getResponse(url string) (*Response, *errortools.Error) {
 	exactOnlineError := ExactOnlineError{}
 	response := Response{}
 
@@ -158,7 +134,7 @@ func (h *Http) getResponse(url string) (*Response, *errortools.Error) {
 		ErrorModel:    &exactOnlineError,
 	}
 
-	_, res, e := h.oAuth2.Get(&requestConfig)
+	_, res, e := service.oAuth2.Get(&requestConfig)
 	if e != nil {
 		if exactOnlineError.Err.Message.Value != "" {
 			e.SetMessage(exactOnlineError.Err.Message.Value)
@@ -166,29 +142,29 @@ func (h *Http) getResponse(url string) (*Response, *errortools.Error) {
 		return nil, e
 	}
 
-	h.readRateLimitHeaders(res)
+	service.readRateLimitHeaders(res)
 
 	return &response, nil
 }
 
-func (h *Http) DateFilter(field string, comparer string, time *time.Time, includeParameter bool, prefix string) string {
+func (service *Service) DateFilter(field string, comparer string, time *time.Time, includeParameter bool, prefix string) string {
 	filter := ""
 	if time != nil {
 		if includeParameter {
 			filter = prefix + "$filter="
 		}
 
-		filter = fmt.Sprintf("%s%s %s DateTime'%s'", filter, field, comparer, time.Format(h.LastModifiedFormat()))
+		filter = fmt.Sprintf("%s%s %s DateTime'%s'", filter, field, comparer, time.Format(service.LastModifiedFormat()))
 
 	}
 
 	return filter
 }
 
-func (h *Http) GetCount(path string, createdBefore *time.Time) (int64, *errortools.Error) {
-	urlStr := fmt.Sprintf("%s?$top=0&$inlinecount=allpages%s", h.BaseURL(path), h.DateFilter("Created", "lt", createdBefore, true, "&"))
+func (service *Service) GetCount(url string, createdBefore *time.Time) (int64, *errortools.Error) {
+	urlStr := fmt.Sprintf("%s?$top=0&$inlinecount=allpages%s", url, service.DateFilter("Created", "lt", createdBefore, true, "&"))
 
-	response, e := h.getResponse(urlStr)
+	response, e := service.getResponse(urlStr)
 	if e != nil {
 		return 0, e
 	}
@@ -201,13 +177,13 @@ func (h *Http) GetCount(path string, createdBefore *time.Time) (int64, *errortoo
 	return count, nil
 }
 
-func (h *Http) GetSingle(url string, model interface{}) *errortools.Error {
-	err := h.wait()
+func (service *Service) GetSingle(url string, model interface{}) *errortools.Error {
+	err := service.wait()
 	if err != nil {
 		return errortools.ErrorMessage(err)
 	}
 
-	response, e := h.getResponseSingle(url)
+	response, e := service.getResponseSingle(url)
 	if e != nil {
 		return e
 	}
@@ -220,13 +196,13 @@ func (h *Http) GetSingle(url string, model interface{}) *errortools.Error {
 	return nil
 }
 
-func (h *Http) Get(url string, model interface{}) (string, *errortools.Error) {
-	err := h.wait()
+func (service *Service) Get(url string, model interface{}) (string, *errortools.Error) {
+	err := service.wait()
 	if err != nil {
 		return "", errortools.ErrorMessage(err)
 	}
 
-	response, e := h.getResponse(url)
+	response, e := service.getResponse(url)
 	if e != nil {
 		return "", e
 	}
@@ -239,7 +215,7 @@ func (h *Http) Get(url string, model interface{}) (string, *errortools.Error) {
 	return response.Data.Next, nil
 }
 
-func (h *Http) Put(url string, bodyModel interface{}) *errortools.Error {
+func (service *Service) Put(url string, bodyModel interface{}) *errortools.Error {
 	exactOnlineError := ExactOnlineError{}
 
 	requestConfig := oauth2.RequestConfig{
@@ -248,7 +224,7 @@ func (h *Http) Put(url string, bodyModel interface{}) *errortools.Error {
 		ErrorModel: &exactOnlineError,
 	}
 
-	_, res, e := h.oAuth2.Put(&requestConfig)
+	_, res, e := service.oAuth2.Put(&requestConfig)
 	if e != nil {
 		if exactOnlineError.Err.Message.Value != "" {
 			e.SetMessage(exactOnlineError.Err.Message.Value)
@@ -256,23 +232,23 @@ func (h *Http) Put(url string, bodyModel interface{}) *errortools.Error {
 		return e
 	}
 
-	h.readRateLimitHeaders(res)
+	service.readRateLimitHeaders(res)
 
 	return nil
 }
 
-func (h *Http) PostValues(url string, values map[string]string, model interface{}) *errortools.Error {
+func (service *Service) PostValues(url string, values map[string]string, model interface{}) *errortools.Error {
 	buf := new(bytes.Buffer)
 	json.NewEncoder(buf).Encode(values)
 
-	return h.Post(url, buf, model)
+	return service.Post(url, buf, model)
 }
 
-func (h *Http) PostBytes(url string, b []byte, model interface{}) *errortools.Error {
-	return h.Post(url, bytes.NewBuffer(b), model)
+func (service *Service) PostBytes(url string, b []byte, model interface{}) *errortools.Error {
+	return service.Post(url, bytes.NewBuffer(b), model)
 }
 
-func (h *Http) Post(url string, bodyModel interface{}, responseModel interface{}) *errortools.Error {
+func (service *Service) Post(url string, bodyModel interface{}, responseModel interface{}) *errortools.Error {
 	exactOnlineError := ExactOnlineError{}
 	response := ResponseSingle{}
 
@@ -282,7 +258,7 @@ func (h *Http) Post(url string, bodyModel interface{}, responseModel interface{}
 		ErrorModel: &exactOnlineError,
 	}
 
-	_, res, e := h.oAuth2.Post(&requestConfig)
+	_, res, e := service.oAuth2.Post(&requestConfig)
 	if e != nil {
 		if exactOnlineError.Err.Message.Value != "" {
 			e.SetMessage(exactOnlineError.Err.Message.Value)
@@ -290,12 +266,15 @@ func (h *Http) Post(url string, bodyModel interface{}, responseModel interface{}
 		return e
 	}
 
-	h.readRateLimitHeaders(res)
+	service.readRateLimitHeaders(res)
 
 	defer res.Body.Close()
 
 	err := json.Unmarshal(response.Data, responseModel)
 	if err != nil {
+		if e == nil {
+			return errortools.ErrorMessage(err)
+		}
 		e.SetMessage(err)
 		return e
 	}
@@ -303,7 +282,7 @@ func (h *Http) Post(url string, bodyModel interface{}, responseModel interface{}
 	return nil
 }
 
-func (h *Http) Delete(url string) *errortools.Error {
+func (service *Service) Delete(url string) *errortools.Error {
 	exactOnlineError := ExactOnlineError{}
 
 	requestConfig := oauth2.RequestConfig{
@@ -311,7 +290,7 @@ func (h *Http) Delete(url string) *errortools.Error {
 		ErrorModel: &exactOnlineError,
 	}
 
-	_, res, e := h.oAuth2.Delete(&requestConfig)
+	_, res, e := service.oAuth2.Delete(&requestConfig)
 	if e != nil {
 		if exactOnlineError.Err.Message.Value != "" {
 			e.SetMessage(exactOnlineError.Err.Message.Value)
@@ -319,7 +298,7 @@ func (h *Http) Delete(url string) *errortools.Error {
 		return e
 	}
 
-	h.readRateLimitHeaders(res)
+	service.readRateLimitHeaders(res)
 
 	return nil
 }

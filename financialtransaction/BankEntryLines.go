@@ -70,7 +70,7 @@ func (service *Service) NewGetBankEntryLinesCall(modifiedAfter *time.Time) *GetB
 	call.service = service
 
 	selectFields := utilities.GetTaggedTagNames("json", BankEntryLine{})
-	call.urlNext = fmt.Sprintf("%s/BankEntryLines?$select=%s", service.BaseURL(), selectFields)
+	call.urlNext = service.url(fmt.Sprintf("BankEntryLines?$select=%s", selectFields))
 	if modifiedAfter != nil {
 		call.urlNext += service.DateFilter("Modified", "gt", modifiedAfter, true, "&")
 	}

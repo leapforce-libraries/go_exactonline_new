@@ -94,7 +94,7 @@ func (service *Service) NewGetTransactionLinesCall(modifiedAfter *time.Time) *Ge
 	call.service = service
 
 	selectFields := utilities.GetTaggedTagNames("json", TransactionLine{})
-	call.urlNext = fmt.Sprintf("%s/TransactionLines?$select=%s", service.BaseURL(), selectFields)
+	call.urlNext = service.url(fmt.Sprintf("TransactionLines?$select=%s", selectFields))
 	if modifiedAfter != nil {
 		call.urlNext += service.DateFilter("Modified", "gt", modifiedAfter, true, "&")
 	}

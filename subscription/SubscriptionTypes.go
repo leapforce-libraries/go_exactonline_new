@@ -46,8 +46,7 @@ func (service *Service) NewGetSubscriptionTypesCall(params *GetSubscriptionTypes
 	call.service = service
 
 	selectFields := utilities.GetTaggedTagNames("json", SubscriptionType{})
-	call.urlNext = fmt.Sprintf("%s/SubscriptionTypes?$select=%s", service.BaseURL(), selectFields)
-
+	call.urlNext = service.url(fmt.Sprintf("SubscriptionTypes?$select=%s", selectFields))
 	filter := []string{}
 
 	if params != nil {
@@ -104,7 +103,7 @@ func (call *GetSubscriptionTypesCall) DoAll() (*[]SubscriptionType, *errortools.
 }
 
 func (service *Service) CreateSubscriptionType(subscriptionType *SubscriptionTypeUpdate) (*SubscriptionType, *errortools.Error) {
-	url := fmt.Sprintf("%s/SubscriptionTypes", service.BaseURL())
+	url := service.url("SubscriptionTypes")
 
 	subscriptionTypeNew := SubscriptionType{}
 
@@ -116,7 +115,7 @@ func (service *Service) CreateSubscriptionType(subscriptionType *SubscriptionTyp
 }
 
 func (service *Service) UpdateSubscriptionType(id types.GUID, subscriptionType *SubscriptionTypeUpdate) *errortools.Error {
-	url := fmt.Sprintf("%s/SubscriptionTypes(guid'%s')", service.BaseURL(), id.String())
+	url := service.url(fmt.Sprintf("SubscriptionTypes(guid'%s')", id.String()))
 
 	e := service.Put(url, subscriptionType)
 	if e != nil {
@@ -126,7 +125,7 @@ func (service *Service) UpdateSubscriptionType(id types.GUID, subscriptionType *
 }
 
 func (service *Service) DeleteSubscriptionType(id types.GUID) *errortools.Error {
-	url := fmt.Sprintf("%s/SubscriptionTypes(guid'%s')", service.BaseURL(), id.String())
+	url := service.url(fmt.Sprintf("SubscriptionTypes(guid'%s')", id.String()))
 
 	err := service.Delete(url)
 	if err != nil {

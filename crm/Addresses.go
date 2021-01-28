@@ -82,7 +82,7 @@ func (service *Service) NewGetAddressesCall(params *GetAddressesCallParams) *Get
 	call.service = service
 
 	selectFields := utilities.GetTaggedTagNames("json", Address{})
-	call.urlNext = fmt.Sprintf("%s/Addresses?$select=%s", service.BaseURL(), selectFields)
+	call.urlNext = service.url(fmt.Sprintf("Addresses?$select=%s", selectFields))
 	filter := []string{}
 
 	if params != nil {
@@ -139,7 +139,7 @@ func (call *GetAddressesCall) DoAll() (*[]Address, *errortools.Error) {
 }
 
 func (service *Service) GetAddress(id types.GUID) (*Address, *errortools.Error) {
-	url := fmt.Sprintf("%s/Addresses(guid'%s')", service.BaseURL(), id.String())
+	url := service.url(fmt.Sprintf("Addresses(guid'%s')", id.String()))
 
 	addressNew := Address{}
 

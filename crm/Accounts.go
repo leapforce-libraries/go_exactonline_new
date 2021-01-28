@@ -317,7 +317,7 @@ func (service *Service) NewGetAccountsCall(params *GetAccountsCallParams) *GetAc
 	call.service = service
 
 	selectFields := utilities.GetTaggedTagNames("json", Account{})
-	call.urlNext = fmt.Sprintf("%s/Accounts?$select=%s", service.BaseURL(), selectFields)
+	call.urlNext = service.url(fmt.Sprintf("Accounts?$select=%s", selectFields))
 	filter := []string{}
 
 	if params != nil {
@@ -377,7 +377,7 @@ func (call *GetAccountsCall) DoAll() (*[]Account, *errortools.Error) {
 }
 
 func (service *Service) GetAccount(id types.GUID) (*Account, *errortools.Error) {
-	url := fmt.Sprintf("%s/Accounts(guid'%s')", service.BaseURL(), id.String())
+	url := service.url(fmt.Sprintf("Accounts(guid'%s')", id.String()))
 
 	accountNew := Account{}
 
@@ -389,7 +389,7 @@ func (service *Service) GetAccount(id types.GUID) (*Account, *errortools.Error) 
 }
 
 func (service *Service) CreateAccount(account *AccountUpdate) (*Account, *errortools.Error) {
-	url := fmt.Sprintf("%s/Accounts", service.BaseURL())
+	url := service.url("Accounts")
 
 	accountNew := Account{}
 
@@ -401,7 +401,7 @@ func (service *Service) CreateAccount(account *AccountUpdate) (*Account, *errort
 }
 
 func (service *Service) UpdateAccount(id types.GUID, account *AccountUpdate) *errortools.Error {
-	url := fmt.Sprintf("%s/Accounts(guid'%s')", service.BaseURL(), id.String())
+	url := service.url(fmt.Sprintf("Accounts(guid'%s')", id.String()))
 
 	e := service.Put(url, account)
 	if e != nil {
@@ -411,7 +411,7 @@ func (service *Service) UpdateAccount(id types.GUID, account *AccountUpdate) *er
 }
 
 func (service *Service) DeleteAccount(id types.GUID) *errortools.Error {
-	url := fmt.Sprintf("%s/Accounts(guid'%s')", service.BaseURL(), id.String())
+	url := service.url(fmt.Sprintf("Accounts(guid'%s')", id.String()))
 
 	err := service.Delete(url)
 	if err != nil {
