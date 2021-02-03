@@ -9,6 +9,7 @@ import (
 	"time"
 
 	errortools "github.com/leapforce-libraries/go_errortools"
+	go_http "github.com/leapforce-libraries/go_http"
 	oauth2 "github.com/leapforce-libraries/go_oauth2"
 )
 
@@ -105,7 +106,7 @@ func (service *Service) getResponseSingle(url string) (*ResponseSingle, *errorto
 	exactOnlineError := ExactOnlineError{}
 	response := ResponseSingle{}
 
-	requestConfig := oauth2.RequestConfig{
+	requestConfig := go_http.RequestConfig{
 		URL:           url,
 		ResponseModel: &response,
 		ErrorModel:    &exactOnlineError,
@@ -128,7 +129,7 @@ func (service *Service) getResponse(url string) (*Response, *errortools.Error) {
 	exactOnlineError := ExactOnlineError{}
 	response := Response{}
 
-	requestConfig := oauth2.RequestConfig{
+	requestConfig := go_http.RequestConfig{
 		URL:           url,
 		ResponseModel: &response,
 		ErrorModel:    &exactOnlineError,
@@ -218,7 +219,7 @@ func (service *Service) Get(url string, model interface{}) (string, *errortools.
 func (service *Service) Put(url string, bodyModel interface{}) *errortools.Error {
 	exactOnlineError := ExactOnlineError{}
 
-	requestConfig := oauth2.RequestConfig{
+	requestConfig := go_http.RequestConfig{
 		URL:        url,
 		BodyModel:  bodyModel,
 		ErrorModel: &exactOnlineError,
@@ -252,7 +253,7 @@ func (service *Service) Post(url string, bodyModel interface{}, responseModel in
 	exactOnlineError := ExactOnlineError{}
 	response := ResponseSingle{}
 
-	requestConfig := oauth2.RequestConfig{
+	requestConfig := go_http.RequestConfig{
 		URL:        url,
 		BodyModel:  bodyModel,
 		ErrorModel: &exactOnlineError,
@@ -285,7 +286,7 @@ func (service *Service) Post(url string, bodyModel interface{}, responseModel in
 func (service *Service) Delete(url string) *errortools.Error {
 	exactOnlineError := ExactOnlineError{}
 
-	requestConfig := oauth2.RequestConfig{
+	requestConfig := go_http.RequestConfig{
 		URL:        url,
 		ErrorModel: &exactOnlineError,
 	}
