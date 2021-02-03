@@ -12,31 +12,31 @@ import (
 // PlannedSalesReturn stores PlannedSalesReturn from exactonline
 //
 type PlannedSalesReturn struct {
-	PlannedSalesReturnID             types.GUID               `json:"PlannedSalesReturnID"`
-	Created                          *types.Date              `json:"Created"`
-	Creator                          types.GUID               `json:"Creator"`
-	CreatorFullName                  string                   `json:"CreatorFullName"`
-	DeliveredTo                      types.GUID               `json:"DeliveredTo"`
-	DeliveredToContactPerson         types.GUID               `json:"DeliveredToContactPerson"`
-	DeliveredToContactPersonFullName string                   `json:"DeliveredToContactPersonFullName"`
-	DeliveredToName                  string                   `json:"DeliveredToName"`
-	DeliveryAddress                  types.GUID               `json:"DeliveryAddress"`
-	Description                      string                   `json:"Description"`
-	Division                         int32                    `json:"Division"`
-	Document                         types.GUID               `json:"Document"`
-	DocumentSubject                  string                   `json:"DocumentSubject"`
-	Modified                         *types.Date              `json:"Modified"`
-	Modifier                         types.GUID               `json:"Modifier"`
-	ModifierFullName                 string                   `json:"ModifierFullName"`
-	PlannedSalesReturnLines          []PlannedSalesReturnLine `json:"PlannedSalesReturnLines"`
-	Remarks                          string                   `json:"Remarks"`
-	ReturnDate                       *types.Date              `json:"ReturnDate"`
-	ReturnNumber                     int32                    `json:"ReturnNumber"`
-	Source                           int16                    `json:"Source"`
-	Status                           int16                    `json:"Status"`
-	Warehouse                        types.GUID               `json:"Warehouse"`
-	WarehouseCode                    string                   `json:"WarehouseCode"`
-	WarehouseDescription             string                   `json:"WarehouseDescription"`
+	PlannedSalesReturnID             types.GUID  `json:"PlannedSalesReturnID"`
+	Created                          *types.Date `json:"Created"`
+	Creator                          types.GUID  `json:"Creator"`
+	CreatorFullName                  string      `json:"CreatorFullName"`
+	DeliveredTo                      types.GUID  `json:"DeliveredTo"`
+	DeliveredToContactPerson         types.GUID  `json:"DeliveredToContactPerson"`
+	DeliveredToContactPersonFullName string      `json:"DeliveredToContactPersonFullName"`
+	DeliveredToName                  string      `json:"DeliveredToName"`
+	DeliveryAddress                  types.GUID  `json:"DeliveryAddress"`
+	Description                      string      `json:"Description"`
+	Division                         int32       `json:"Division"`
+	Document                         types.GUID  `json:"Document"`
+	DocumentSubject                  string      `json:"DocumentSubject"`
+	Modified                         *types.Date `json:"Modified"`
+	Modifier                         types.GUID  `json:"Modifier"`
+	ModifierFullName                 string      `json:"ModifierFullName"`
+	//PlannedSalesReturnLines          []PlannedSalesReturnLine `json:"PlannedSalesReturnLines"`
+	Remarks              string      `json:"Remarks"`
+	ReturnDate           *types.Date `json:"ReturnDate"`
+	ReturnNumber         int32       `json:"ReturnNumber"`
+	Source               int16       `json:"Source"`
+	Status               int16       `json:"Status"`
+	Warehouse            types.GUID  `json:"Warehouse"`
+	WarehouseCode        string      `json:"WarehouseCode"`
+	WarehouseDescription string      `json:"WarehouseDescription"`
 }
 
 type GetPlannedSalesReturnsCall struct {
