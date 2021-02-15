@@ -97,6 +97,10 @@ func (service *Service) ValidateToken() (*oauth2.Token, *errortools.Error) {
 	return service.oAuth2.ValidateToken()
 }
 
+func (service *Service) InitToken() *errortools.Error {
+	return service.oAuth2.InitToken()
+}
+
 func ParseDateString(date string) *time.Time {
 	if len(date) >= 19 {
 		d, err := time.Parse("2006-01-02T15:04:05", date[:19])
