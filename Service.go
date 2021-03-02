@@ -41,11 +41,9 @@ type Service struct {
 }
 
 type ServiceConfig struct {
-	Division              int32
-	ClientID              string
-	ClientSecret          string
-	MaxRetries            *uint
-	SecondsBetweenRetries *uint32
+	Division     int32
+	ClientID     string
+	ClientSecret string
 }
 
 // methods
@@ -68,16 +66,14 @@ func NewService(serviceConfig ServiceConfig, bigQueryService *bigquery.Service) 
 	}
 
 	oauht2Config := oauth2.OAuth2Config{
-		ClientID:              serviceConfig.ClientID,
-		ClientSecret:          serviceConfig.ClientSecret,
-		RedirectURL:           RedirectURL,
-		AuthURL:               AuthURL,
-		TokenURL:              TokenURL,
-		TokenHTTPMethod:       TokenHTTPMethod,
-		GetTokenFunction:      &getTokenFunction,
-		SaveTokenFunction:     &saveTokenFunction,
-		MaxRetries:            serviceConfig.MaxRetries,
-		SecondsBetweenRetries: serviceConfig.SecondsBetweenRetries,
+		ClientID:          serviceConfig.ClientID,
+		ClientSecret:      serviceConfig.ClientSecret,
+		RedirectURL:       RedirectURL,
+		AuthURL:           AuthURL,
+		TokenURL:          TokenURL,
+		TokenHTTPMethod:   TokenHTTPMethod,
+		GetTokenFunction:  &getTokenFunction,
+		SaveTokenFunction: &saveTokenFunction,
 	}
 	oAuth2 := oauth2.NewOAuth(oauht2Config)
 	httpService := eo_http.NewService(serviceConfig.Division, oAuth2)
