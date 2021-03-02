@@ -10,6 +10,8 @@ import (
 	financialtransaction "github.com/leapforce-libraries/go_exactonline_new/financialtransaction"
 	eo_http "github.com/leapforce-libraries/go_exactonline_new/http"
 	logistics "github.com/leapforce-libraries/go_exactonline_new/logistics"
+	purchaseentry "github.com/leapforce-libraries/go_exactonline_new/purchaseentry"
+	purchaseorder "github.com/leapforce-libraries/go_exactonline_new/purchaseorder"
 	salesorder "github.com/leapforce-libraries/go_exactonline_new/salesorder"
 	subscription "github.com/leapforce-libraries/go_exactonline_new/subscription"
 	google "github.com/leapforce-libraries/go_google"
@@ -35,6 +37,8 @@ type Service struct {
 	CRMService                  *crm.Service
 	FinancialTransactionService *financialtransaction.Service
 	LogisticsService            *logistics.Service
+	PurchaseEntryService        *purchaseentry.Service
+	PurchaseOrderService        *purchaseorder.Service
 	SalesOrderService           *salesorder.Service
 	SubscriptionService         *subscription.Service
 	oAuth2                      *oauth2.OAuth2
