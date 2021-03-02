@@ -87,6 +87,8 @@ func NewService(serviceConfig ServiceConfig, bigQueryService *bigquery.Service) 
 		CRMService:                  crm.NewService(httpService),
 		FinancialTransactionService: financialtransaction.NewService(httpService),
 		LogisticsService:            logistics.NewService(httpService),
+		PurchaseEntryService:        purchaseentry.NewService(httpService),
+		PurchaseOrderService:        purchaseorder.NewService(httpService),
 		SalesOrderService:           salesorder.NewService(httpService),
 		SubscriptionService:         subscription.NewService(httpService),
 		oAuth2:                      oAuth2,
