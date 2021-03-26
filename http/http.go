@@ -219,10 +219,12 @@ func (service *Service) Get(url string, model interface{}) (string, *errortools.
 func (service *Service) Put(url string, bodyModel interface{}) *errortools.Error {
 	exactOnlineError := ExactOnlineError{}
 
+	maxRetries := uint(0) // no retries to prevent errors like "stream error: stream ID 25; PROTOCOL_ERROR exactonline"
 	requestConfig := go_http.RequestConfig{
 		URL:        url,
 		BodyModel:  bodyModel,
 		ErrorModel: &exactOnlineError,
+		MaxRetries: &maxRetries,
 	}
 
 	_, res, e := service.oAuth2.Put(&requestConfig)
