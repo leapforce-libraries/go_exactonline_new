@@ -2,6 +2,7 @@ package exactonline
 
 import (
 	"fmt"
+	"strings"
 	"time"
 
 	errortools "github.com/leapforce-libraries/go_errortools"
@@ -113,20 +114,34 @@ type Item struct {
 }
 
 type GetItemsCall struct {
-	modifiedAfter *time.Time
-	urlNext       string
-	service       *Service
+	urlNext string
+	service *Service
 }
 
-func (service *Service) NewGetItemsCall(modifiedAfter *time.Time) *GetItemsCall {
+type GetContactsCallParams struct {
+	ItemGroupCode *string
+	ModifiedAfter *time.Time
+}
+
+func (service *Service) NewGetItemsCall(params *GetContactsCallParams) *GetItemsCall {
 	call := GetItemsCall{}
-	call.modifiedAfter = modifiedAfter
 	call.service = service
 
 	selectFields := utilities.GetTaggedTagNames("json", Item{})
 	call.urlNext = service.url(fmt.Sprintf("Items?$select=%s", selectFields))
-	if modifiedAfter != nil {
-		call.urlNext += service.DateFilter("Modified", "gt", modifiedAfter, true, "&")
+	filter := []string{}
+
+	if params != nil {
+		if params.ItemGroupCode != nil {
+			filter = append(filter, fmt.Sprintf("ItemGroupCode eq '%s'", *params.ItemGroupCode))
+		}
+		if params.ModifiedAfter != nil {
+			call.urlNext += service.DateFilter("Modified", "gt", params.ModifiedAfter, true, "&")
+		}
+	}
+
+	if len(filter) > 0 {
+		call.urlNext = fmt.Sprintf("%s&$filter=%s", call.urlNext, strings.Join(filter, " and "))
 	}
 
 	return &call
