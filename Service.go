@@ -20,14 +20,12 @@ import (
 )
 
 const (
-	APIName            string = "ExactOnline"
-	APIURL             string = "https://start.exactonline.nl/api/v1"
-	AuthURL            string = "https://start.exactonline.nl/api/oauth2/auth"
-	TokenURL           string = "https://start.exactonline.nl/api/oauth2/token"
-	TokenHTTPMethod    string = http.MethodPost
-	RedirectURL        string = "http://localhost:8080/oauth/redirect"
-	TableRefreshToken  string = "leapforce.oauth2"
-	LastModifiedFormat string = "2006-01-02T15:04:05"
+	apiName         string = "ExactOnline"
+	apiURL          string = "https://start.exactonline.nl/api/v1"
+	authURL         string = "https://start.exactonline.nl/api/oauth2/auth"
+	tokenURL        string = "https://start.exactonline.nl/api/oauth2/token"
+	tokenHTTPMethod string = http.MethodPost
+	redirectURL     string = "http://localhost:8080/oauth/redirect"
 )
 
 // Service stores Service configuration
@@ -66,20 +64,20 @@ func NewService(serviceConfig *ServiceConfig, bigQueryService *bigquery.Service)
 	}
 
 	getTokenFunction := func() (*oauth2.Token, *errortools.Error) {
-		return google.GetToken(APIName, serviceConfig.ClientID, bigQueryService)
+		return google.GetToken(apiName, serviceConfig.ClientID, bigQueryService)
 	}
 
 	saveTokenFunction := func(token *oauth2.Token) *errortools.Error {
-		return google.SaveToken(APIName, serviceConfig.ClientID, token, bigQueryService)
+		return google.SaveToken(apiName, serviceConfig.ClientID, token, bigQueryService)
 	}
 
 	oauht2Config := oauth2.OAuth2Config{
 		ClientID:          serviceConfig.ClientID,
 		ClientSecret:      serviceConfig.ClientSecret,
-		RedirectURL:       RedirectURL,
-		AuthURL:           AuthURL,
-		TokenURL:          TokenURL,
-		TokenHTTPMethod:   TokenHTTPMethod,
+		RedirectURL:       redirectURL,
+		AuthURL:           authURL,
+		TokenURL:          tokenURL,
+		TokenHTTPMethod:   tokenHTTPMethod,
 		GetTokenFunction:  &getTokenFunction,
 		SaveTokenFunction: &saveTokenFunction,
 	}

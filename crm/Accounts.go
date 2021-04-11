@@ -400,14 +400,16 @@ func (service *Service) CreateAccount(account *AccountUpdate) (*Account, *errort
 	return &accountNew, nil
 }
 
-func (service *Service) UpdateAccount(id types.GUID, account *AccountUpdate) *errortools.Error {
+func (service *Service) UpdateAccount(id types.GUID, account *AccountUpdate) (*Account, *errortools.Error) {
 	url := service.url(fmt.Sprintf("Accounts(guid'%s')", id.String()))
 
-	e := service.Put(url, account)
+	accountUpdated := Account{}
+
+	e := service.Put(url, account, &accountUpdated)
 	if e != nil {
-		return e
+		return nil, e
 	}
-	return nil
+	return &accountUpdated, nil
 }
 
 func (service *Service) DeleteAccount(id types.GUID) *errortools.Error {

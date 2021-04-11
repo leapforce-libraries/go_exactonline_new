@@ -102,50 +102,54 @@ func (service *Service) readRateLimitHeaders(res *http.Response) {
 	}
 }
 
-func (service *Service) getResponseSingle(url string) (*ResponseSingle, *errortools.Error) {
+func (service *Service) getResponseSingle(url string) (*http.Request, *http.Response, *ResponseSingle, *errortools.Error) {
 	exactOnlineError := ExactOnlineError{}
-	response := ResponseSingle{}
+	responseSingle := ResponseSingle{}
 
 	requestConfig := go_http.RequestConfig{
 		URL:           url,
-		ResponseModel: &response,
+		ResponseModel: &responseSingle,
 		ErrorModel:    &exactOnlineError,
 	}
 
-	_, res, e := service.oAuth2.Get(&requestConfig)
+	request, response, e := service.oAuth2.Get(&requestConfig)
 	if e != nil {
+		e.SetRequest(request)
+		e.SetResponse(response)
 		if exactOnlineError.Err.Message.Value != "" {
 			e.SetMessage(exactOnlineError.Err.Message.Value)
 		}
-		return nil, e
+		return request, response, nil, e
 	}
 
-	service.readRateLimitHeaders(res)
+	service.readRateLimitHeaders(response)
 
-	return &response, nil
+	return request, response, &responseSingle, nil
 }
 
-func (service *Service) getResponse(url string) (*Response, *errortools.Error) {
+func (service *Service) getResponse(url string) (*http.Request, *http.Response, *Response, *errortools.Error) {
 	exactOnlineError := ExactOnlineError{}
-	response := Response{}
+	_response := Response{}
 
 	requestConfig := go_http.RequestConfig{
 		URL:           url,
-		ResponseModel: &response,
+		ResponseModel: &_response,
 		ErrorModel:    &exactOnlineError,
 	}
 
-	_, res, e := service.oAuth2.Get(&requestConfig)
+	request, response, e := service.oAuth2.Get(&requestConfig)
 	if e != nil {
+		e.SetRequest(request)
+		e.SetResponse(response)
 		if exactOnlineError.Err.Message.Value != "" {
 			e.SetMessage(exactOnlineError.Err.Message.Value)
 		}
-		return nil, e
+		return request, response, nil, e
 	}
 
-	service.readRateLimitHeaders(res)
+	service.readRateLimitHeaders(response)
 
-	return &response, nil
+	return request, response, &_response, nil
 }
 
 func (service *Service) DateFilter(field string, comparer string, time *time.Time, includeParameter bool, prefix string) string {
@@ -165,14 +169,17 @@ func (service *Service) DateFilter(field string, comparer string, time *time.Tim
 func (service *Service) GetCount(url string, createdBefore *time.Time) (int64, *errortools.Error) {
 	urlStr := fmt.Sprintf("%s?$top=0&$inlinecount=allpages%s", url, service.DateFilter("Created", "lt", createdBefore, true, "&"))
 
-	response, e := service.getResponse(urlStr)
+	request, response, _response, e := service.getResponse(urlStr)
 	if e != nil {
 		return 0, e
 	}
 
-	count, err := strconv.ParseInt(response.Data.Count, 10, 64)
+	count, err := strconv.ParseInt(_response.Data.Count, 10, 64)
 	if err != nil {
-		return 0, errortools.ErrorMessage(err)
+		e := errortools.ErrorMessage(err)
+		e.SetRequest(request)
+		e.SetResponse(response)
+		return 0, e
 	}
 
 	return count, nil
@@ -184,14 +191,17 @@ func (service *Service) GetSingle(url string, model interface{}) *errortools.Err
 		return errortools.ErrorMessage(err)
 	}
 
-	response, e := service.getResponseSingle(url)
+	request, response, _response, e := service.getResponseSingle(url)
 	if e != nil {
 		return e
 	}
 
-	err = json.Unmarshal(response.Data, &model)
+	err = json.Unmarshal(_response.Data, &model)
 	if err != nil {
-		return errortools.ErrorMessage(err)
+		e := errortools.ErrorMessage(err)
+		e.SetRequest(request)
+		e.SetResponse(response)
+		return e
 	}
 
 	return nil
@@ -203,39 +213,55 @@ func (service *Service) Get(url string, model interface{}) (string, *errortools.
 		return "", errortools.ErrorMessage(err)
 	}
 
-	response, e := service.getResponse(url)
+	request, response, _response, e := service.getResponse(url)
 	if e != nil {
 		return "", e
 	}
 
-	err = json.Unmarshal(response.Data.Results, &model)
+	err = json.Unmarshal(_response.Data.Results, &model)
 	if err != nil {
-		return "", errortools.ErrorMessage(err)
+		e := errortools.ErrorMessage(err)
+		e.SetRequest(request)
+		e.SetResponse(response)
+		return "", e
 	}
 
-	return response.Data.Next, nil
+	return _response.Data.Next, nil
 }
 
-func (service *Service) Put(url string, bodyModel interface{}) *errortools.Error {
+func (service *Service) Put(url string, bodyModel interface{}, responseModel interface{}) *errortools.Error {
 	exactOnlineError := ExactOnlineError{}
+	responseSingle := ResponseSingle{}
 
 	maxRetries := uint(0) // no retries to prevent errors like "stream error: stream ID 25; PROTOCOL_ERROR exactonline"
 	requestConfig := go_http.RequestConfig{
-		URL:        url,
-		BodyModel:  bodyModel,
-		ErrorModel: &exactOnlineError,
-		MaxRetries: &maxRetries,
+		URL:           url,
+		BodyModel:     bodyModel,
+		ResponseModel: &responseSingle,
+		ErrorModel:    &exactOnlineError,
+		MaxRetries:    &maxRetries,
 	}
 
-	_, res, e := service.oAuth2.Put(&requestConfig)
+	request, response, e := service.oAuth2.Put(&requestConfig)
 	if e != nil {
+		e.SetRequest(request)
+		e.SetResponse(response)
 		if exactOnlineError.Err.Message.Value != "" {
 			e.SetMessage(exactOnlineError.Err.Message.Value)
 		}
 		return e
 	}
 
-	service.readRateLimitHeaders(res)
+	service.readRateLimitHeaders(response)
+
+	err := json.Unmarshal(responseSingle.Data, responseModel)
+	if err != nil {
+		if e == nil {
+			return errortools.ErrorMessage(err)
+		}
+		e.SetMessage(err)
+		return e
+	}
 
 	return nil
 }
@@ -253,27 +279,28 @@ func (service *Service) PostBytes(url string, b []byte, model interface{}) *erro
 
 func (service *Service) Post(url string, bodyModel interface{}, responseModel interface{}) *errortools.Error {
 	exactOnlineError := ExactOnlineError{}
-	response := ResponseSingle{}
+	responseSingle := ResponseSingle{}
 
 	requestConfig := go_http.RequestConfig{
-		URL:        url,
-		BodyModel:  bodyModel,
-		ErrorModel: &exactOnlineError,
+		URL:           url,
+		BodyModel:     bodyModel,
+		ResponseModel: &responseSingle,
+		ErrorModel:    &exactOnlineError,
 	}
 
-	_, res, e := service.oAuth2.Post(&requestConfig)
+	request, response, e := service.oAuth2.Post(&requestConfig)
 	if e != nil {
+		e.SetRequest(request)
+		e.SetResponse(response)
 		if exactOnlineError.Err.Message.Value != "" {
 			e.SetMessage(exactOnlineError.Err.Message.Value)
 		}
 		return e
 	}
 
-	service.readRateLimitHeaders(res)
+	service.readRateLimitHeaders(response)
 
-	defer res.Body.Close()
-
-	err := json.Unmarshal(response.Data, responseModel)
+	err := json.Unmarshal(responseSingle.Data, responseModel)
 	if err != nil {
 		if e == nil {
 			return errortools.ErrorMessage(err)
@@ -293,15 +320,17 @@ func (service *Service) Delete(url string) *errortools.Error {
 		ErrorModel: &exactOnlineError,
 	}
 
-	_, res, e := service.oAuth2.Delete(&requestConfig)
+	request, response, e := service.oAuth2.Delete(&requestConfig)
 	if e != nil {
+		e.SetRequest(request)
+		e.SetResponse(response)
 		if exactOnlineError.Err.Message.Value != "" {
 			e.SetMessage(exactOnlineError.Err.Message.Value)
 		}
 		return e
 	}
 
-	service.readRateLimitHeaders(res)
+	service.readRateLimitHeaders(response)
 
 	return nil
 }

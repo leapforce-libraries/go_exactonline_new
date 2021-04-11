@@ -181,14 +181,16 @@ func (service *Service) CreateSubscription(subscription *SubscriptionUpdate) (*S
 	return &subscriptionNew, nil
 }
 
-func (service *Service) UpdateSubscription(entryID types.GUID, subscription *SubscriptionUpdate) *errortools.Error {
+func (service *Service) UpdateSubscription(entryID types.GUID, subscription *SubscriptionUpdate) (*Subscription, *errortools.Error) {
 	url := service.url(fmt.Sprintf("Subscriptions(guid'%s')", entryID.String()))
 
-	e := service.Put(url, subscription)
+	subscriptionUpdated := Subscription{}
+
+	e := service.Put(url, subscription, &subscriptionUpdated)
 	if e != nil {
-		return e
+		return nil, e
 	}
-	return nil
+	return &subscriptionUpdated, nil
 }
 
 func (service *Service) DeleteSubscription(entryID types.GUID) *errortools.Error {

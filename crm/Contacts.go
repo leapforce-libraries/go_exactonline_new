@@ -223,6 +223,18 @@ func (call *GetContactsCall) DoAll() (*[]Contact, *errortools.Error) {
 	return &contacts, nil
 }
 
+func (service *Service) GetContact(id types.GUID) (*Contact, *errortools.Error) {
+	url := service.url(fmt.Sprintf("Contacts(guid'%s')", id.String()))
+
+	contactNew := Contact{}
+
+	e := service.GetSingle(url, &contactNew)
+	if e != nil {
+		return nil, e
+	}
+	return &contactNew, nil
+}
+
 func (service *Service) CreateContact(contact *ContactUpdate) (*Contact, *errortools.Error) {
 	url := service.url("Contacts")
 
@@ -235,14 +247,16 @@ func (service *Service) CreateContact(contact *ContactUpdate) (*Contact, *errort
 	return &contactNew, nil
 }
 
-func (service *Service) UpdateContact(id types.GUID, contact *ContactUpdate) *errortools.Error {
+func (service *Service) UpdateContact(id types.GUID, contact *ContactUpdate) (*Contact, *errortools.Error) {
 	url := service.url(fmt.Sprintf("Contacts(guid'%s')", id.String()))
 
-	e := service.Put(url, contact)
+	contactUpdated := Contact{}
+
+	e := service.Put(url, contact, &contactUpdated)
 	if e != nil {
-		return e
+		return nil, e
 	}
-	return nil
+	return &contactUpdated, nil
 }
 
 func (service *Service) DeleteContact(id types.GUID) *errortools.Error {

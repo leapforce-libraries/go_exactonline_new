@@ -118,12 +118,12 @@ type GetItemsCall struct {
 	service *Service
 }
 
-type GetContactsCallParams struct {
+type GetItemsCallParams struct {
 	ItemGroupCode *string
 	ModifiedAfter *time.Time
 }
 
-func (service *Service) NewGetItemsCall(params *GetContactsCallParams) *GetItemsCall {
+func (service *Service) NewGetItemsCall(params *GetItemsCallParams) *GetItemsCall {
 	call := GetItemsCall{}
 	call.service = service
 

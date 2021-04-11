@@ -30,8 +30,8 @@ func (service *Service) Post(url string, bodyModel interface{}, responseModel in
 	return service.httpService.Post(url, bodyModel, responseModel)
 }
 
-func (service *Service) Put(url string, bodyModel interface{}) *errortools.Error {
-	return service.httpService.Put(url, bodyModel)
+func (service *Service) Put(url string, bodyModel interface{}, responseModel interface{}) *errortools.Error {
+	return service.httpService.Put(url, bodyModel, responseModel)
 }
 
 func (service *Service) Delete(url string) *errortools.Error {
