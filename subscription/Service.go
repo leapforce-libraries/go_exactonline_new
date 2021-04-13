@@ -6,6 +6,7 @@ import (
 
 	errortools "github.com/leapforce-libraries/go_errortools"
 	http "github.com/leapforce-libraries/go_exactonline_new/http"
+	go_http "github.com/leapforce-libraries/go_http"
 )
 
 const servicePath string = "subscription"
@@ -30,8 +31,8 @@ func (service *Service) Post(url string, bodyModel interface{}, responseModel in
 	return service.httpService.Post(url, bodyModel, responseModel)
 }
 
-func (service *Service) Put(url string, bodyModel interface{}, responseModel interface{}) *errortools.Error {
-	return service.httpService.Put(url, bodyModel, responseModel)
+func (service *Service) Put(requestConfig *go_http.RequestConfig) *errortools.Error {
+	return service.httpService.Put(requestConfig)
 }
 
 func (service *Service) Delete(url string) *errortools.Error {

@@ -229,20 +229,18 @@ func (service *Service) Get(url string, model interface{}) (string, *errortools.
 	return _response.Data.Next, nil
 }
 
-func (service *Service) Put(url string, bodyModel interface{}, responseModel interface{}) *errortools.Error {
+func (service *Service) Put(requestConfig *go_http.RequestConfig) *errortools.Error {
 	exactOnlineError := ExactOnlineError{}
-	responseSingle := ResponseSingle{}
 
 	maxRetries := uint(0) // no retries to prevent errors like "stream error: stream ID 25; PROTOCOL_ERROR exactonline"
-	requestConfig := go_http.RequestConfig{
-		URL:           url,
-		BodyModel:     bodyModel,
-		ResponseModel: &responseSingle,
-		ErrorModel:    &exactOnlineError,
-		MaxRetries:    &maxRetries,
+	_requestConfig := go_http.RequestConfig{
+		URL:        requestConfig.URL,
+		BodyModel:  requestConfig.BodyModel,
+		ErrorModel: &exactOnlineError,
+		MaxRetries: &maxRetries,
 	}
 
-	request, response, e := service.oAuth2.Put(&requestConfig)
+	request, response, e := service.oAuth2.Put(&_requestConfig)
 	if e != nil {
 		e.SetRequest(request)
 		e.SetResponse(response)
@@ -253,15 +251,6 @@ func (service *Service) Put(url string, bodyModel interface{}, responseModel int
 	}
 
 	service.readRateLimitHeaders(response)
-
-	err := json.Unmarshal(responseSingle.Data, responseModel)
-	if err != nil {
-		if e == nil {
-			return errortools.ErrorMessage(err)
-		}
-		e.SetMessage(err)
-		return e
-	}
 
 	return nil
 }

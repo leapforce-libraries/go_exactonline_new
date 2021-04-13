@@ -6,6 +6,7 @@ import (
 	"time"
 
 	errortools "github.com/leapforce-libraries/go_errortools"
+	go_http "github.com/leapforce-libraries/go_http"
 	types "github.com/leapforce-libraries/go_types"
 	utilities "github.com/leapforce-libraries/go_utilities"
 )
@@ -59,12 +60,12 @@ type Subscription struct {
 //
 type SubscriptionUpdate struct {
 	BlockEntry                  *bool                     `json:"BlockEntry,omitempty"`
-	CancellationDate            *string                   `json:"CancellationDate,omitempty"`
+	CancellationDate            *types.Date               `json:"CancellationDate,omitempty"`
 	Classification              *string                   `json:"Classification,omitempty"`
 	Currency                    *string                   `json:"Currency,omitempty"`
 	CustomerPONumber            *string                   `json:"CustomerPONumber,omitempty"`
 	Description                 *string                   `json:"Description,omitempty"`
-	EndDate                     *string                   `json:"EndDate,omitempty"`
+	EndDate                     *types.Date               `json:"EndDate,omitempty"`
 	InvoiceDay                  *byte                     `json:"InvoiceDay,omitempty"`
 	InvoicedTo                  *string                   `json:"InvoicedTo,omitempty"`
 	InvoiceTo                   *string                   `json:"InvoiceTo,omitempty"`
@@ -78,7 +79,7 @@ type SubscriptionUpdate struct {
 	PaymentConditionDescription *string                   `json:"PaymentConditionDescription,omitempty"`
 	Printed                     *bool                     `json:"Printed,omitempty"`
 	ReasonCancelled             *string                   `json:"ReasonCancelled,omitempty"`
-	StartDate                   *string                   `json:"StartDate,omitempty"`
+	StartDate                   *types.Date               `json:"StartDate,omitempty"`
 	SubscriptionLines           *[]SubscriptionLineUpdate `json:"SubscriptionLines,omitempty"`
 	SubscriptionType            *string                   `json:"SubscriptionType,omitempty"`
 }
@@ -181,16 +182,27 @@ func (service *Service) CreateSubscription(subscription *SubscriptionUpdate) (*S
 	return &subscriptionNew, nil
 }
 
-func (service *Service) UpdateSubscription(entryID types.GUID, subscription *SubscriptionUpdate) (*Subscription, *errortools.Error) {
-	url := service.url(fmt.Sprintf("Subscriptions(guid'%s')", entryID.String()))
+func (service *Service) UpdateSubscription(entryID types.GUID, subscription *SubscriptionUpdate, returnUpdated bool) (*Subscription, *errortools.Error) {
+	requestConfig := go_http.RequestConfig{
+		URL:       service.url(fmt.Sprintf("Subscriptions(guid'%s')", entryID.String())),
+		BodyModel: subscription,
+	}
 
-	subscriptionUpdated := Subscription{}
-
-	e := service.Put(url, subscription, &subscriptionUpdated)
+	e := service.Put(&requestConfig)
 	if e != nil {
 		return nil, e
 	}
-	return &subscriptionUpdated, nil
+
+	if !returnUpdated {
+		return nil, nil
+	}
+
+	subscriptionUpdated, e := service.GetSubscription(entryID)
+	if e != nil {
+		return nil, e
+	}
+
+	return subscriptionUpdated, nil
 }
 
 func (service *Service) DeleteSubscription(entryID types.GUID) *errortools.Error {

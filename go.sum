@@ -397,6 +397,16 @@ github.com/leapforce-libraries/go_types v0.0.0-20210325205936-6205c0fe330b h1:DE
 github.com/leapforce-libraries/go_types v0.0.0-20210325205936-6205c0fe330b/go.mod h1:dM2wpUVXfTFAuEBZG+878JIQtr/QraSb0mpGkLYt1Qw=
 github.com/leapforce-libraries/go_types v0.0.0-20210327214904-e5e83ce3293d h1:UyKtnCDuvizRAbfuEn/4JCH3IOgaQVu4ge2XNmZb/ac=
 github.com/leapforce-libraries/go_types v0.0.0-20210327214904-e5e83ce3293d/go.mod h1:rkVvb9aLkrzggctNNNpIz0fRBwWY+FPj239qRSXxHXs=
+github.com/leapforce-libraries/go_types v0.0.0-20210413115605-cd37eabf9da4 h1:vBKyfpXjETGR9BrfVcubiFacjEJDo0S/9NdlB/1f+oI=
+github.com/leapforce-libraries/go_types v0.0.0-20210413115605-cd37eabf9da4/go.mod h1:rkVvb9aLkrzggctNNNpIz0fRBwWY+FPj239qRSXxHXs=
+github.com/leapforce-libraries/go_types v0.0.0-20210413120026-fff1146524fc h1:na+jDJeAvCadm+u96qsFfbfWE6eaZM0EvGpf1Wco09U=
+github.com/leapforce-libraries/go_types v0.0.0-20210413120026-fff1146524fc/go.mod h1:rkVvb9aLkrzggctNNNpIz0fRBwWY+FPj239qRSXxHXs=
+github.com/leapforce-libraries/go_types v0.0.0-20210413120817-31b26432cf6e h1:8Z94Pr7UCx5JrD8KdXGbrYeHVRAIaYklzRsqVt0jc3Q=
+github.com/leapforce-libraries/go_types v0.0.0-20210413120817-31b26432cf6e/go.mod h1:rkVvb9aLkrzggctNNNpIz0fRBwWY+FPj239qRSXxHXs=
+github.com/leapforce-libraries/go_types v0.0.0-20210413122801-bfd8fb9eb48e h1:9af0JsDcDzL8tmGbBD1brzqLSN9GmlepRfv7CrnIFo8=
+github.com/leapforce-libraries/go_types v0.0.0-20210413122801-bfd8fb9eb48e/go.mod h1:rkVvb9aLkrzggctNNNpIz0fRBwWY+FPj239qRSXxHXs=
+github.com/leapforce-libraries/go_types v0.0.0-20210413124801-03fb795abdbd h1:efoXjFHb9mLY6xCCvifXOHvLoLrXjvApSmZVQdtPhso=
+github.com/leapforce-libraries/go_types v0.0.0-20210413124801-03fb795abdbd/go.mod h1:rkVvb9aLkrzggctNNNpIz0fRBwWY+FPj239qRSXxHXs=
 github.com/leapforce-libraries/go_utilities v0.0.0-20201102125031-858dcf5b1a85 h1:6/An5jAx6RNkqB3g0uk/4VrkE3/88hxazSbAJDHgSTo=
 github.com/leapforce-libraries/go_utilities v0.0.0-20201102125031-858dcf5b1a85/go.mod h1:ESDsQRfPC+Xg1UIa8AebkB0seY2m4g+kUFI82sh9gkg=
 github.com/leapforce-libraries/go_utilities v0.0.0-20201202144031-10e8b749b684 h1:po/Si8kWQYmEOh7uhAaoFNYC+AFoOGpYdzxMOaXuMkE=

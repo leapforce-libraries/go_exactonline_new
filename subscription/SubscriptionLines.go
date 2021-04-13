@@ -6,6 +6,7 @@ import (
 	"time"
 
 	errortools "github.com/leapforce-libraries/go_errortools"
+	go_http "github.com/leapforce-libraries/go_http"
 	types "github.com/leapforce-libraries/go_types"
 	utilities "github.com/leapforce-libraries/go_utilities"
 )
@@ -44,28 +45,28 @@ type SubscriptionLine struct {
 // SubscriptionLineUpdate stores SubscriptionLine values for insert/update
 //
 type SubscriptionLineUpdate struct {
-	AmountDC            *float64 `json:"AmountDC,omitempty"`
-	AmountFC            *float64 `json:"AmountFC,omitempty"`
-	Costcenter          *string  `json:"Costcenter,omitempty"`
-	Costunit            *string  `json:"Costunit,omitempty"`
-	Description         *string  `json:"Description,omitempty"`
-	Discount            *float64 `json:"Discount,omitempty"`
-	EntryID             *string  `json:"EntryID,omitempty"`
-	FromDate            *string  `json:"FromDate,omitempty"`
-	Item                *string  `json:"Item,omitempty"`
-	LineNumber          *int32   `json:"LineNumber,omitempty"`
-	LineType            *int16   `json:"LineType,omitempty"`
-	LineTypeDescription *string  `json:"LineTypeDescription,omitempty"`
-	NetPrice            *float64 `json:"NetPrice,omitempty"`
-	Notes               *string  `json:"Notes,omitempty"`
-	Quantity            *float64 `json:"Quantity,omitempty"`
-	ToDate              *string  `json:"ToDate,omitempty"`
-	UnitCode            *string  `json:"UnitCode,omitempty"`
-	UnitDescription     *string  `json:"UnitDescription,omitempty"`
-	UnitPrice           *float64 `json:"UnitPrice,omitempty"`
-	VATAmountFC         *float64 `json:"VATAmountFC,omitempty"`
-	VATCode             *string  `json:"VATCode,omitempty"`
-	VATCodeDescription  *string  `json:"VATCodeDescription,omitempty"`
+	AmountDC            *float64    `json:"AmountDC,omitempty"`
+	AmountFC            *float64    `json:"AmountFC,omitempty"`
+	Costcenter          *string     `json:"Costcenter,omitempty"`
+	Costunit            *string     `json:"Costunit,omitempty"`
+	Description         *string     `json:"Description,omitempty"`
+	Discount            *float64    `json:"Discount,omitempty"`
+	EntryID             *string     `json:"EntryID,omitempty"`
+	FromDate            *types.Date `json:"FromDate,omitempty"`
+	Item                *string     `json:"Item,omitempty"`
+	LineNumber          *int32      `json:"LineNumber,omitempty"`
+	LineType            *int16      `json:"LineType,omitempty"`
+	LineTypeDescription *string     `json:"LineTypeDescription,omitempty"`
+	NetPrice            *float64    `json:"NetPrice,omitempty"`
+	Notes               *string     `json:"Notes,omitempty"`
+	Quantity            *float64    `json:"Quantity,omitempty"`
+	ToDate              *types.Date `json:"ToDate,omitempty"`
+	UnitCode            *string     `json:"UnitCode,omitempty"`
+	UnitDescription     *string     `json:"UnitDescription,omitempty"`
+	UnitPrice           *float64    `json:"UnitPrice,omitempty"`
+	VATAmountFC         *float64    `json:"VATAmountFC,omitempty"`
+	VATCode             *string     `json:"VATCode,omitempty"`
+	VATCodeDescription  *string     `json:"VATCodeDescription,omitempty"`
 }
 
 type GetSubscriptionLinesCall struct {
@@ -143,6 +144,18 @@ func (call *GetSubscriptionLinesCall) DoAll() (*[]SubscriptionLine, *errortools.
 	return &subscriptionLines, nil
 }
 
+func (service *Service) GetSubscriptionLine(id types.GUID) (*SubscriptionLine, *errortools.Error) {
+	url := service.url(fmt.Sprintf("SubscriptionLines(guid'%s')", id.String()))
+
+	subscriptionLine := SubscriptionLine{}
+
+	err := service.GetSingle(url, &subscriptionLine)
+	if err != nil {
+		return nil, err
+	}
+	return &subscriptionLine, nil
+}
+
 func (service *Service) CreateSubscriptionLine(subscriptionLine *SubscriptionLineUpdate) (*SubscriptionLine, *errortools.Error) {
 	url := service.url("SubscriptionLines")
 
@@ -155,16 +168,27 @@ func (service *Service) CreateSubscriptionLine(subscriptionLine *SubscriptionLin
 	return &subscriptionLineNew, nil
 }
 
-func (service *Service) UpdateSubscriptionLine(id types.GUID, subscriptionLine *SubscriptionLineUpdate) (*SubscriptionLine, *errortools.Error) {
-	url := service.url(fmt.Sprintf("SubscriptionLines(guid'%s')", id.String()))
+func (service *Service) UpdateSubscriptionLine(id types.GUID, subscriptionLine *SubscriptionLineUpdate, returnUpdated bool) (*SubscriptionLine, *errortools.Error) {
+	requestConfig := go_http.RequestConfig{
+		URL:       service.url(fmt.Sprintf("SubscriptionLines(guid'%s')", id.String())),
+		BodyModel: subscriptionLine,
+	}
 
-	subscriptionLineUpdated := SubscriptionLine{}
-
-	e := service.Put(url, subscriptionLine, &subscriptionLineUpdated)
+	e := service.Put(&requestConfig)
 	if e != nil {
 		return nil, e
 	}
-	return &subscriptionLineUpdated, nil
+
+	if !returnUpdated {
+		return nil, nil
+	}
+
+	subscriptionLineUpdated, e := service.GetSubscriptionLine(id)
+	if e != nil {
+		return nil, e
+	}
+
+	return subscriptionLineUpdated, nil
 }
 
 func (service *Service) DeleteSubscriptionLine(id types.GUID) *errortools.Error {

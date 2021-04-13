@@ -6,6 +6,7 @@ import (
 	"time"
 
 	errortools "github.com/leapforce-libraries/go_errortools"
+	go_http "github.com/leapforce-libraries/go_http"
 	types "github.com/leapforce-libraries/go_types"
 	utilities "github.com/leapforce-libraries/go_utilities"
 )
@@ -247,16 +248,27 @@ func (service *Service) CreateContact(contact *ContactUpdate) (*Contact, *errort
 	return &contactNew, nil
 }
 
-func (service *Service) UpdateContact(id types.GUID, contact *ContactUpdate) (*Contact, *errortools.Error) {
-	url := service.url(fmt.Sprintf("Contacts(guid'%s')", id.String()))
+func (service *Service) UpdateContact(id types.GUID, contact *ContactUpdate, returnUpdated bool) (*Contact, *errortools.Error) {
+	requestConfig := go_http.RequestConfig{
+		URL:       service.url(fmt.Sprintf("Contacts(guid'%s')", id.String())),
+		BodyModel: contact,
+	}
 
-	contactUpdated := Contact{}
-
-	e := service.Put(url, contact, &contactUpdated)
+	e := service.Put(&requestConfig)
 	if e != nil {
 		return nil, e
 	}
-	return &contactUpdated, nil
+
+	if !returnUpdated {
+		return nil, nil
+	}
+
+	contactUpdated, e := service.GetContact(id)
+	if e != nil {
+		return nil, e
+	}
+
+	return contactUpdated, nil
 }
 
 func (service *Service) DeleteContact(id types.GUID) *errortools.Error {

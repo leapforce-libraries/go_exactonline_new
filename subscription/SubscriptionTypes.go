@@ -6,6 +6,7 @@ import (
 	"time"
 
 	errortools "github.com/leapforce-libraries/go_errortools"
+	go_http "github.com/leapforce-libraries/go_http"
 	types "github.com/leapforce-libraries/go_types"
 	utilities "github.com/leapforce-libraries/go_utilities"
 )
@@ -102,6 +103,18 @@ func (call *GetSubscriptionTypesCall) DoAll() (*[]SubscriptionType, *errortools.
 	return &subscriptionTypes, nil
 }
 
+func (service *Service) GetSubscriptionType(id types.GUID) (*SubscriptionType, *errortools.Error) {
+	url := service.url(fmt.Sprintf("SubscriptionTypes(guid'%s')", id.String()))
+
+	subscriptionType := SubscriptionType{}
+
+	err := service.GetSingle(url, &subscriptionType)
+	if err != nil {
+		return nil, err
+	}
+	return &subscriptionType, nil
+}
+
 func (service *Service) CreateSubscriptionType(subscriptionType *SubscriptionTypeUpdate) (*SubscriptionType, *errortools.Error) {
 	url := service.url("SubscriptionTypes")
 
@@ -114,16 +127,27 @@ func (service *Service) CreateSubscriptionType(subscriptionType *SubscriptionTyp
 	return &subscriptionTypeNew, nil
 }
 
-func (service *Service) UpdateSubscriptionType(id types.GUID, subscriptionType *SubscriptionTypeUpdate) (*SubscriptionType, *errortools.Error) {
-	url := service.url(fmt.Sprintf("SubscriptionTypes(guid'%s')", id.String()))
+func (service *Service) UpdateSubscriptionType(id types.GUID, subscriptionType *SubscriptionTypeUpdate, returnUpdated bool) (*SubscriptionType, *errortools.Error) {
+	requestConfig := go_http.RequestConfig{
+		URL:       service.url(fmt.Sprintf("SubscriptionTypes(guid'%s')", id.String())),
+		BodyModel: subscriptionType,
+	}
 
-	subscriptionTypeUpdated := SubscriptionType{}
-
-	e := service.Put(url, subscriptionType, &subscriptionTypeUpdated)
+	e := service.Put(&requestConfig)
 	if e != nil {
 		return nil, e
 	}
-	return &subscriptionTypeUpdated, nil
+
+	if !returnUpdated {
+		return nil, nil
+	}
+
+	subscriptionTypeUpdated, e := service.GetSubscriptionType(id)
+	if e != nil {
+		return nil, e
+	}
+
+	return subscriptionTypeUpdated, nil
 }
 
 func (service *Service) DeleteSubscriptionType(id types.GUID) *errortools.Error {
