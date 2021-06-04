@@ -1,7 +1,6 @@
 package exactonline
 
 import (
-	"encoding/json"
 	"fmt"
 
 	errortools "github.com/leapforce-libraries/go_errortools"
@@ -30,7 +29,6 @@ type SalesOrderGoodsDelivery struct {
 	Document                      types.GUID        `json:"Document"`
 	DocumentSubject               string            `json:"DocumentSubject"`
 	EntryNumber                   int32             `json:"EntryNumber"`
-	GoodsDeliveryLines            json.RawMessage   `json:"GoodsDeliveryLines"` //to be implemented when needed
 	Modified                      *types.Date       `json:"Modified"`
 	Modifier                      types.GUID        `json:"Modifier"`
 	ModifierFullName              string            `json:"ModifierFullName"`
