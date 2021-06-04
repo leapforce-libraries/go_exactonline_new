@@ -98,6 +98,7 @@ func NewService(serviceConfig *ServiceConfig, bigQueryService *bigquery.Service)
 		PurchaseOrderService:        purchaseorder.NewService(httpService),
 		SalesOrderService:           salesorder.NewService(httpService),
 		SubscriptionService:         subscription.NewService(httpService),
+		SyncService:                 sync.NewService(httpService),
 		oAuth2Service:               oAuth2Service,
 	}, nil
 }
