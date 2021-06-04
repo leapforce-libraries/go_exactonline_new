@@ -92,7 +92,7 @@ func (service *Service) NewSyncCRMContactsCall(timestamp *int64) *SyncCRMContact
 	selectFields := utilities.GetTaggedTagNames("json", CRMContact{})
 	url := service.url(fmt.Sprintf("CRM/Contacts?$select=%s", selectFields))
 	if timestamp != nil {
-		url = fmt.Sprintf("%s&$filter=Timestamp eq %vL", url, *timestamp)
+		url = fmt.Sprintf("%s&$filter=Timestamp gt %vL", url, *timestamp)
 	}
 	call.urlNext = url
 
