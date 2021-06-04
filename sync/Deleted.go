@@ -8,6 +8,26 @@ import (
 	utilities "github.com/leapforce-libraries/go_utilities"
 )
 
+type EntityType int64
+
+const (
+	EntityTypeTransactionLines     int64 = 1
+	EntityTypeAccounts             int64 = 2
+	EntityTypeAddresses            int64 = 3
+	EntityTypeAttachments          int64 = 4
+	EntityTypeContacts             int64 = 5
+	EntityTypeDocuments            int64 = 6
+	EntityTypeGLAccounts           int64 = 7
+	EntityTypeSalesItemPrices      int64 = 8
+	EntityTypeItems                int64 = 9
+	EntityTypePaymentTerms         int64 = 10
+	EntityTypeQuotations           int64 = 11
+	EntityTypeSalesOrders          int64 = 12
+	EntityTypeSalesInvoices        int64 = 13
+	EntityTypeTimeCostTransactions int64 = 14
+	EntityTypeStockPositions       int64 = 15
+)
+
 // Deleted stores Deleted from exactonline
 //
 type Deleted struct {
@@ -18,26 +38,25 @@ type Deleted struct {
 	ID         types.GUID        `json:"ID"`
 }
 
-type SyncDeletedsCall struct {
+type SyncDeletedCall struct {
 	urlNext string
 	service *Service
 }
 
-func (service *Service) NewSyncDeletedsCall(timestamp *int64) *SyncDeletedsCall {
-	call := SyncDeletedsCall{}
-	call.service = service
-
+func (service *Service) NewSyncDeletedCall(timestamp *int64) *SyncDeletedCall {
 	selectFields := utilities.GetTaggedTagNames("json", Deleted{})
 	url := service.url(fmt.Sprintf("Deleted?$select=%s", selectFields))
 	if timestamp != nil {
-		url = fmt.Sprintf("%s&$filter=Timestamp eq %vL", url, *timestamp)
+		url = fmt.Sprintf("%s&$filter=Timestamp gt %vL", url, *timestamp)
 	}
-	call.urlNext = url
 
-	return &call
+	return &SyncDeletedCall{
+		service: service,
+		urlNext: url,
+	}
 }
 
-func (call *SyncDeletedsCall) Do() (*[]Deleted, *errortools.Error) {
+func (call *SyncDeletedCall) Do() (*[]Deleted, *errortools.Error) {
 	if call.urlNext == "" {
 		return nil, nil
 	}

@@ -88,17 +88,16 @@ type SyncFinancialTransactionLinesCall struct {
 }
 
 func (service *Service) NewSyncFinancialTransactionLinesCall(timestamp *int64) *SyncFinancialTransactionLinesCall {
-	call := SyncFinancialTransactionLinesCall{}
-	call.service = service
-
 	selectFields := utilities.GetTaggedTagNames("json", FinancialTransactionLine{})
 	url := service.url(fmt.Sprintf("Financial/TransactionLines?$select=%s", selectFields))
 	if timestamp != nil {
 		url = fmt.Sprintf("%s&$filter=Timestamp gt %vL", url, *timestamp)
 	}
-	call.urlNext = url
 
-	return &call
+	return &SyncFinancialTransactionLinesCall{
+		service: service,
+		urlNext: url,
+	}
 }
 
 func (call *SyncFinancialTransactionLinesCall) Do() (*[]FinancialTransactionLine, *errortools.Error) {

@@ -86,17 +86,16 @@ type SyncCRMContactsCall struct {
 }
 
 func (service *Service) NewSyncCRMContactsCall(timestamp *int64) *SyncCRMContactsCall {
-	call := SyncCRMContactsCall{}
-	call.service = service
-
 	selectFields := utilities.GetTaggedTagNames("json", CRMContact{})
 	url := service.url(fmt.Sprintf("CRM/Contacts?$select=%s", selectFields))
 	if timestamp != nil {
 		url = fmt.Sprintf("%s&$filter=Timestamp gt %vL", url, *timestamp)
 	}
-	call.urlNext = url
 
-	return &call
+	return &SyncCRMContactsCall{
+		service: service,
+		urlNext: url,
+	}
 }
 
 func (call *SyncCRMContactsCall) Do() (*[]CRMContact, *errortools.Error) {
