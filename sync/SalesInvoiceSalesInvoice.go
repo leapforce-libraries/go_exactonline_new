@@ -31,6 +31,7 @@ type SalesInvoiceSalesInvoice struct {
 	DeliverToAddress                     types.GUID        `json:"DeliverToAddress"`
 	DeliverToContactPerson               types.GUID        `json:"DeliverToContactPerson"`
 	DeliverToContactPersonFullName       string            `json:"DeliverToContactPersonFullName"`
+	DeliverToName                        string            `json:"DeliverToName"`
 	DeliveryDate                         string            `json:"DeliveryDate"`
 	Description                          string            `json:"Description"`
 	Discount                             float64           `json:"Discount"`
