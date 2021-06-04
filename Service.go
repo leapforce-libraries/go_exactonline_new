@@ -32,6 +32,7 @@ const (
 // Service stores Service configuration
 //
 type Service struct {
+	clientID                    string
 	BudgetService               *budget.Service
 	CRMService                  *crm.Service
 	FinancialTransactionService *financialtransaction.Service
@@ -90,6 +91,7 @@ func NewService(serviceConfig *ServiceConfig, bigQueryService *bigquery.Service)
 	httpService := eo_http.NewService(serviceConfig.Division, oAuth2Service)
 
 	return &Service{
+		clientID:                    serviceConfig.ClientID,
 		BudgetService:               budget.NewService(httpService),
 		CRMService:                  crm.NewService(httpService),
 		FinancialTransactionService: financialtransaction.NewService(httpService),
@@ -120,4 +122,20 @@ func ParseDateString(date string) *time.Time {
 	}
 
 	return nil
+}
+
+func (service Service) APIName() string {
+	return apiName
+}
+
+func (service Service) APIKey() string {
+	return service.clientID
+}
+
+func (service Service) APICallCount() int64 {
+	return service.oAuth2Service.APICallCount()
+}
+
+func (service Service) APIReset() {
+	service.oAuth2Service.APIReset()
 }
