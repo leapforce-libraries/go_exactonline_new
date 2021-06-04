@@ -14,6 +14,7 @@ import (
 	purchaseorder "github.com/leapforce-libraries/go_exactonline_new/purchaseorder"
 	salesorder "github.com/leapforce-libraries/go_exactonline_new/salesorder"
 	subscription "github.com/leapforce-libraries/go_exactonline_new/subscription"
+	sync "github.com/leapforce-libraries/go_exactonline_new/sync"
 	google "github.com/leapforce-libraries/go_google"
 	bigquery "github.com/leapforce-libraries/go_google/bigquery"
 	oauth2 "github.com/leapforce-libraries/go_oauth2"
@@ -39,7 +40,8 @@ type Service struct {
 	PurchaseOrderService        *purchaseorder.Service
 	SalesOrderService           *salesorder.Service
 	SubscriptionService         *subscription.Service
-	oAuth2                      *oauth2.OAuth2
+	SyncService                 *sync.Service
+	oAuth2Service               *oauth2.Service
 }
 
 type ServiceConfig struct {
@@ -71,7 +73,7 @@ func NewService(serviceConfig *ServiceConfig, bigQueryService *bigquery.Service)
 		return google.SaveToken(apiName, serviceConfig.ClientID, token, bigQueryService)
 	}
 
-	oauht2Config := oauth2.OAuth2Config{
+	oauth2ServiceConfig := oauth2.ServiceConfig{
 		ClientID:          serviceConfig.ClientID,
 		ClientSecret:      serviceConfig.ClientSecret,
 		RedirectURL:       redirectURL,
@@ -81,8 +83,11 @@ func NewService(serviceConfig *ServiceConfig, bigQueryService *bigquery.Service)
 		GetTokenFunction:  &getTokenFunction,
 		SaveTokenFunction: &saveTokenFunction,
 	}
-	oAuth2 := oauth2.NewOAuth(oauht2Config)
-	httpService := eo_http.NewService(serviceConfig.Division, oAuth2)
+	oAuth2Service, e := oauth2.NewService(&oauth2ServiceConfig)
+	if e != nil {
+		return nil, e
+	}
+	httpService := eo_http.NewService(serviceConfig.Division, oAuth2Service)
 
 	return &Service{
 		BudgetService:               budget.NewService(httpService),
@@ -93,16 +98,16 @@ func NewService(serviceConfig *ServiceConfig, bigQueryService *bigquery.Service)
 		PurchaseOrderService:        purchaseorder.NewService(httpService),
 		SalesOrderService:           salesorder.NewService(httpService),
 		SubscriptionService:         subscription.NewService(httpService),
-		oAuth2:                      oAuth2,
+		oAuth2Service:               oAuth2Service,
 	}, nil
 }
 
 func (service *Service) ValidateToken() (*oauth2.Token, *errortools.Error) {
-	return service.oAuth2.ValidateToken()
+	return service.oAuth2Service.ValidateToken()
 }
 
-func (service *Service) InitToken() *errortools.Error {
-	return service.oAuth2.InitToken()
+func (service *Service) InitToken(scope string) *errortools.Error {
+	return service.oAuth2Service.InitToken(scope)
 }
 
 func ParseDateString(date string) *time.Time {

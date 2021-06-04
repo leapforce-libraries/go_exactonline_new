@@ -27,17 +27,17 @@ const (
 //
 type Service struct {
 	division                    int32
-	oAuth2                      *oauth2.OAuth2
+	oAuth2Service               *oauth2.Service
 	xRateLimitMinutelyRemaining int
 	xRateLimitMinutelyReset     int64
 }
 
 // methods
 //
-func NewService(division int32, oauth2 *oauth2.OAuth2) *Service {
+func NewService(division int32, oauth2Service *oauth2.Service) *Service {
 	return &Service{
-		division: division,
-		oAuth2:   oauth2,
+		division:      division,
+		oAuth2Service: oauth2Service,
 	}
 }
 
@@ -49,8 +49,8 @@ func (service *Service) LastModifiedFormat() string {
 	return LastModifiedFormat
 }
 
-func (service *Service) InitToken() *errortools.Error {
-	return service.oAuth2.InitToken()
+func (service *Service) InitToken(scope string) *errortools.Error {
+	return service.oAuth2Service.InitToken(scope)
 }
 
 // Response represents highest level of exactonline api response
@@ -112,7 +112,7 @@ func (service *Service) getResponseSingle(url string) (*http.Request, *http.Resp
 		ErrorModel:    &exactOnlineError,
 	}
 
-	request, response, e := service.oAuth2.Get(&requestConfig)
+	request, response, e := service.oAuth2Service.Get(&requestConfig)
 	if e != nil {
 		e.SetRequest(request)
 		e.SetResponse(response)
@@ -137,7 +137,7 @@ func (service *Service) getResponse(url string) (*http.Request, *http.Response, 
 		ErrorModel:    &exactOnlineError,
 	}
 
-	request, response, e := service.oAuth2.Get(&requestConfig)
+	request, response, e := service.oAuth2Service.Get(&requestConfig)
 	if e != nil {
 		e.SetRequest(request)
 		e.SetResponse(response)
@@ -240,7 +240,7 @@ func (service *Service) Put(requestConfig *go_http.RequestConfig) *errortools.Er
 		MaxRetries: &maxRetries,
 	}
 
-	request, response, e := service.oAuth2.Put(&_requestConfig)
+	request, response, e := service.oAuth2Service.Put(&_requestConfig)
 	if e != nil {
 		e.SetRequest(request)
 		e.SetResponse(response)
@@ -277,7 +277,7 @@ func (service *Service) Post(url string, bodyModel interface{}, responseModel in
 		ErrorModel:    &exactOnlineError,
 	}
 
-	request, response, e := service.oAuth2.Post(&requestConfig)
+	request, response, e := service.oAuth2Service.Post(&requestConfig)
 	if e != nil {
 		e.SetRequest(request)
 		e.SetResponse(response)
@@ -309,7 +309,7 @@ func (service *Service) Delete(url string) *errortools.Error {
 		ErrorModel: &exactOnlineError,
 	}
 
-	request, response, e := service.oAuth2.Delete(&requestConfig)
+	request, response, e := service.oAuth2Service.Delete(&requestConfig)
 	if e != nil {
 		e.SetRequest(request)
 		e.SetResponse(response)
