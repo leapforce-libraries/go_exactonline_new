@@ -11,21 +11,21 @@ import (
 type EntityType int64
 
 const (
-	EntityTypeTransactionLines     int64 = 1
-	EntityTypeAccounts             int64 = 2
-	EntityTypeAddresses            int64 = 3
-	EntityTypeAttachments          int64 = 4
-	EntityTypeContacts             int64 = 5
-	EntityTypeDocuments            int64 = 6
-	EntityTypeGLAccounts           int64 = 7
-	EntityTypeSalesItemPrices      int64 = 8
-	EntityTypeItems                int64 = 9
-	EntityTypePaymentTerms         int64 = 10
-	EntityTypeQuotations           int64 = 11
-	EntityTypeSalesOrders          int64 = 12
-	EntityTypeSalesInvoices        int64 = 13
-	EntityTypeTimeCostTransactions int64 = 14
-	EntityTypeStockPositions       int64 = 15
+	EntityTypeTransactionLines     EntityType = 1
+	EntityTypeAccounts             EntityType = 2
+	EntityTypeAddresses            EntityType = 3
+	EntityTypeAttachments          EntityType = 4
+	EntityTypeContacts             EntityType = 5
+	EntityTypeDocuments            EntityType = 6
+	EntityTypeGLAccounts           EntityType = 7
+	EntityTypeSalesItemPrices      EntityType = 8
+	EntityTypeItems                EntityType = 9
+	EntityTypePaymentTerms         EntityType = 10
+	EntityTypeQuotations           EntityType = 11
+	EntityTypeSalesOrders          EntityType = 12
+	EntityTypeSalesInvoices        EntityType = 13
+	EntityTypeTimeCostTransactions EntityType = 14
+	EntityTypeStockPositions       EntityType = 15
 )
 
 // Deleted stores Deleted from exactonline
