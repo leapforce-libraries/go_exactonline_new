@@ -9,9 +9,9 @@ import (
 	utilities "github.com/leapforce-libraries/go_utilities"
 )
 
-// SalesOrderGoodDeliveryLine stores SalesOrderGoodDeliveryLine from exactonline
+// SalesOrderGoodsDeliveryLine stores SalesOrderGoodsDeliveryLine from exactonline
 //
-type SalesOrderGoodDeliveryLine struct {
+type SalesOrderGoodsDeliveryLine struct {
 	Timestamp                  types.Int64String `json:"Timestamp"`
 	ID                         types.GUID        `json:"ID"`
 	BatchNumbers               json.RawMessage   `json:"BatchNumbers"` //to be implemented when needed
@@ -44,37 +44,37 @@ type SalesOrderGoodDeliveryLine struct {
 	Unitcode                   string            `json:"Unitcode"`
 }
 
-type SyncSalesOrderGoodDeliveryLinesCall struct {
+type SyncSalesOrderGoodsDeliveryLinesCall struct {
 	urlNext string
 	service *Service
 }
 
-func (service *Service) NewSyncSalesOrderGoodDeliveryLinesCall(timestamp *int64) *SyncSalesOrderGoodDeliveryLinesCall {
-	selectFields := utilities.GetTaggedTagNames("json", SalesOrderGoodDeliveryLine{})
-	url := service.url(fmt.Sprintf("SalesOrder/GoodDeliveryLines?$select=%s", selectFields))
+func (service *Service) NewSyncSalesOrderGoodsDeliveryLinesCall(timestamp *int64) *SyncSalesOrderGoodsDeliveryLinesCall {
+	selectFields := utilities.GetTaggedTagNames("json", SalesOrderGoodsDeliveryLine{})
+	url := service.url(fmt.Sprintf("SalesOrder/GoodsDeliveryLines?$select=%s", selectFields))
 	if timestamp != nil {
 		url = fmt.Sprintf("%s&$filter=Timestamp gt %vL", url, *timestamp)
 	}
 
-	return &SyncSalesOrderGoodDeliveryLinesCall{
+	return &SyncSalesOrderGoodsDeliveryLinesCall{
 		service: service,
 		urlNext: url,
 	}
 }
 
-func (call *SyncSalesOrderGoodDeliveryLinesCall) Do() (*[]SalesOrderGoodDeliveryLine, *errortools.Error) {
+func (call *SyncSalesOrderGoodsDeliveryLinesCall) Do() (*[]SalesOrderGoodsDeliveryLine, *errortools.Error) {
 	if call.urlNext == "" {
 		return nil, nil
 	}
 
-	salesOrderGoodDeliveryLines := []SalesOrderGoodDeliveryLine{}
+	salesOrderGoodsDeliveryLines := []SalesOrderGoodsDeliveryLine{}
 
-	next, err := call.service.Get(call.urlNext, &salesOrderGoodDeliveryLines)
+	next, err := call.service.Get(call.urlNext, &salesOrderGoodsDeliveryLines)
 	if err != nil {
 		return nil, err
 	}
 
 	call.urlNext = next
 
-	return &salesOrderGoodDeliveryLines, nil
+	return &salesOrderGoodsDeliveryLines, nil
 }

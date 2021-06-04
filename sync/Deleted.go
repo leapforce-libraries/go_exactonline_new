@@ -24,8 +24,8 @@ const (
 	EntityTypePaymentTerms         EntityType = 10
 	EntityTypeQuotations           EntityType = 11
 	EntityTypeSalesOrders          EntityType = 12
-	EntityTypeGoodDeliveries       EntityType = 0 // ??
-	EntityTypeGoodDeliveryLines    EntityType = 0 // ??
+	EntityTypeGoodsDeliveries      EntityType = 0 // ??
+	EntityTypeGoodsDeliveryLines   EntityType = 0 // ??
 	EntityTypeSalesInvoices        EntityType = 13
 	EntityTypeTimeCostTransactions EntityType = 14
 	EntityTypeStockPositions       EntityType = 15
