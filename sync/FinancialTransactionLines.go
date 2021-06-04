@@ -83,14 +83,12 @@ type FinancialTransactionLine struct {
 }
 
 type SyncFinancialTransactionLinesCall struct {
-	timestamp *int64
-	urlNext   string
-	service   *Service
+	urlNext string
+	service *Service
 }
 
 func (service *Service) NewSyncFinancialTransactionLinesCall(timestamp *int64) *SyncFinancialTransactionLinesCall {
 	call := SyncFinancialTransactionLinesCall{}
-	call.timestamp = timestamp
 	call.service = service
 
 	selectFields := utilities.GetTaggedTagNames("json", FinancialTransactionLine{})
