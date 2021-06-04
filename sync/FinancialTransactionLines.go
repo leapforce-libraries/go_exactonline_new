@@ -96,7 +96,7 @@ func (service *Service) NewSyncFinancialTransactionLinesCall(timestamp *int64) *
 	selectFields := utilities.GetTaggedTagNames("json", FinancialTransactionLine{})
 	url := service.url(fmt.Sprintf("Financial/TransactionLines?$select=%s", selectFields))
 	if timestamp != nil {
-		url = fmt.Sprintf("%s&$filter=Timestamp eq %v", url, *timestamp)
+		url = fmt.Sprintf("%s&$filter=Timestamp eq %vL", url, *timestamp)
 	}
 	call.urlNext = url
 
