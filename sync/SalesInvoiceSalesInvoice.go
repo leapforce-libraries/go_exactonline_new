@@ -18,7 +18,7 @@ type SalesInvoiceSalesInvoice struct {
 	AmountDiscountExclVat                float64           `json:"AmountDiscountExclVat"`
 	AmountFC                             float64           `json:"AmountFC"`
 	AmountFCExclVat                      float64           `json:"AmountFCExclVat"`
-	CostCenter                           types.GUID        `json:"CostCenter"`
+	CostCenter                           string            `json:"CostCenter"`
 	CostCenterDescription                string            `json:"CostCenterDescription"`
 	CostUnit                             string            `json:"CostUnit"`
 	CostUnitDescription                  string            `json:"CostUnitDescription"`
