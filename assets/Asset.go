@@ -12,7 +12,7 @@ import (
 // Asset stores Asset from exactonline
 //
 type Asset struct {
-	ID                            types.GUID  `json:"ID "`
+	ID                            types.GUID  `json:"ID"`
 	AlreadyDepreciated            byte        `json:"AlreadyDepreciated"`
 	AssetFrom                     types.GUID  `json:"AssetFrom"`
 	AssetFromDescription          string      `json:"AssetFromDescription"`
