@@ -40,7 +40,7 @@ func (service *Service) NewGetAgingReceivablesListsCall() *GetAgingReceivablesLi
 	call.service = service
 
 	selectFields := utilities.GetTaggedTagNames("json", AgingReceivablesList{})
-	call.urlNext = service.urlRead(fmt.Sprintf("AgingReceivablesLists?$select=%s", selectFields))
+	call.urlNext = service.urlRead(fmt.Sprintf("AgingReceivablesList?$select=%s", selectFields))
 
 	return &call
 }

@@ -9,6 +9,7 @@ import (
 	budget "github.com/leapforce-libraries/go_exactonline_new/budget"
 	cashflow "github.com/leapforce-libraries/go_exactonline_new/cashflow"
 	crm "github.com/leapforce-libraries/go_exactonline_new/crm"
+	financial "github.com/leapforce-libraries/go_exactonline_new/financial"
 	financialtransaction "github.com/leapforce-libraries/go_exactonline_new/financialtransaction"
 	eo_http "github.com/leapforce-libraries/go_exactonline_new/http"
 	logistics "github.com/leapforce-libraries/go_exactonline_new/logistics"
@@ -39,6 +40,7 @@ type Service struct {
 	BudgetService               *budget.Service
 	CashflowService             *cashflow.Service
 	CRMService                  *crm.Service
+	FinancialService            *financial.Service
 	FinancialTransactionService *financialtransaction.Service
 	LogisticsService            *logistics.Service
 	PurchaseEntryService        *purchaseentry.Service
@@ -100,6 +102,7 @@ func NewService(serviceConfig *ServiceConfig, bigQueryService *bigquery.Service)
 		BudgetService:               budget.NewService(httpService),
 		CashflowService:             cashflow.NewService(httpService),
 		CRMService:                  crm.NewService(httpService),
+		FinancialService:            financial.NewService(httpService),
 		FinancialTransactionService: financialtransaction.NewService(httpService),
 		LogisticsService:            logistics.NewService(httpService),
 		PurchaseEntryService:        purchaseentry.NewService(httpService),

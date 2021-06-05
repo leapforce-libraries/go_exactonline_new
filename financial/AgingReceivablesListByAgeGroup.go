@@ -12,7 +12,7 @@ import (
 //
 type AgingReceivablesListByAgeGroup struct {
 	AgeGroup             int
-	AccountID            types.GUID `json:"AccountId "`
+	AccountID            types.GUID `json:"AccountId"`
 	AccountCode          string     `json:"AccountCode"`
 	AccountName          string     `json:"AccountName"`
 	AgeGroup1            int32      `json:"AgeGroup1"`
@@ -41,7 +41,7 @@ func (service *Service) NewGetAgingReceivablesListByAgeGroupsCall(ageGroup int) 
 	call.service = service
 
 	selectFields := utilities.GetTaggedTagNames("json", AgingReceivablesListByAgeGroup{})
-	call.urlNext = service.urlRead(fmt.Sprintf("AgingReceivablesListByAgeGroups?ageGroup=%v&$select=%s", ageGroup, selectFields))
+	call.urlNext = service.urlRead(fmt.Sprintf("AgingReceivablesListByAgeGroup?ageGroup=%v&$select=%s", ageGroup, selectFields))
 
 	return &call
 }

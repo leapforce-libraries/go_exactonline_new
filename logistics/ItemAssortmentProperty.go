@@ -34,7 +34,7 @@ func (service *Service) NewGetItemAssortmentPropertiesCall(params *GetItemAssort
 	call.service = service
 
 	selectFields := utilities.GetTaggedTagNames("json", ItemAssortmentProperty{})
-	call.urlNext = service.url(fmt.Sprintf("ItemAssortmentProperties?$select=%s", selectFields))
+	call.urlNext = service.url(fmt.Sprintf("ItemAssortmentProperty?$select=%s", selectFields))
 	filter := []string{}
 
 	if params != nil {
