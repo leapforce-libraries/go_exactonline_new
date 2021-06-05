@@ -36,7 +36,7 @@ func (service *Service) NewGetGLSchemesCall(modifiedAfter *time.Time) *GetGLSche
 	call.service = service
 
 	selectFields := utilities.GetTaggedTagNames("json", GLScheme{})
-	call.urlNext = service.url(fmt.Sprintf("GLScheme?$select=%s", selectFields))
+	call.urlNext = service.url(fmt.Sprintf("GLSchemes?$select=%s", selectFields))
 	if modifiedAfter != nil {
 		call.urlNext += service.DateFilter("Modified", "gt", modifiedAfter, true, "&")
 	}

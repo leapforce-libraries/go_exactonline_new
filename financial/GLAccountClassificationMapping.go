@@ -34,7 +34,7 @@ func (service *Service) NewGetGLAccountClassificationMappingsCall() *GetGLAccoun
 	call.service = service
 
 	selectFields := utilities.GetTaggedTagNames("json", GLAccountClassificationMapping{})
-	call.urlNext = service.url(fmt.Sprintf("GLAccountClassificationMapping?$select=%s", selectFields))
+	call.urlNext = service.url(fmt.Sprintf("GLAccountClassificationMappings?$select=%s", selectFields))
 
 	return &call
 }
