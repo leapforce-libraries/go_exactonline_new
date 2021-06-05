@@ -5,7 +5,9 @@ import (
 	"time"
 
 	errortools "github.com/leapforce-libraries/go_errortools"
+	assets "github.com/leapforce-libraries/go_exactonline_new/assets"
 	budget "github.com/leapforce-libraries/go_exactonline_new/budget"
+	cashflow "github.com/leapforce-libraries/go_exactonline_new/cashflow"
 	crm "github.com/leapforce-libraries/go_exactonline_new/crm"
 	financialtransaction "github.com/leapforce-libraries/go_exactonline_new/financialtransaction"
 	eo_http "github.com/leapforce-libraries/go_exactonline_new/http"
@@ -33,7 +35,9 @@ const (
 //
 type Service struct {
 	clientID                    string
+	AssetsService               *assets.Service
 	BudgetService               *budget.Service
+	CashflowService             *cashflow.Service
 	CRMService                  *crm.Service
 	FinancialTransactionService *financialtransaction.Service
 	LogisticsService            *logistics.Service
@@ -92,7 +96,9 @@ func NewService(serviceConfig *ServiceConfig, bigQueryService *bigquery.Service)
 
 	return &Service{
 		clientID:                    serviceConfig.ClientID,
+		AssetsService:               assets.NewService(httpService),
 		BudgetService:               budget.NewService(httpService),
+		CashflowService:             cashflow.NewService(httpService),
 		CRMService:                  crm.NewService(httpService),
 		FinancialTransactionService: financialtransaction.NewService(httpService),
 		LogisticsService:            logistics.NewService(httpService),
