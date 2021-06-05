@@ -40,14 +40,12 @@ type Budget struct {
 }
 
 type GetBudgetsCall struct {
-	modifiedAfter *time.Time
-	urlNext       string
-	service       *Service
+	urlNext string
+	service *Service
 }
 
 func (service *Service) NewGetBudgetsCall(modifiedAfter *time.Time) *GetBudgetsCall {
 	call := GetBudgetsCall{}
-	call.modifiedAfter = modifiedAfter
 	call.service = service
 
 	selectFields := utilities.GetTaggedTagNames("json", Budget{})

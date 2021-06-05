@@ -89,7 +89,3 @@ func (call *GetItemAssortmentPropertiesCall) DoAll() (*[]ItemAssortmentProperty,
 
 	return &items, nil
 }
-
-func (service *Service) GetItemAssortmentPropertiesCount(createdBefore *time.Time) (int64, *errortools.Error) {
-	return service.GetCount("ItemAssortmentProperties", createdBefore)
-}
