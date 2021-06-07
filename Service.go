@@ -12,9 +12,13 @@ import (
 	financial "github.com/leapforce-libraries/go_exactonline_new/financial"
 	financialtransaction "github.com/leapforce-libraries/go_exactonline_new/financialtransaction"
 	eo_http "github.com/leapforce-libraries/go_exactonline_new/http"
+	inventory "github.com/leapforce-libraries/go_exactonline_new/inventory"
 	logistics "github.com/leapforce-libraries/go_exactonline_new/logistics"
+	payroll "github.com/leapforce-libraries/go_exactonline_new/payroll"
+	project "github.com/leapforce-libraries/go_exactonline_new/project"
 	purchaseentry "github.com/leapforce-libraries/go_exactonline_new/purchaseentry"
 	purchaseorder "github.com/leapforce-libraries/go_exactonline_new/purchaseorder"
+	salesinvoice "github.com/leapforce-libraries/go_exactonline_new/salesinvoice"
 	salesorder "github.com/leapforce-libraries/go_exactonline_new/salesorder"
 	subscription "github.com/leapforce-libraries/go_exactonline_new/subscription"
 	sync "github.com/leapforce-libraries/go_exactonline_new/sync"
@@ -42,9 +46,13 @@ type Service struct {
 	CRMService                  *crm.Service
 	FinancialService            *financial.Service
 	FinancialTransactionService *financialtransaction.Service
+	InventoryService            *inventory.Service
 	LogisticsService            *logistics.Service
+	PayrollService              *payroll.Service
+	ProjectService              *project.Service
 	PurchaseEntryService        *purchaseentry.Service
 	PurchaseOrderService        *purchaseorder.Service
+	SalesInvoiceService         *salesinvoice.Service
 	SalesOrderService           *salesorder.Service
 	SubscriptionService         *subscription.Service
 	SyncService                 *sync.Service
@@ -104,9 +112,13 @@ func NewService(serviceConfig *ServiceConfig, bigQueryService *bigquery.Service)
 		CRMService:                  crm.NewService(httpService),
 		FinancialService:            financial.NewService(httpService),
 		FinancialTransactionService: financialtransaction.NewService(httpService),
+		InventoryService:            inventory.NewService(httpService),
 		LogisticsService:            logistics.NewService(httpService),
+		PayrollService:              payroll.NewService(httpService),
+		ProjectService:              project.NewService(httpService),
 		PurchaseEntryService:        purchaseentry.NewService(httpService),
 		PurchaseOrderService:        purchaseorder.NewService(httpService),
+		SalesInvoiceService:         salesinvoice.NewService(httpService),
 		SalesOrderService:           salesorder.NewService(httpService),
 		SubscriptionService:         subscription.NewService(httpService),
 		SyncService:                 sync.NewService(httpService),

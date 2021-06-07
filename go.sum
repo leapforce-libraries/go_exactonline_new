@@ -336,6 +336,8 @@ github.com/leapforce-libraries/go_google v0.0.0-20210423214553-0375c4164934 h1:h
 github.com/leapforce-libraries/go_google v0.0.0-20210423214553-0375c4164934/go.mod h1:TgN7RlerriKqnb41qXgs8wT6T+v0F8s1Hj8ikbusnX0=
 github.com/leapforce-libraries/go_google v0.0.0-20210604062236-9268a2f14cac h1:ytu6w1eSOUJwXQdC3sphhSgSXFgKJ5gYhcrJEwfwvRQ=
 github.com/leapforce-libraries/go_google v0.0.0-20210604062236-9268a2f14cac/go.mod h1:ObwVimqCQTaNtiznGB4baMsPNafXU8cqXnK0yrE/4PU=
+github.com/leapforce-libraries/go_google v0.0.0-20210604170955-260603b2ee9f h1:pMez6Dg/rE3tYbDoX7gYeJy0nPb2juqxV1lITpA7TZA=
+github.com/leapforce-libraries/go_google v0.0.0-20210604170955-260603b2ee9f/go.mod h1:ObwVimqCQTaNtiznGB4baMsPNafXU8cqXnK0yrE/4PU=
 github.com/leapforce-libraries/go_googlecloudstorage v0.0.0-20210428222229-1147c7986a8d/go.mod h1:5vTKz3d/EqR85Ge5dN6+emiKfMDh73mibAQRs7wQz8k=
 github.com/leapforce-libraries/go_googlecloudstorage v0.0.0-20210512105628-d07f5f4332c1 h1:mI+rNmq/Y6va2epFYmEPlE7XNI3AinLe93DzjDamJu0=
 github.com/leapforce-libraries/go_googlecloudstorage v0.0.0-20210512105628-d07f5f4332c1/go.mod h1:5vTKz3d/EqR85Ge5dN6+emiKfMDh73mibAQRs7wQz8k=
@@ -477,6 +479,8 @@ github.com/leapforce-libraries/go_utilities v0.0.0-20210505125333-18b876c17d79 h
 github.com/leapforce-libraries/go_utilities v0.0.0-20210505125333-18b876c17d79/go.mod h1:fp9gPd4WpZ62d3/5l+NU6H1XgqpigCGMxLKxFO61vEA=
 github.com/leapforce-libraries/go_utilities v0.0.0-20210602102157-b8d055f7e0af h1:vER47brePx/rjqJ9Qfch6EExuk7u+rwnRs98IUlLdPk=
 github.com/leapforce-libraries/go_utilities v0.0.0-20210602102157-b8d055f7e0af/go.mod h1:fp9gPd4WpZ62d3/5l+NU6H1XgqpigCGMxLKxFO61vEA=
+github.com/leapforce-libraries/go_utilities v0.0.0-20210607133432-092ce628d77d h1:RgbeCHhA/vmbXGqE9y+0RxE0rRoYKb5bEtB/g5wWIOY=
+github.com/leapforce-libraries/go_utilities v0.0.0-20210607133432-092ce628d77d/go.mod h1:fp9gPd4WpZ62d3/5l+NU6H1XgqpigCGMxLKxFO61vEA=
 github.com/magiconair/properties v1.8.0/go.mod h1:PppfXfuXeibc/6YijjN8zIbojt8czPbwD3XqdrwzmxQ=
 github.com/mattn/go-colorable v0.1.2/go.mod h1:U0ppj6V5qS13XJ6of8GYAs25YV2eR4EVcfRqFIhoBtE=
 github.com/mattn/go-isatty v0.0.7/go.mod h1:Iq45c/XA43vh69/j3iqttzPXn0bhXyGjM0Hdxcsrc5s=
