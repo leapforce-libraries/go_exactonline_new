@@ -71,8 +71,8 @@ type CRMContact struct {
 	Phone                     string            `json:"Phone"`
 	PhoneExtension            string            `json:"PhoneExtension"`
 	PictureName               string            `json:"PictureName"`
-	PictureThumbnailUrl       string            `json:"PictureThumbnailUrl"`
-	PictureUrl                string            `json:"PictureUrl"`
+	PictureThumbnailURL       string            `json:"PictureThumbnailUrl"`
+	PictureURL                string            `json:"PictureUrl"`
 	Postcode                  string            `json:"Postcode"`
 	SocialSecurityNumber      string            `json:"SocialSecurityNumber"`
 	StartDate                 *types.Date       `json:"StartDate"`

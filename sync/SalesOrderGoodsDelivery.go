@@ -12,7 +12,6 @@ import (
 //
 type SalesOrderGoodsDelivery struct {
 	Timestamp                     types.Int64String `json:"Timestamp"`
-	EntryID                       types.GUID        `json:"EntryID"`
 	Created                       *types.Date       `json:"Created"`
 	Creator                       types.GUID        `json:"Creator"`
 	CreatorFullName               string            `json:"CreatorFullName"`
@@ -28,6 +27,7 @@ type SalesOrderGoodsDelivery struct {
 	Division                      int32             `json:"Division"`
 	Document                      types.GUID        `json:"Document"`
 	DocumentSubject               string            `json:"DocumentSubject"`
+	EntryID                       types.GUID        `json:"EntryID"`
 	EntryNumber                   int32             `json:"EntryNumber"`
 	Modified                      *types.Date       `json:"Modified"`
 	Modifier                      types.GUID        `json:"Modifier"`

@@ -12,7 +12,6 @@ import (
 //
 type FinancialGLClassification struct {
 	Timestamp                    types.Int64String `json:"Timestamp"`
-	ID                           types.GUID        `json:"ID"`
 	Abstract                     bool              `json:"Abstract"`
 	Balance                      string            `json:"Balance"`
 	Code                         string            `json:"Code"`
@@ -21,6 +20,7 @@ type FinancialGLClassification struct {
 	CreatorFullName              string            `json:"CreatorFullName"`
 	Description                  string            `json:"Description"`
 	Division                     int32             `json:"Division"`
+	ID                           types.GUID        `json:"ID"`
 	IsTupleSubElement            bool              `json:"IsTupleSubElement"`
 	Modified                     *types.Date       `json:"Modified"`
 	Modifier                     types.GUID        `json:"Modifier"`

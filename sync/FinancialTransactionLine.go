@@ -12,7 +12,6 @@ import (
 //
 type FinancialTransactionLine struct {
 	Timestamp                 types.Int64String `json:"Timestamp"`
-	ID                        types.GUID        `json:"ID"`
 	Account                   types.GUID        `json:"Account"`
 	AccountCode               string            `json:"AccountCode"`
 	AccountName               string            `json:"AccountName"`
@@ -48,6 +47,7 @@ type FinancialTransactionLine struct {
 	GLAccount                 types.GUID        `json:"GLAccount"`
 	GLAccountCode             string            `json:"GLAccountCode"`
 	GLAccountDescription      string            `json:"GLAccountDescription"`
+	ID                        types.GUID        `json:"ID"`
 	InvoiceNumber             int64             `json:"InvoiceNumber"`
 	Item                      types.GUID        `json:"Item"`
 	ItemCode                  string            `json:"ItemCode"`

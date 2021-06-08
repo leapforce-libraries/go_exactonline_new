@@ -13,7 +13,6 @@ import (
 //
 type CRMAccount struct {
 	Timestamp                           types.Int64String `json:"Timestamp"`
-	ID                                  types.GUID        `json:"ID"`
 	Accountant                          types.GUID        `json:"Accountant"`
 	AccountManager                      types.GUID        `json:"AccountManager"`
 	AccountManagerFullName              string            `json:"AccountManagerFullName"`
@@ -75,6 +74,7 @@ type CRMAccount struct {
 	GLAR                                types.GUID        `json:"GLAR"`
 	GlnNumber                           string            `json:"GlnNumber"`
 	HasWithholdingTaxSales              bool              `json:"HasWithholdingTaxSales"`
+	ID                                  types.GUID        `json:"ID"`
 	IgnoreDatevWarningMessage           bool              `json:"IgnoreDatevWarningMessage"`
 	IntraStatArea                       string            `json:"IntraStatArea"`
 	IntraStatDeliveryTerm               string            `json:"IntraStatDeliveryTerm"`
@@ -146,10 +146,10 @@ type CRMAccount struct {
 	SalesVATCodeDescription             string            `json:"SalesVATCodeDescription"`
 	SearchCode                          string            `json:"SearchCode"`
 	SecurityLevel                       int32             `json:"SecurityLevel"`
-	SeparateInvPerProject               byte              `json:"SeparateInvPerProject"`
-	SeparateInvPerSubscription          byte              `json:"SeparateInvPerSubscription"`
+	SeparateInvoicePerSubscription      byte              `json:"SeparateInvPerSubscription"`
 	ShippingLeadDays                    int32             `json:"ShippingLeadDays"`
 	ShippingMethod                      types.GUID        `json:"ShippingMethod"`
+	ShowRemarkForSales                  bool              `json:"ShowRemarkForSales"`
 	StartDate                           *types.Date       `json:"StartDate"`
 	State                               string            `json:"State"`
 	StateName                           string            `json:"StateName"`

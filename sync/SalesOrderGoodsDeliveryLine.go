@@ -13,7 +13,6 @@ import (
 //
 type SalesOrderGoodsDeliveryLine struct {
 	Timestamp                  types.Int64String `json:"Timestamp"`
-	ID                         types.GUID        `json:"ID"`
 	BatchNumbers               json.RawMessage   `json:"BatchNumbers"` //to be implemented when needed
 	Created                    *types.Date       `json:"Created"`
 	Creator                    types.GUID        `json:"Creator"`
@@ -23,6 +22,7 @@ type SalesOrderGoodsDeliveryLine struct {
 	Description                string            `json:"Description"`
 	Division                   int32             `json:"Division"`
 	EntryID                    types.GUID        `json:"EntryID"`
+	ID                         types.GUID        `json:"ID"`
 	Item                       types.GUID        `json:"Item"`
 	ItemCode                   string            `json:"ItemCode"`
 	ItemDescription            string            `json:"ItemDescription"`

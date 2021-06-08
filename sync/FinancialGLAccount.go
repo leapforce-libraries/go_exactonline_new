@@ -12,7 +12,6 @@ import (
 //
 type FinancialGLAccount struct {
 	Timestamp                      types.Int64String `json:"Timestamp"`
-	ID                             types.GUID        `json:"ID"`
 	AssimilatedVATBox              int16             `json:"AssimilatedVATBox"`
 	BalanceSide                    string            `json:"BalanceSide"`
 	BalanceType                    string            `json:"BalanceType"`
@@ -30,6 +29,7 @@ type FinancialGLAccount struct {
 	Division                       int32             `json:"Division"`
 	ExcludeVATListing              byte              `json:"ExcludeVATListing"`
 	ExpenseNonDeductiblePercentage float64           `json:"ExpenseNonDeductiblePercentage"`
+	ID                             types.GUID        `json:"ID"`
 	IsBlocked                      bool              `json:"IsBlocked"`
 	Matching                       bool              `json:"Matching"`
 	Modified                       *types.Date       `json:"Modified"`

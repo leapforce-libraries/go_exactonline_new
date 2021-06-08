@@ -2,7 +2,6 @@ package exactonline
 
 import (
 	"fmt"
-	"time"
 
 	errortools "github.com/leapforce-libraries/go_errortools"
 	types "github.com/leapforce-libraries/go_types"
@@ -95,7 +94,4 @@ func (call *GetSalesInvoiceLinesCall) Do() (*[]SalesInvoiceLine, *errortools.Err
 	call.urlNext = next
 
 	return &salesOrderLines, nil
-}
-func (service *Service) GetSalesInvoiceLinesCount(createdBefore *time.Time) (int64, *errortools.Error) {
-	return service.GetCount("SalesInvoiceLines", createdBefore)
 }

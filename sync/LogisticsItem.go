@@ -12,7 +12,6 @@ import (
 //
 type LogisticsItem struct {
 	Timestamp               types.Int64String `json:"Timestamp"`
-	ID                      types.GUID        `json:"ID"`
 	AverageCost             float64           `json:"AverageCost"`
 	Barcode                 string            `json:"Barcode"`
 	Class01                 string            `json:"Class_01"`
@@ -75,6 +74,7 @@ type LogisticsItem struct {
 	GLStockCode             string            `json:"GLStockCode"`
 	GLStockDescription      string            `json:"GLStockDescription"`
 	GrossWeight             float64           `json:"GrossWeight"`
+	ID                      types.GUID        `json:"ID"`
 	IsBatchItem             byte              `json:"IsBatchItem"`
 	IsFractionAllowedItem   bool              `json:"IsFractionAllowedItem"`
 	IsMakeItem              byte              `json:"IsMakeItem"`
@@ -101,8 +101,8 @@ type LogisticsItem struct {
 	PictureName             string            `json:"PictureName"`
 	PictureThumbnailURL     string            `json:"PictureThumbnailUrl"`
 	PictureURL              string            `json:"PictureUrl"`
-	SalesVatCode            string            `json:"SalesVatCode"`
-	SalesVatCodeDescription string            `json:"SalesVatCodeDescription"`
+	SalesVATCode            string            `json:"SalesVatCode"`
+	SalesVATCodeDescription string            `json:"SalesVatCodeDescription"`
 	SearchCode              string            `json:"SearchCode"`
 	SecurityLevel           int32             `json:"SecurityLevel"`
 	StartDate               *types.Date       `json:"StartDate"`

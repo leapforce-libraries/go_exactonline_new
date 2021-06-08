@@ -12,7 +12,6 @@ import (
 //
 type LogisticsSalesItemPrice struct {
 	Timestamp                  types.Int64String `json:"Timestamp"`
-	ID                         types.GUID        `json:"ID"`
 	Account                    types.GUID        `json:"Account"`
 	AccountName                string            `json:"AccountName"`
 	Created                    *types.Date       `json:"Created"`
@@ -23,6 +22,7 @@ type LogisticsSalesItemPrice struct {
 	DefaultItemUnitDescription string            `json:"DefaultItemUnitDescription"`
 	Division                   int32             `json:"Division"`
 	EndDate                    *types.Date       `json:"EndDate"`
+	ID                         types.GUID        `json:"ID"`
 	Item                       types.GUID        `json:"Item"`
 	ItemCode                   string            `json:"ItemCode"`
 	ItemDescription            string            `json:"ItemDescription"`
