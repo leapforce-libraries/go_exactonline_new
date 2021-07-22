@@ -49,9 +49,10 @@ func (service *Service) LastModifiedFormat() string {
 	return LastModifiedFormat
 }
 
-func (service *Service) InitToken(scope string) *errortools.Error {
-	return service.oAuth2Service.InitToken(scope)
-}
+/*
+func (service *Service) InitToken(scope string, accessType *string, prompt *string, state *string) *errortools.Error {
+	return service.oAuth2Service.InitToken(scope, accessType, prompt, state)
+}*/
 
 // Response represents highest level of exactonline api response
 //

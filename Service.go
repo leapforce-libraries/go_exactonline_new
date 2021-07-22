@@ -130,8 +130,8 @@ func (service *Service) ValidateToken() (*oauth2.Token, *errortools.Error) {
 	return service.oAuth2Service.ValidateToken()
 }
 
-func (service *Service) InitToken(scope string) *errortools.Error {
-	return service.oAuth2Service.InitToken(scope)
+func (service *Service) InitToken(scope string, accessType *string, prompt *string, state *string) *errortools.Error {
+	return service.oAuth2Service.InitToken(scope, accessType, prompt, state)
 }
 
 func ParseDateString(date string) *time.Time {
