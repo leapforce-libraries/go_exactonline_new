@@ -105,6 +105,8 @@ func (service *Service) readRateLimitHeaders(res *http.Response) bool {
 	init := false
 
 	if service.xRateLimitMinutely == nil {
+		init = true
+
 		service.xRateLimitMinutely = &struct {
 			Remaining int
 			Reset     int64
