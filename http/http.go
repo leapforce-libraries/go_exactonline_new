@@ -89,6 +89,7 @@ func (service *Service) wait() *errortools.Error {
 
 		if ms > 0 {
 			if ms > maxWait {
+				errortools.SetContext("rate_limit_reset", reset.Format(time.RFC3339))
 				return errortools.ErrorMessage("Rate limit waiting time exceeds maximum waiting time")
 			}
 
