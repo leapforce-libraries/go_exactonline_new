@@ -77,7 +77,7 @@ type Results struct {
 }
 
 // wait assures the maximum of 300(?) api calls per minute dictated by exactonline's rate-limit
-func (service *Service) wait() error {
+func (service *Service) wait() *errortools.Error {
 	if service.xRateLimitMinutely == nil {
 		return nil
 	}
@@ -85,8 +85,13 @@ func (service *Service) wait() error {
 	if service.xRateLimitMinutely.Remaining < 1 {
 		reset := time.Unix(service.xRateLimitMinutely.Reset/1000, 0)
 		ms := time.Until(reset).Milliseconds()
+		maxWait := int64(10 * 60 * 1000) // 10 minutes
 
 		if ms > 0 {
+			if ms > maxWait {
+				return errortools.ErrorMessage("Rate limit waiting time exceeds maximum waiting time")
+			}
+
 			fmt.Println("eo.xRateLimitMinutelyReset:", service.xRateLimitMinutely.Reset)
 			fmt.Println("reset:", reset)
 			fmt.Println("waiting ms:", ms)
@@ -113,8 +118,8 @@ func (service *Service) readRateLimitHeaders(res *http.Response) bool {
 		}{0, 0}
 	}
 
-	remaining, errRem := strconv.Atoi(res.Header.Get("X-RateLimit-Minutely-Remaining"))
-	reset, errRes := strconv.ParseInt(res.Header.Get("X-RateLimit-Minutely-Reset"), 10, 64)
+	remaining, errRem := strconv.Atoi(res.Header.Get("X-RateLimit-Remaining"))
+	reset, errRes := strconv.ParseInt(res.Header.Get("X-RateLimit-Reset"), 10, 64)
 	if errRem == nil && errRes == nil {
 		service.xRateLimitMinutely.Remaining = remaining
 		service.xRateLimitMinutely.Reset = reset
