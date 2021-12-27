@@ -84,13 +84,13 @@ type Results struct {
 func (service *Service) wait() *errortools.Error {
 	reset := int64(0)
 
-	if service.xRateLimit == nil {
+	if service.xRateLimit != nil {
 		if service.xRateLimit.Remaining < 1 {
 			reset = service.xRateLimit.Reset
 		}
 	}
 
-	if service.xRateLimitMinutely == nil {
+	if service.xRateLimitMinutely != nil {
 		if service.xRateLimitMinutely.Remaining < 1 {
 			if service.xRateLimitMinutely.Reset > reset {
 				reset = service.xRateLimitMinutely.Reset
