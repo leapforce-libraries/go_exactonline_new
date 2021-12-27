@@ -26,8 +26,12 @@ const (
 // ExactOnline stores ExactOnline configuration
 //
 type Service struct {
-	division           int32
-	oAuth2Service      *oauth2.Service
+	division      int32
+	oAuth2Service *oauth2.Service
+	xRateLimit    *struct {
+		Remaining int
+		Reset     int64
+	}
 	xRateLimitMinutely *struct {
 		Remaining int
 		Reset     int64
@@ -78,23 +82,36 @@ type Results struct {
 
 // wait assures the maximum of 300(?) api calls per minute dictated by exactonline's rate-limit
 func (service *Service) wait() *errortools.Error {
-	if service.xRateLimitMinutely == nil {
-		return nil
+	reset := int64(0)
+
+	if service.xRateLimit == nil {
+		if service.xRateLimit.Remaining < 1 {
+			reset = service.xRateLimit.Reset
+		}
 	}
 
-	if service.xRateLimitMinutely.Remaining < 1 {
-		reset := time.Unix(service.xRateLimitMinutely.Reset/1000, 0)
-		ms := time.Until(reset).Milliseconds()
+	if service.xRateLimitMinutely == nil {
+		if service.xRateLimitMinutely.Remaining < 1 {
+			if service.xRateLimitMinutely.Reset > reset {
+				reset = service.xRateLimitMinutely.Reset
+			}
+		}
+	}
+
+	if reset > 0 {
+		resetTime := time.Unix(reset/1000, 0)
+		ms := time.Until(resetTime).Milliseconds()
 		maxWait := int64(10 * 60 * 1000) // 10 minutes
 
 		if ms > 0 {
 			if ms > maxWait {
-				errortools.SetContext("rate_limit_reset", reset.Format(time.RFC3339))
+				errortools.SetContext("rate_limit_reset", resetTime.Format(time.RFC3339))
 				return errortools.ErrorMessage("Rate limit waiting time exceeds maximum waiting time")
 			}
 
-			fmt.Println("eo.xRateLimitMinutelyReset:", service.xRateLimitMinutely.Reset)
-			fmt.Println("reset:", reset)
+			fmt.Println("xRateLimitReset:", service.xRateLimit.Reset)
+			fmt.Println("xRateLimitMinutelyReset:", service.xRateLimitMinutely.Reset)
+			fmt.Println("resetTime:", reset)
 			fmt.Println("waiting ms:", ms)
 			time.Sleep(time.Duration(ms+1000) * time.Millisecond)
 		}
@@ -110,18 +127,34 @@ func (service *Service) readRateLimitHeaders(res *http.Response) bool {
 
 	init := false
 
-	if service.xRateLimitMinutely == nil {
-		init = true
-
-		service.xRateLimitMinutely = &struct {
-			Remaining int
-			Reset     int64
-		}{0, 0}
-	}
-
 	remaining, errRem := strconv.Atoi(res.Header.Get("X-RateLimit-Remaining"))
 	reset, errRes := strconv.ParseInt(res.Header.Get("X-RateLimit-Reset"), 10, 64)
 	if errRem == nil && errRes == nil {
+		if service.xRateLimit == nil {
+			init = true
+
+			service.xRateLimit = &struct {
+				Remaining int
+				Reset     int64
+			}{0, 0}
+		}
+
+		service.xRateLimit.Remaining = remaining
+		service.xRateLimit.Reset = reset
+	}
+
+	remaining, errRem = strconv.Atoi(res.Header.Get("X-Ratelimit-Minutely-Remaining"))
+	reset, errRes = strconv.ParseInt(res.Header.Get("X-Ratelimit-Minutely-Reset"), 10, 64)
+	if errRem == nil && errRes == nil {
+		if service.xRateLimitMinutely == nil {
+			init = true
+
+			service.xRateLimitMinutely = &struct {
+				Remaining int
+				Reset     int64
+			}{0, 0}
+		}
+
 		service.xRateLimitMinutely.Remaining = remaining
 		service.xRateLimitMinutely.Reset = reset
 	}
