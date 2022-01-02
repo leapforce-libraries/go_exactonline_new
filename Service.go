@@ -34,6 +34,9 @@ const (
 	tokenURL        string = "https://start.exactonline.nl/api/oauth2/token"
 	tokenHTTPMethod string = http.MethodPost
 	redirectURL     string = "http://localhost:8080/oauth/redirect"
+	// You can only request for a new access token after 570 seconds from the time you successfully received the previous access token.
+	// see: https://support.exactonline.com/community/s/knowledge-base#All-All-DNO-Simulation-gen-apilimits
+	refreshMargin time.Duration = 30 * time.Millisecond
 )
 
 // Service stores Service configuration
@@ -88,12 +91,14 @@ func NewService(serviceConfig *ServiceConfig, bigQueryService *bigquery.Service)
 		return google.SaveToken(apiName, serviceConfig.ClientID, token, bigQueryService)
 	}
 
+	_refreshMargin := refreshMargin
 	oauth2ServiceConfig := oauth2.ServiceConfig{
 		ClientID:          serviceConfig.ClientID,
 		ClientSecret:      serviceConfig.ClientSecret,
 		RedirectURL:       redirectURL,
 		AuthURL:           authURL,
 		TokenURL:          tokenURL,
+		RefreshMargin:     &_refreshMargin,
 		TokenHTTPMethod:   tokenHTTPMethod,
 		GetTokenFunction:  &getTokenFunction,
 		SaveTokenFunction: &saveTokenFunction,
