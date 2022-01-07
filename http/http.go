@@ -109,8 +109,12 @@ func (service *Service) wait() *errortools.Error {
 				return errortools.ErrorMessage("Rate limit waiting time exceeds maximum waiting time")
 			}
 
-			fmt.Println("xRateLimitReset:", service.xRateLimit.Reset)
-			fmt.Println("xRateLimitMinutelyReset:", service.xRateLimitMinutely.Reset)
+			if service.xRateLimit != nil {
+				fmt.Println("xRateLimitReset:", service.xRateLimit.Reset)
+			}
+			if service.xRateLimitMinutely != nil {
+				fmt.Println("xRateLimitMinutelyReset:", service.xRateLimitMinutely.Reset)
+			}
 			fmt.Println("resetTime:", reset)
 			fmt.Println("waiting ms:", ms)
 			time.Sleep(time.Duration(ms+1000) * time.Millisecond)

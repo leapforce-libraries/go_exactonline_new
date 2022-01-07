@@ -36,7 +36,7 @@ const (
 	redirectURL     string = "http://localhost:8080/oauth/redirect"
 	// You can only request for a new access token after 570 seconds from the time you successfully received the previous access token.
 	// see: https://support.exactonline.com/community/s/knowledge-base#All-All-DNO-Simulation-gen-apilimits
-	refreshMargin time.Duration = 30 * time.Millisecond
+	refreshMargin time.Duration = 30 * time.Second
 )
 
 // Service stores Service configuration
