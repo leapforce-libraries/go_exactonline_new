@@ -12,7 +12,7 @@ import (
 //
 type AgingReceivablesListByAgeGroup struct {
 	AgeGroup             int
-	AccountID            types.GUID `json:"AccountId"`
+	AccountID            types.Guid `json:"AccountId"`
 	AccountCode          string     `json:"AccountCode"`
 	AccountName          string     `json:"AccountName"`
 	AgeGroup1            int32      `json:"AgeGroup1"`

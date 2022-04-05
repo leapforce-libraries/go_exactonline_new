@@ -12,9 +12,9 @@ import (
 // Budget stores Budget from exactonline
 //
 type Budget struct {
-	ID                        types.GUID  `json:"ID"`
+	ID                        types.Guid  `json:"ID"`
 	AmountDC                  float64     `json:"AmountDC"`
-	BudgetScenario            types.GUID  `json:"BudgetScenario"`
+	BudgetScenario            types.Guid  `json:"BudgetScenario"`
 	BudgetScenarioCode        string      `json:"BudgetScenarioCode"`
 	BudgetScenarioDescription string      `json:"BudgetScenarioDescription"`
 	Costcenter                string      `json:"Costcenter"`
@@ -22,18 +22,18 @@ type Budget struct {
 	Costunit                  string      `json:"Costunit"`
 	CostunitDescription       string      `json:"CostunitDescription"`
 	Created                   *types.Date `json:"Created"`
-	Creator                   types.GUID  `json:"Creator"`
+	Creator                   types.Guid  `json:"Creator"`
 	CreatorFullName           string      `json:"CreatorFullName"`
 	Division                  int32       `json:"Division"`
-	GLAccount                 types.GUID  `json:"GLAccount"`
+	GLAccount                 types.Guid  `json:"GLAccount"`
 	GLAccountCode             string      `json:"GLAccountCode"`
 	GLAccountDescription      string      `json:"GLAccountDescription"`
 	HID                       string      `json:"HID"`
-	Item                      types.GUID  `json:"Item"`
+	Item                      types.Guid  `json:"Item"`
 	ItemCode                  string      `json:"ItemCode"`
 	ItemDescription           string      `json:"ItemDescription"`
 	Modified                  *types.Date `json:"Modified"`
-	Modifier                  types.GUID  `json:"Modifier"`
+	Modifier                  types.Guid  `json:"Modifier"`
 	ModifierFullName          string      `json:"ModifierFullName"`
 	ReportingPeriod           int16       `json:"ReportingPeriod"`
 	ReportingYear             int16       `json:"ReportingYear"`

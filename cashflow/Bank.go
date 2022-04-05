@@ -12,7 +12,7 @@ import (
 // Bank stores Bank from exactonline
 //
 type Bank struct {
-	ID              types.GUID  `json:"ID"`
+	ID              types.Guid  `json:"ID"`
 	BankName        string      `json:"BankName"`
 	BICCode         string      `json:"BICCode"`
 	Country         string      `json:"Country"`

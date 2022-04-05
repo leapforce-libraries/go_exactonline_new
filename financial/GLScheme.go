@@ -12,16 +12,16 @@ import (
 // GLScheme stores GLScheme from exactonline
 //
 type GLScheme struct {
-	ID               types.GUID  `json:"ID"`
+	ID               types.Guid  `json:"ID"`
 	Code             string      `json:"Code"`
 	Created          *types.Date `json:"Created"`
-	Creator          types.GUID  `json:"Creator"`
+	Creator          types.Guid  `json:"Creator"`
 	CreatorFullName  string      `json:"CreatorFullName"`
 	Description      string      `json:"Description"`
 	Division         int32       `json:"Division"`
 	Main             byte        `json:"Main"`
 	Modified         *types.Date `json:"Modified"`
-	Modifier         types.GUID  `json:"Modifier"`
+	Modifier         types.Guid  `json:"Modifier"`
 	ModifierFullName string      `json:"ModifierFullName"`
 	TargetNamespace  string      `json:"TargetNamespace"`
 }

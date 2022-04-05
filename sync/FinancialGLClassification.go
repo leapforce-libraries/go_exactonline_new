@@ -16,23 +16,23 @@ type FinancialGLClassification struct {
 	Balance                      string            `json:"Balance"`
 	Code                         string            `json:"Code"`
 	Created                      *types.Date       `json:"Created"`
-	Creator                      types.GUID        `json:"Creator"`
+	Creator                      types.Guid        `json:"Creator"`
 	CreatorFullName              string            `json:"CreatorFullName"`
 	Description                  string            `json:"Description"`
 	Division                     int32             `json:"Division"`
-	ID                           types.GUID        `json:"ID"`
+	ID                           types.Guid        `json:"ID"`
 	IsTupleSubElement            bool              `json:"IsTupleSubElement"`
 	Modified                     *types.Date       `json:"Modified"`
-	Modifier                     types.GUID        `json:"Modifier"`
+	Modifier                     types.Guid        `json:"Modifier"`
 	ModifierFullName             string            `json:"ModifierFullName"`
 	Name                         string            `json:"Name"`
 	Nillable                     bool              `json:"Nillable"`
-	Parent                       types.GUID        `json:"Parent"`
+	Parent                       types.Guid        `json:"Parent"`
 	PeriodType                   string            `json:"PeriodType"`
 	SubstitutionGroup            string            `json:"SubstitutionGroup"`
-	TaxonomyNamespace            types.GUID        `json:"TaxonomyNamespace"`
+	TaxonomyNamespace            types.Guid        `json:"TaxonomyNamespace"`
 	TaxonomyNamespaceDescription string            `json:"TaxonomyNamespaceDescription"`
-	Type                         types.GUID        `json:"Type"`
+	Type                         types.Guid        `json:"Type"`
 }
 
 type SyncFinancialGLClassificationsCall struct {

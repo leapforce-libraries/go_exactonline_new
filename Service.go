@@ -22,18 +22,18 @@ import (
 	salesorder "github.com/leapforce-libraries/go_exactonline_new/salesorder"
 	subscription "github.com/leapforce-libraries/go_exactonline_new/subscription"
 	sync "github.com/leapforce-libraries/go_exactonline_new/sync"
-	google "github.com/leapforce-libraries/go_google"
 	bigquery "github.com/leapforce-libraries/go_google/bigquery"
 	oauth2 "github.com/leapforce-libraries/go_oauth2"
+	tokensource "github.com/leapforce-libraries/go_oauth2/tokensource"
 )
 
 const (
 	apiName         string = "ExactOnline"
-	apiURL          string = "https://start.exactonline.nl/api/v1"
-	authURL         string = "https://start.exactonline.nl/api/oauth2/auth"
-	tokenURL        string = "https://start.exactonline.nl/api/oauth2/token"
+	apiUrl          string = "https://start.exactonline.nl/api/v1"
+	authUrl         string = "https://start.exactonline.nl/api/oauth2/auth"
+	tokenUrl        string = "https://start.exactonline.nl/api/oauth2/token"
 	tokenHTTPMethod string = http.MethodPost
-	redirectURL     string = "http://localhost:8080/oauth/redirect"
+	redirectUrl     string = "http://localhost:8080/oauth/redirect"
 	// You can only request for a new access token after 570 seconds from the time you successfully received the previous access token.
 	// see: https://support.exactonline.com/community/s/knowledge-base#All-All-DNO-Simulation-gen-apilimits
 	refreshMargin time.Duration = 30 * time.Second
@@ -66,6 +66,7 @@ type ServiceConfig struct {
 	Division     int32
 	ClientID     string
 	ClientSecret string
+	TokenSource  tokensource.TokenSource
 }
 
 // methods
@@ -83,25 +84,16 @@ func NewService(serviceConfig *ServiceConfig, bigQueryService *bigquery.Service)
 		return nil, errortools.ErrorMessage("ClientSecret not provided")
 	}
 
-	getTokenFunction := func() (*oauth2.Token, *errortools.Error) {
-		return google.GetToken(apiName, serviceConfig.ClientID, bigQueryService)
-	}
-
-	saveTokenFunction := func(token *oauth2.Token) *errortools.Error {
-		return google.SaveToken(apiName, serviceConfig.ClientID, token, bigQueryService)
-	}
-
 	_refreshMargin := refreshMargin
 	oauth2ServiceConfig := oauth2.ServiceConfig{
-		ClientID:          serviceConfig.ClientID,
-		ClientSecret:      serviceConfig.ClientSecret,
-		RedirectURL:       redirectURL,
-		AuthURL:           authURL,
-		TokenURL:          tokenURL,
-		RefreshMargin:     &_refreshMargin,
-		TokenHTTPMethod:   tokenHTTPMethod,
-		GetTokenFunction:  &getTokenFunction,
-		SaveTokenFunction: &saveTokenFunction,
+		ClientId:        serviceConfig.ClientID,
+		ClientSecret:    serviceConfig.ClientSecret,
+		RedirectUrl:     redirectUrl,
+		AuthUrl:         authUrl,
+		TokenUrl:        tokenUrl,
+		RefreshMargin:   &_refreshMargin,
+		TokenHttpMethod: tokenHTTPMethod,
+		TokenSource:     serviceConfig.TokenSource,
 	}
 	oAuth2Service, e := oauth2.NewService(&oauth2ServiceConfig)
 	if e != nil {
@@ -131,13 +123,13 @@ func NewService(serviceConfig *ServiceConfig, bigQueryService *bigquery.Service)
 	}, nil
 }
 
-func (service *Service) ValidateToken() (*oauth2.Token, *errortools.Error) {
+/*func (service *Service) ValidateToken() (*oauth2.Token, *errortools.Error) {
 	return service.oAuth2Service.ValidateToken()
 }
 
 func (service *Service) InitToken(scope string, accessType *string, prompt *string, state *string) *errortools.Error {
 	return service.oAuth2Service.InitToken(scope, accessType, prompt, state)
-}
+}*/
 
 func ParseDateString(date string) *time.Time {
 	if len(date) >= 19 {
@@ -150,18 +142,18 @@ func ParseDateString(date string) *time.Time {
 	return nil
 }
 
-func (service Service) APIName() string {
+func (service Service) ApiName() string {
 	return apiName
 }
 
-func (service Service) APIKey() string {
+func (service Service) ApiKey() string {
 	return service.clientID
 }
 
-func (service Service) APICallCount() int64 {
-	return service.oAuth2Service.APICallCount()
+func (service Service) ApiCallCount() int64 {
+	return service.oAuth2Service.ApiCallCount()
 }
 
-func (service Service) APIReset() {
-	service.oAuth2Service.APIReset()
+func (service Service) ApiReset() {
+	service.oAuth2Service.ApiReset()
 }

@@ -23,19 +23,19 @@ type FinancialGLAccount struct {
 	Costunit                       string            `json:"Costunit"`
 	CostunitDescription            string            `json:"CostunitDescription"`
 	Created                        *types.Date       `json:"Created"`
-	Creator                        types.GUID        `json:"Creator"`
+	Creator                        types.Guid        `json:"Creator"`
 	CreatorFullName                string            `json:"CreatorFullName"`
 	Description                    string            `json:"Description"`
 	Division                       int32             `json:"Division"`
 	ExcludeVATListing              byte              `json:"ExcludeVATListing"`
 	ExpenseNonDeductiblePercentage float64           `json:"ExpenseNonDeductiblePercentage"`
-	ID                             types.GUID        `json:"ID"`
+	ID                             types.Guid        `json:"ID"`
 	IsBlocked                      bool              `json:"IsBlocked"`
 	Matching                       bool              `json:"Matching"`
 	Modified                       *types.Date       `json:"Modified"`
-	Modifier                       types.GUID        `json:"Modifier"`
+	Modifier                       types.Guid        `json:"Modifier"`
 	ModifierFullName               string            `json:"ModifierFullName"`
-	PrivateGLAccount               types.GUID        `json:"PrivateGLAccount"`
+	PrivateGLAccount               types.Guid        `json:"PrivateGLAccount"`
 	PrivatePercentage              float64           `json:"PrivatePercentage"`
 	ReportingCode                  string            `json:"ReportingCode"`
 	RevalueCurrency                bool              `json:"RevalueCurrency"`
@@ -47,11 +47,11 @@ type FinancialGLAccount struct {
 	VATCode                        string            `json:"VATCode"`
 	VATDescription                 string            `json:"VATDescription"`
 	VATGLAccountType               string            `json:"VATGLAccountType"`
-	VATNonDeductibleGLAccount      types.GUID        `json:"VATNonDeductibleGLAccount"`
+	VATNonDeductibleGLAccount      types.Guid        `json:"VATNonDeductibleGLAccount"`
 	VATNonDeductiblePercentage     float64           `json:"VATNonDeductiblePercentage"`
 	VATSystem                      string            `json:"VATSystem"`
-	YearEndCostGLAccount           types.GUID        `json:"YearEndCostGLAccount"`
-	YearEndReflectionGLAccount     types.GUID        `json:"YearEndReflectionGLAccount"`
+	YearEndCostGLAccount           types.Guid        `json:"YearEndCostGLAccount"`
+	YearEndReflectionGLAccount     types.Guid        `json:"YearEndReflectionGLAccount"`
 }
 
 type SyncFinancialGLAccountsCall struct {

@@ -11,7 +11,7 @@ import (
 // AgingReceivablesList stores AgingReceivablesList from exactonline
 //
 type AgingReceivablesList struct {
-	AccountID            types.GUID `json:"AccountId"`
+	AccountID            types.Guid `json:"AccountId"`
 	AccountCode          string     `json:"AccountCode"`
 	AccountName          string     `json:"AccountName"`
 	AgeGroup1            int32      `json:"AgeGroup1"`

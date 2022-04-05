@@ -13,7 +13,7 @@ import (
 type PayablesListByAgeGroup struct {
 	HID                string      `json:"HID"`
 	AccountCode        string      `json:"AccountCode"`
-	AccountID          types.GUID  `json:"AccountId"`
+	AccountID          types.Guid  `json:"AccountId"`
 	AccountName        string      `json:"AccountName"`
 	Amount             float64     `json:"Amount"`
 	AmountInTransit    float64     `json:"AmountInTransit"`
@@ -22,7 +22,7 @@ type PayablesListByAgeGroup struct {
 	Description        string      `json:"Description"`
 	DueDate            *types.Date `json:"DueDate"`
 	EntryNumber        int32       `json:"EntryNumber"`
-	ID                 types.GUID  `json:"Id"`
+	ID                 types.Guid  `json:"Id"`
 	InvoiceDate        *types.Date `json:"InvoiceDate"`
 	InvoiceNumber      int32       `json:"InvoiceNumber"`
 	JournalCode        string      `json:"JournalCode"`

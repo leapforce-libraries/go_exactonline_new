@@ -12,11 +12,11 @@ import (
 // ActiveEmployment stores ActiveEmployment from exactonline
 //
 type ActiveEmployment struct {
-	ID                       types.GUID  `json:"ID"`
+	ID                       types.Guid  `json:"ID"`
 	AverageDaysPerWeek       float64     `json:"AverageDaysPerWeek"`
 	AverageHoursPerWeek      float64     `json:"AverageHoursPerWeek"`
-	Contract                 types.GUID  `json:"Contract"`
-	ContractDocument         types.GUID  `json:"ContractDocument"`
+	Contract                 types.Guid  `json:"Contract"`
+	ContractDocument         types.Guid  `json:"ContractDocument"`
 	ContractEndDate          *types.Date `json:"ContractEndDate,omitempty"`
 	ContractProbationEndDate *types.Date `json:"ContractProbationEndDate,omitempty"`
 	ContractProbationPeriod  int64       `json:"ContractProbationPeriod"`
@@ -24,31 +24,31 @@ type ActiveEmployment struct {
 	ContractType             int64       `json:"ContractType"`
 	ContractTypeDescription  string      `json:"ContractTypeDescription"`
 	Created                  *types.Date `json:"Created,omitempty"`
-	Creator                  types.GUID  `json:"Creator"`
+	Creator                  types.Guid  `json:"Creator"`
 	CreatorFullName          string      `json:"CreatorFullName"`
-	Department               types.GUID  `json:"Department"`
+	Department               types.Guid  `json:"Department"`
 	DepartmentCode           string      `json:"DepartmentCode"`
 	DepartmentDescription    string      `json:"DepartmentDescription"`
 	Division                 int64       `json:"Division"`
-	Employee                 types.GUID  `json:"Employee"`
+	Employee                 types.Guid  `json:"Employee"`
 	EmployeeFullName         string      `json:"EmployeeFullName"`
 	EmployeeHID              int64       `json:"EmployeeHID"`
-	EmploymentOrganization   types.GUID  `json:"EmploymentOrganization"`
+	EmploymentOrganization   types.Guid  `json:"EmploymentOrganization"`
 	EndDate                  *types.Date `json:"EndDate,omitempty"`
 	HID                      int64       `json:"HID"`
 	HourlyWage               float64     `json:"HourlyWage"`
 	InternalRate             float64     `json:"InternalRate"`
-	Jobtitle                 types.GUID  `json:"Jobtitle"`
+	Jobtitle                 types.Guid  `json:"Jobtitle"`
 	JobtitleDescription      string      `json:"JobtitleDescription"`
 	Modified                 *types.Date `json:"Modified,omitempty"`
-	Modifier                 types.GUID  `json:"Modifier"`
+	Modifier                 types.Guid  `json:"Modifier"`
 	ModifierFullName         string      `json:"ModifierFullName"`
 	ReasonEnd                int64       `json:"ReasonEnd"`
 	ReasonEndDescription     string      `json:"ReasonEndDescription"`
 	ReasonEndFlex            int64       `json:"ReasonEndFlex"`
 	ReasonEndFlexDescription string      `json:"ReasonEndFlexDescription"`
-	Salary                   types.GUID  `json:"Salary"`
-	Schedule                 types.GUID  `json:"Schedule"`
+	Salary                   types.Guid  `json:"Salary"`
+	Schedule                 types.Guid  `json:"Schedule"`
 	ScheduleAverageHours     float64     `json:"ScheduleAverageHours"`
 	ScheduleCode             string      `json:"ScheduleCode"`
 	ScheduleDays             float64     `json:"ScheduleDays"`

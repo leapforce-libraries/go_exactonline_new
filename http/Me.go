@@ -9,17 +9,17 @@ import (
 // Me stores Me from exactonline
 //
 type Me struct {
-	UserID                      types.GUID      `json:"UserID"`
+	UserID                      types.Guid      `json:"UserID"`
 	AccountingDivision          int32           `json:"AccountingDivision"`
 	CurrentDivision             int32           `json:"CurrentDivision"`
-	DivisionCustomer            types.GUID      `json:"DivisionCustomer"`
+	DivisionCustomer            types.Guid      `json:"DivisionCustomer"`
 	DivisionCustomerCode        string          `json:"DivisionCustomerCode"`
 	DivisionCustomerName        string          `json:"DivisionCustomerName"`
 	DivisionCustomerSiretNumber string          `json:"DivisionCustomerSiretNumber"`
 	DivisionCustomerVatNumber   string          `json:"DivisionCustomerVatNumber"`
 	DossierDivision             int32           `json:"DossierDivision"`
 	Email                       string          `json:"Email"`
-	EmployeeID                  types.GUID      `json:"EmployeeID"`
+	EmployeeID                  types.Guid      `json:"EmployeeID"`
 	FirstName                   string          `json:"FirstName"`
 	FullName                    string          `json:"FullName"`
 	Gender                      string          `json:"Gender"`

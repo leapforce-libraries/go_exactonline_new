@@ -12,19 +12,19 @@ import (
 // ProjectHourBudget stores ProjectHourBudget from exactonline
 //
 type ProjectHourBudget struct {
-	ID                 types.GUID  `json:"ID"`
+	ID                 types.Guid  `json:"ID"`
 	Budget             float64     `json:"Budget"`
 	Created            *types.Date `json:"Created,omitempty"`
-	Creator            types.GUID  `json:"Creator"`
+	Creator            types.Guid  `json:"Creator"`
 	CreatorFullName    string      `json:"CreatorFullName"`
 	Division           int64       `json:"Division"`
-	Item               types.GUID  `json:"Item"`
+	Item               types.Guid  `json:"Item"`
 	ItemCode           string      `json:"ItemCode"`
 	ItemDescription    string      `json:"ItemDescription"`
 	Modified           *types.Date `json:"Modified,omitempty"`
-	Modifier           types.GUID  `json:"Modifier"`
+	Modifier           types.Guid  `json:"Modifier"`
 	ModifierFullName   string      `json:"ModifierFullName"`
-	Project            types.GUID  `json:"Project"`
+	Project            types.Guid  `json:"Project"`
 	ProjectCode        string      `json:"ProjectCode"`
 	ProjectDescription string      `json:"ProjectDescription"`
 }

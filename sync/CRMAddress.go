@@ -12,20 +12,20 @@ import (
 //
 type CRMAddress struct {
 	Timestamp            types.Int64String `json:"Timestamp"`
-	ID                   types.GUID        `json:"ID"`
-	Account              types.GUID        `json:"Account"`
+	ID                   types.Guid        `json:"ID"`
+	Account              types.Guid        `json:"Account"`
 	AccountIsSupplier    bool              `json:"AccountIsSupplier"`
 	AccountName          string            `json:"AccountName"`
 	AddressLine1         string            `json:"AddressLine1"`
 	AddressLine2         string            `json:"AddressLine2"`
 	AddressLine3         string            `json:"AddressLine3"`
 	City                 string            `json:"City"`
-	Contact              types.GUID        `json:"Contact"`
+	Contact              types.Guid        `json:"Contact"`
 	ContactName          string            `json:"ContactName"`
 	Country              string            `json:"Country"`
 	CountryName          string            `json:"CountryName"`
 	Created              *types.Date       `json:"Created"`
-	Creator              types.GUID        `json:"Creator"`
+	Creator              types.Guid        `json:"Creator"`
 	CreatorFullName      string            `json:"CreatorFullName"`
 	Division             int32             `json:"Division"`
 	Fax                  string            `json:"Fax"`
@@ -52,7 +52,7 @@ type CRMAddress struct {
 	Mailbox              string            `json:"Mailbox"`
 	Main                 bool              `json:"Main"`
 	Modified             *types.Date       `json:"Modified"`
-	Modifier             types.GUID        `json:"Modifier"`
+	Modifier             types.Guid        `json:"Modifier"`
 	ModifierFullName     string            `json:"ModifierFullName"`
 	NicNumber            string            `json:"NicNumber"`
 	Notes                string            `json:"Notes"`
@@ -62,7 +62,7 @@ type CRMAddress struct {
 	State                string            `json:"State"`
 	StateDescription     string            `json:"StateDescription"`
 	Type                 int16             `json:"Type"`
-	Warehouse            types.GUID        `json:"Warehouse"`
+	Warehouse            types.Guid        `json:"Warehouse"`
 	WarehouseCode        string            `json:"WarehouseCode"`
 	WarehouseDescription string            `json:"WarehouseDescription"`
 }

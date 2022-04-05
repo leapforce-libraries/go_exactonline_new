@@ -12,14 +12,14 @@ import (
 //
 type FinancialTransactionLine struct {
 	Timestamp                 types.Int64String `json:"Timestamp"`
-	Account                   types.GUID        `json:"Account"`
+	Account                   types.Guid        `json:"Account"`
 	AccountCode               string            `json:"AccountCode"`
 	AccountName               string            `json:"AccountName"`
 	AmountDC                  float64           `json:"AmountDC"`
 	AmountFC                  float64           `json:"AmountFC"`
 	AmountVATBaseFC           float64           `json:"AmountVATBaseFC"`
 	AmountVATFC               float64           `json:"AmountVATFC"`
-	Asset                     types.GUID        `json:"Asset"`
+	Asset                     types.Guid        `json:"Asset"`
 	AssetCode                 string            `json:"AssetCode"`
 	AssetDescription          string            `json:"AssetDescription"`
 	CostCenter                string            `json:"CostCenter"`
@@ -27,29 +27,29 @@ type FinancialTransactionLine struct {
 	CostUnit                  string            `json:"CostUnit"`
 	CostUnitDescription       string            `json:"CostUnitDescription"`
 	Created                   *types.Date       `json:"Created"`
-	Creator                   types.GUID        `json:"Creator"`
+	Creator                   types.Guid        `json:"Creator"`
 	CreatorFullName           string            `json:"CreatorFullName"`
 	Currency                  string            `json:"Currency"`
 	Date                      *types.Date       `json:"Date"`
 	Description               string            `json:"Description"`
 	Division                  int64             `json:"Division"`
-	Document                  types.GUID        `json:"Document"`
+	Document                  types.Guid        `json:"Document"`
 	DocumentNumber            int64             `json:"DocumentNumber"`
 	DocumentSubject           string            `json:"DocumentSubject"`
 	DueDate                   *types.Date       `json:"DueDate"`
-	EntryID                   types.GUID        `json:"EntryID"`
+	EntryID                   types.Guid        `json:"EntryID"`
 	EntryNumber               int64             `json:"EntryNumber"`
 	ExchangeRate              float64           `json:"ExchangeRate"`
 	ExtraDutyAmountFC         float64           `json:"ExtraDutyAmountFC"`
 	ExtraDutyPercentage       float64           `json:"ExtraDutyPercentage"`
 	FinancialPeriod           int64             `json:"FinancialPeriod"`
 	FinancialYear             int64             `json:"FinancialYear"`
-	GLAccount                 types.GUID        `json:"GLAccount"`
+	GLAccount                 types.Guid        `json:"GLAccount"`
 	GLAccountCode             string            `json:"GLAccountCode"`
 	GLAccountDescription      string            `json:"GLAccountDescription"`
-	ID                        types.GUID        `json:"ID"`
+	ID                        types.Guid        `json:"ID"`
 	InvoiceNumber             int64             `json:"InvoiceNumber"`
-	Item                      types.GUID        `json:"Item"`
+	Item                      types.Guid        `json:"Item"`
 	ItemCode                  string            `json:"ItemCode"`
 	ItemDescription           string            `json:"ItemDescription"`
 	JournalCode               string            `json:"JournalCode"`
@@ -57,20 +57,20 @@ type FinancialTransactionLine struct {
 	LineNumber                int64             `json:"LineNumber"`
 	LineType                  int64             `json:"LineType"`
 	Modified                  *types.Date       `json:"Modified"`
-	Modifier                  types.GUID        `json:"Modifier"`
+	Modifier                  types.Guid        `json:"Modifier"`
 	ModifierFullName          string            `json:"ModifierFullName"`
 	Notes                     string            `json:"Notes"`
-	OffsetID                  types.GUID        `json:"OffsetID"`
+	OffsetID                  types.Guid        `json:"OffsetID"`
 	OrderNumber               int64             `json:"OrderNumber"`
 	PaymentDiscountAmount     float64           `json:"PaymentDiscountAmount"`
 	PaymentReference          string            `json:"PaymentReference"`
-	Project                   types.GUID        `json:"Project"`
+	Project                   types.Guid        `json:"Project"`
 	ProjectCode               string            `json:"ProjectCode"`
 	ProjectDescription        string            `json:"ProjectDescription"`
 	Quantity                  float64           `json:"Quantity"`
 	SerialNumber              string            `json:"SerialNumber"`
 	Status                    int64             `json:"Status"`
-	Subscription              types.GUID        `json:"Subscription"`
+	Subscription              types.Guid        `json:"Subscription"`
 	SubscriptionDescription   string            `json:"SubscriptionDescription"`
 	TrackingNumber            string            `json:"TrackingNumber"`
 	TrackingNumberDescription string            `json:"TrackingNumberDescription"`

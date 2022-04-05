@@ -12,12 +12,12 @@ import (
 // Receivable stores Receivable from exactonline
 //
 type Receivable struct {
-	ID                            types.GUID  `json:"ID"`
-	Account                       types.GUID  `json:"Account"`
-	AccountBankAccountID          types.GUID  `json:"AccountBankAccountID"`
+	ID                            types.Guid  `json:"ID"`
+	Account                       types.Guid  `json:"Account"`
+	AccountBankAccountID          types.Guid  `json:"AccountBankAccountID"`
 	AccountBankAccountNumber      string      `json:"AccountBankAccountNumber"`
 	AccountCode                   string      `json:"AccountCode"`
-	AccountContact                types.GUID  `json:"AccountContact"`
+	AccountContact                types.Guid  `json:"AccountContact"`
 	AccountContactName            string      `json:"AccountContactName"`
 	AccountCountry                string      `json:"AccountCountry"`
 	AccountName                   string      `json:"AccountName"`
@@ -25,22 +25,22 @@ type Receivable struct {
 	AmountDiscountDC              float64     `json:"AmountDiscountDC"`
 	AmountDiscountFC              float64     `json:"AmountDiscountFC"`
 	AmountFC                      float64     `json:"AmountFC"`
-	BankAccountID                 types.GUID  `json:"BankAccountID"`
+	BankAccountID                 types.Guid  `json:"BankAccountID"`
 	BankAccountNumber             string      `json:"BankAccountNumber"`
 	CashflowTransactionBatchCode  string      `json:"CashflowTransactionBatchCode"`
 	Created                       *types.Date `json:"Created"`
-	Creator                       types.GUID  `json:"Creator"`
+	Creator                       types.Guid  `json:"Creator"`
 	CreatorFullName               string      `json:"CreatorFullName"`
 	Currency                      string      `json:"Currency"`
 	Description                   string      `json:"Description"`
-	DirectDebitMandate            types.GUID  `json:"DirectDebitMandate"`
+	DirectDebitMandate            types.Guid  `json:"DirectDebitMandate"`
 	DirectDebitMandateDescription string      `json:"DirectDebitMandateDescription"`
 	DirectDebitMandatePaymentType int16       `json:"DirectDebitMandatePaymentType"`
 	DirectDebitMandateReference   string      `json:"DirectDebitMandateReference"`
 	DirectDebitMandateType        int16       `json:"DirectDebitMandateType"`
 	DiscountDueDate               *types.Date `json:"DiscountDueDate"`
 	Division                      int32       `json:"Division"`
-	Document                      types.GUID  `json:"Document"`
+	Document                      types.Guid  `json:"Document"`
 	DocumentNumber                int32       `json:"DocumentNumber"`
 	DocumentSubject               string      `json:"DocumentSubject"`
 	DueDate                       *types.Date `json:"DueDate"`
@@ -49,9 +49,9 @@ type Receivable struct {
 	EndToEndID                    string      `json:"EndToEndID"`
 	EndYear                       int16       `json:"EndYear"`
 	EntryDate                     *types.Date `json:"EntryDate"`
-	EntryID                       types.GUID  `json:"EntryID"`
+	EntryID                       types.Guid  `json:"EntryID"`
 	EntryNumber                   int32       `json:"EntryNumber"`
-	GLAccount                     types.GUID  `json:"GLAccount"`
+	GLAccount                     types.Guid  `json:"GLAccount"`
 	GLAccountCode                 string      `json:"GLAccountCode"`
 	GLAccountDescription          string      `json:"GLAccountDescription"`
 	InvoiceDate                   *types.Date `json:"InvoiceDate"`
@@ -62,7 +62,7 @@ type Receivable struct {
 	JournalDescription            string      `json:"JournalDescription"`
 	LastPaymentDate               *types.Date `json:"LastPaymentDate"`
 	Modified                      *types.Date `json:"Modified"`
-	Modifier                      types.GUID  `json:"Modifier"`
+	Modifier                      types.Guid  `json:"Modifier"`
 	ModifierFullName              string      `json:"ModifierFullName"`
 	PaymentCondition              string      `json:"PaymentCondition"`
 	PaymentConditionDescription   string      `json:"PaymentConditionDescription"`
@@ -75,15 +75,15 @@ type Receivable struct {
 	RateFC                        float64     `json:"RateFC"`
 	ReceivableBatchNumber         int32       `json:"ReceivableBatchNumber"`
 	ReceivableSelected            *types.Date `json:"ReceivableSelected"`
-	ReceivableSelector            types.GUID  `json:"ReceivableSelector"`
+	ReceivableSelector            types.Guid  `json:"ReceivableSelector"`
 	ReceivableSelectorFullName    string      `json:"ReceivableSelectorFullName"`
 	Source                        int32       `json:"Source"`
 	Status                        int16       `json:"Status"`
 	TransactionAmountDC           float64     `json:"TransactionAmountDC"`
 	TransactionAmountFC           float64     `json:"TransactionAmountFC"`
 	TransactionDueDate            *types.Date `json:"TransactionDueDate"`
-	TransactionEntryID            types.GUID  `json:"TransactionEntryID"`
-	TransactionID                 types.GUID  `json:"TransactionID"`
+	TransactionEntryID            types.Guid  `json:"TransactionEntryID"`
+	TransactionID                 types.Guid  `json:"TransactionID"`
 	TransactionIsReversal         bool        `json:"TransactionIsReversal"`
 	TransactionReportingPeriod    int16       `json:"TransactionReportingPeriod"`
 	TransactionReportingYear      int16       `json:"TransactionReportingYear"`

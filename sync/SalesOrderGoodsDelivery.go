@@ -13,31 +13,31 @@ import (
 type SalesOrderGoodsDelivery struct {
 	Timestamp                     types.Int64String `json:"Timestamp"`
 	Created                       *types.Date       `json:"Created"`
-	Creator                       types.GUID        `json:"Creator"`
+	Creator                       types.Guid        `json:"Creator"`
 	CreatorFullName               string            `json:"CreatorFullName"`
-	DeliveryAccount               types.GUID        `json:"DeliveryAccount"`
+	DeliveryAccount               types.Guid        `json:"DeliveryAccount"`
 	DeliveryAccountCode           string            `json:"DeliveryAccountCode"`
 	DeliveryAccountName           string            `json:"DeliveryAccountName"`
-	DeliveryAddress               types.GUID        `json:"DeliveryAddress"`
-	DeliveryContact               types.GUID        `json:"DeliveryContact"`
+	DeliveryAddress               types.Guid        `json:"DeliveryAddress"`
+	DeliveryContact               types.Guid        `json:"DeliveryContact"`
 	DeliveryContactPersonFullName string            `json:"DeliveryContactPersonFullName"`
 	DeliveryDate                  *types.Date       `json:"DeliveryDate"`
 	DeliveryNumber                int32             `json:"DeliveryNumber"`
 	Description                   string            `json:"Description"`
 	Division                      int32             `json:"Division"`
-	Document                      types.GUID        `json:"Document"`
+	Document                      types.Guid        `json:"Document"`
 	DocumentSubject               string            `json:"DocumentSubject"`
-	EntryID                       types.GUID        `json:"EntryID"`
+	EntryID                       types.Guid        `json:"EntryID"`
 	EntryNumber                   int32             `json:"EntryNumber"`
 	Modified                      *types.Date       `json:"Modified"`
-	Modifier                      types.GUID        `json:"Modifier"`
+	Modifier                      types.Guid        `json:"Modifier"`
 	ModifierFullName              string            `json:"ModifierFullName"`
 	Remarks                       string            `json:"Remarks"`
-	ShippingMethod                types.GUID        `json:"ShippingMethod"`
+	ShippingMethod                types.Guid        `json:"ShippingMethod"`
 	ShippingMethodCode            string            `json:"ShippingMethodCode"`
 	ShippingMethodDescription     string            `json:"ShippingMethodDescription"`
 	TrackingNumber                string            `json:"TrackingNumber"`
-	Warehouse                     types.GUID        `json:"Warehouse"`
+	Warehouse                     types.Guid        `json:"Warehouse"`
 	WarehouseCode                 string            `json:"WarehouseCode"`
 	WarehouseDescription          string            `json:"WarehouseDescription"`
 }

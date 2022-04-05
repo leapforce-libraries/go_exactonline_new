@@ -27,11 +27,11 @@ func (service *Service) GetCount(endpoint string, createdBefore *time.Time) (int
 }
 
 func (service *Service) url(path string) string {
-	return service.httpService.URL(fmt.Sprintf("%s/%s", servicePath, path))
+	return service.httpService.Url(fmt.Sprintf("%s/%s", servicePath, path))
 }
 
 func (service *Service) urlRead(path string) string {
-	return service.httpService.URL(fmt.Sprintf("read/%s/%s", servicePath, path))
+	return service.httpService.Url(fmt.Sprintf("read/%s/%s", servicePath, path))
 }
 
 func (service *Service) DateFilter(field string, comparer string, time *time.Time, includeParameter bool, prefix string) string {

@@ -11,7 +11,7 @@ import (
 // SalesInvoiceLine stores SalesInvoiceLine from exactonline
 //
 type SalesInvoiceLine struct {
-	ID                      types.GUID  `json:"ID"`
+	ID                      types.Guid  `json:"ID"`
 	AmountDC                float64     `json:"AmountDC"`
 	AmountFC                float64     `json:"AmountFC"`
 	CostCenter              string      `json:"CostCenter"`
@@ -23,35 +23,35 @@ type SalesInvoiceLine struct {
 	Description             string      `json:"Description"`
 	Discount                float64     `json:"Discount"`
 	Division                int32       `json:"Division"`
-	Employee                types.GUID  `json:"Employee"`
+	Employee                types.Guid  `json:"Employee"`
 	EmployeeFullName        string      `json:"EmployeeFullName"`
 	EndTime                 *types.Date `json:"EndTime"`
 	ExtraDutyAmountFC       float64     `json:"ExtraDutyAmountFC"`
 	ExtraDutyPercentage     float64     `json:"ExtraDutyPercentage"`
-	GLAccount               types.GUID  `json:"GLAccount"`
+	GLAccount               types.Guid  `json:"GLAccount"`
 	GLAccountDescription    string      `json:"GLAccountDescription"`
-	InvoiceID               types.GUID  `json:"InvoiceID"`
-	Item                    types.GUID  `json:"Item"`
+	InvoiceID               types.Guid  `json:"InvoiceID"`
+	Item                    types.Guid  `json:"Item"`
 	ItemCode                string      `json:"ItemCode"`
 	ItemDescription         string      `json:"ItemDescription"`
 	LineNumber              int32       `json:"LineNumber"`
 	NetPrice                float64     `json:"NetPrice"`
 	Notes                   string      `json:"Notes"`
-	Pricelist               types.GUID  `json:"Pricelist"`
+	Pricelist               types.Guid  `json:"Pricelist"`
 	PricelistDescription    string      `json:"PricelistDescription"`
-	Project                 types.GUID  `json:"Project"`
+	Project                 types.Guid  `json:"Project"`
 	ProjectDescription      string      `json:"ProjectDescription"`
-	ProjectWBS              types.GUID  `json:"ProjectWBS"`
+	ProjectWBS              types.Guid  `json:"ProjectWBS"`
 	ProjectWBSDescription   string      `json:"ProjectWBSDescription"`
 	Quantity                float64     `json:"Quantity"`
-	SalesOrder              types.GUID  `json:"SalesOrder"`
-	SalesOrderLine          types.GUID  `json:"SalesOrderLine"`
+	SalesOrder              types.Guid  `json:"SalesOrder"`
+	SalesOrderLine          types.Guid  `json:"SalesOrderLine"`
 	SalesOrderLineNumber    int32       `json:"SalesOrderLineNumber"`
 	SalesOrderNumber        int32       `json:"SalesOrderNumber"`
 	StartTime               *types.Date `json:"StartTime"`
-	Subscription            types.GUID  `json:"Subscription"`
+	Subscription            types.Guid  `json:"Subscription"`
 	SubscriptionDescription string      `json:"SubscriptionDescription"`
-	TaxSchedule             types.GUID  `json:"TaxSchedule"`
+	TaxSchedule             types.Guid  `json:"TaxSchedule"`
 	TaxScheduleCode         string      `json:"TaxScheduleCode"`
 	TaxScheduleDescription  string      `json:"TaxScheduleDescription"`
 	UnitCode                string      `json:"UnitCode"`

@@ -12,22 +12,22 @@ import (
 // SalesItemPrice stores SalesItemPrice from exactonline
 //
 type SalesItemPrice struct {
-	ID                         types.GUID  `json:"ID"`
-	Account                    types.GUID  `json:"Account"`
+	ID                         types.Guid  `json:"ID"`
+	Account                    types.Guid  `json:"Account"`
 	AccountName                string      `json:"AccountName"`
 	Created                    *types.Date `json:"Created"`
-	Creator                    types.GUID  `json:"Creator"`
+	Creator                    types.Guid  `json:"Creator"`
 	CreatorFullName            string      `json:"CreatorFullName"`
 	Currency                   string      `json:"Currency"`
 	DefaultItemUnit            string      `json:"DefaultItemUnit"`
 	DefaultItemUnitDescription string      `json:"DefaultItemUnitDescription"`
 	Division                   int32       `json:"Division"`
 	EndDate                    *types.Date `json:"EndDate"`
-	Item                       types.GUID  `json:"Item"`
+	Item                       types.Guid  `json:"Item"`
 	ItemCode                   string      `json:"ItemCode"`
 	ItemDescription            string      `json:"ItemDescription"`
 	Modified                   *types.Date `json:"Modified"`
-	Modifier                   types.GUID  `json:"Modifier"`
+	Modifier                   types.Guid  `json:"Modifier"`
 	ModifierFullName           string      `json:"ModifierFullName"`
 	NumberOfItemsPerUnit       float64     `json:"NumberOfItemsPerUnit"`
 	Price                      float64     `json:"Price"`

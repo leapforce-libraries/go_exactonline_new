@@ -12,24 +12,24 @@ import (
 // StockCount stores StockCount from exactonline
 //
 type StockCount struct {
-	StockCountID                 types.GUID  `json:"StockCountID"`
+	StockCountID                 types.Guid  `json:"StockCountID"`
 	Created                      *types.Date `json:"Created"`
-	Creator                      types.GUID  `json:"Creator"`
+	Creator                      types.Guid  `json:"Creator"`
 	CreatorFullName              string      `json:"CreatorFullName"`
 	Description                  string      `json:"Description"`
 	Division                     int32       `json:"Division"`
 	EntryNumber                  int32       `json:"EntryNumber"`
 	Modified                     *types.Date `json:"Modified"`
-	Modifier                     types.GUID  `json:"Modifier"`
+	Modifier                     types.Guid  `json:"Modifier"`
 	ModifierFullName             string      `json:"ModifierFullName"`
-	OffsetGLInventory            types.GUID  `json:"OffsetGLInventory"`
+	OffsetGLInventory            types.Guid  `json:"OffsetGLInventory"`
 	OffsetGLInventoryCode        string      `json:"OffsetGLInventoryCode"`
 	OffsetGLInventoryDescription string      `json:"OffsetGLInventoryDescription"`
 	Source                       int16       `json:"Source"`
 	Status                       int16       `json:"Status"`
 	StockCountDate               *types.Date `json:"StockCountDate"`
 	StockCountNumber             int32       `json:"StockCountNumber"`
-	Warehouse                    types.GUID  `json:"Warehouse"`
+	Warehouse                    types.Guid  `json:"Warehouse"`
 	WarehouseCode                string      `json:"WarehouseCode"`
 	WarehouseDescription         string      `json:"WarehouseDescription"`
 }

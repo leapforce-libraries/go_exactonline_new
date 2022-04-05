@@ -15,37 +15,37 @@ import (
 // Account stores Account from exactonline
 //
 type Account struct {
-	ID                                  types.GUID      `json:"ID"`
-	Accountant                          types.GUID      `json:"Accountant"`
-	AccountManager                      types.GUID      `json:"AccountManager"`
+	ID                                  types.Guid      `json:"ID"`
+	Accountant                          types.Guid      `json:"Accountant"`
+	AccountManager                      types.Guid      `json:"AccountManager"`
 	AccountManagerFullName              string          `json:"AccountManagerFullName"`
 	AccountManagerHID                   int32           `json:"AccountManagerHID"`
-	ActivitySector                      types.GUID      `json:"ActivitySector"`
-	ActivitySubSector                   types.GUID      `json:"ActivitySubSector"`
+	ActivitySector                      types.Guid      `json:"ActivitySector"`
+	ActivitySubSector                   types.Guid      `json:"ActivitySubSector"`
 	AddressLine1                        string          `json:"AddressLine1"`
 	AddressLine2                        string          `json:"AddressLine2"`
 	AddressLine3                        string          `json:"AddressLine3"`
 	BankAccounts                        json.RawMessage `json:"BankAccounts"` //to be implemented when needed
 	Blocked                             bool            `json:"Blocked"`
-	BRIN                                types.GUID      `json:"BRIN"`
+	BRIN                                types.Guid      `json:"BRIN"`
 	BSN                                 string          `json:"BSN"`
-	BusinessType                        types.GUID      `json:"BusinessType"`
+	BusinessType                        types.Guid      `json:"BusinessType"`
 	CanDropShip                         bool            `json:"CanDropShip"`
 	ChamberOfCommerce                   string          `json:"ChamberOfCommerce"`
 	City                                string          `json:"City"`
 	Classification                      string          `json:"Classification"`
-	Classification1                     types.GUID      `json:"Classification1"`
-	Classification2                     types.GUID      `json:"Classification2"`
-	Classification3                     types.GUID      `json:"Classification3"`
-	Classification4                     types.GUID      `json:"Classification4"`
-	Classification5                     types.GUID      `json:"Classification5"`
-	Classification6                     types.GUID      `json:"Classification6"`
-	Classification7                     types.GUID      `json:"Classification7"`
-	Classification8                     types.GUID      `json:"Classification8"`
+	Classification1                     types.Guid      `json:"Classification1"`
+	Classification2                     types.Guid      `json:"Classification2"`
+	Classification3                     types.Guid      `json:"Classification3"`
+	Classification4                     types.Guid      `json:"Classification4"`
+	Classification5                     types.Guid      `json:"Classification5"`
+	Classification6                     types.Guid      `json:"Classification6"`
+	Classification7                     types.Guid      `json:"Classification7"`
+	Classification8                     types.Guid      `json:"Classification8"`
 	ClassificationDescription           string          `json:"ClassificationDescription"`
 	Code                                string          `json:"Code"`
 	CodeAtSupplier                      string          `json:"CodeAtSupplier"`
-	CompanySize                         types.GUID      `json:"CompanySize"`
+	CompanySize                         types.Guid      `json:"CompanySize"`
 	ConsolidationScenario               byte            `json:"ConsolidationScenario"`
 	ControlledDate                      *types.Date     `json:"ControlledDate"`
 	Costcenter                          string          `json:"Costcenter"`
@@ -54,7 +54,7 @@ type Account struct {
 	Country                             string          `json:"Country"`
 	CountryName                         string          `json:"CountryName"`
 	Created                             *types.Date     `json:"Created"`
-	Creator                             types.GUID      `json:"Creator"`
+	Creator                             types.Guid      `json:"Creator"`
 	CreatorFullName                     string          `json:"CreatorFullName"`
 	CreditLinePurchase                  float64         `json:"CreditLinePurchase"`
 	CreditLineSales                     float64         `json:"CreditLineSales"`
@@ -65,16 +65,16 @@ type Account struct {
 	DiscountPurchase                    float64         `json:"DiscountPurchase"`
 	DiscountSales                       float64         `json:"DiscountSales"`
 	Division                            int32           `json:"Division"`
-	Document                            types.GUID      `json:"Document"`
+	Document                            types.Guid      `json:"Document"`
 	DunsNumber                          string          `json:"DunsNumber"`
 	Email                               string          `json:"Email"`
 	EndDate                             *types.Date     `json:"EndDate"`
 	EstablishedDate                     *types.Date     `json:"EstablishedDate"`
 	Fax                                 string          `json:"Fax"`
-	GLAccountPurchase                   types.GUID      `json:"GLAccountPurchase"`
-	GLAccountSales                      types.GUID      `json:"GLAccountSales"`
-	GLAP                                types.GUID      `json:"GLAP"`
-	GLAR                                types.GUID      `json:"GLAR"`
+	GLAccountPurchase                   types.Guid      `json:"GLAccountPurchase"`
+	GLAccountSales                      types.Guid      `json:"GLAccountSales"`
+	GLAP                                types.Guid      `json:"GLAP"`
+	GLAR                                types.Guid      `json:"GLAR"`
 	GlnNumber                           string          `json:"GlnNumber"`
 	HasWithholdingTaxSales              bool            `json:"HasWithholdingTaxSales"`
 	IgnoreDatevWarningMessage           bool            `json:"IgnoreDatevWarningMessage"`
@@ -84,7 +84,7 @@ type Account struct {
 	IntraStatTransactionA               string          `json:"IntraStatTransactionA"`
 	IntraStatTransactionB               string          `json:"IntraStatTransactionB"`
 	IntraStatTransportMethod            string          `json:"IntraStatTransportMethod"`
-	InvoiceAccount                      types.GUID      `json:"InvoiceAccount"`
+	InvoiceAccount                      types.Guid      `json:"InvoiceAccount"`
 	InvoiceAccountCode                  string          `json:"InvoiceAccountCode"`
 	InvoiceAccountName                  string          `json:"InvoiceAccountName"`
 	InvoiceAttachmentType               int32           `json:"InvoiceAttachmentType"`
@@ -105,20 +105,20 @@ type Account struct {
 	Language                            string          `json:"Language"`
 	LanguageDescription                 string          `json:"LanguageDescription"`
 	Latitude                            float64         `json:"Latitude"`
-	LeadPurpose                         types.GUID      `json:"LeadPurpose"`
-	LeadSource                          types.GUID      `json:"LeadSource"`
+	LeadPurpose                         types.Guid      `json:"LeadPurpose"`
+	LeadSource                          types.Guid      `json:"LeadSource"`
 	Logo                                json.RawMessage `json:"Logo"` //to be implemented when needed
 	LogoFileName                        string          `json:"LogoFileName"`
-	LogoThumbnailURL                    string          `json:"LogoThumbnailUrl"`
-	LogoURL                             string          `json:"LogoUrl"`
+	LogoThumbnailUrl                    string          `json:"LogoThumbnailUrl"`
+	LogoUrl                             string          `json:"LogoUrl"`
 	Longitude                           float64         `json:"Longitude"`
-	MainContact                         *types.GUID     `json:"MainContact"`
+	MainContact                         *types.Guid     `json:"MainContact"`
 	Modified                            *types.Date     `json:"Modified"`
-	Modifier                            types.GUID      `json:"Modifier"`
+	Modifier                            types.Guid      `json:"Modifier"`
 	ModifierFullName                    string          `json:"ModifierFullName"`
 	Name                                string          `json:"Name"`
 	OINNumber                           string          `json:"OINNumber"`
-	Parent                              types.GUID      `json:"Parent"`
+	Parent                              types.Guid      `json:"Parent"`
 	PayAsYouEarn                        string          `json:"PayAsYouEarn"`
 	PaymentConditionPurchase            string          `json:"PaymentConditionPurchase"`
 	PaymentConditionPurchaseDescription string          `json:"PaymentConditionPurchaseDescription"`
@@ -127,7 +127,7 @@ type Account struct {
 	Phone                               string          `json:"Phone"`
 	PhoneExtension                      string          `json:"PhoneExtension"`
 	Postcode                            string          `json:"Postcode"`
-	PriceList                           types.GUID      `json:"PriceList"`
+	PriceList                           types.Guid      `json:"PriceList"`
 	PurchaseCurrency                    string          `json:"PurchaseCurrency"`
 	PurchaseCurrencyDescription         string          `json:"PurchaseCurrencyDescription"`
 	PurchaseLeadDays                    int32           `json:"PurchaseLeadDays"`
@@ -135,13 +135,13 @@ type Account struct {
 	PurchaseVATCodeDescription          string          `json:"PurchaseVATCodeDescription"`
 	RecepientOfCommissions              bool            `json:"RecepientOfCommissions"`
 	Remarks                             string          `json:"Remarks"`
-	Reseller                            types.GUID      `json:"Reseller"`
+	Reseller                            types.Guid      `json:"Reseller"`
 	ResellerCode                        string          `json:"ResellerCode"`
 	ResellerName                        string          `json:"ResellerName"`
 	RSIN                                string          `json:"RSIN"`
 	SalesCurrency                       string          `json:"SalesCurrency"`
 	SalesCurrencyDescription            string          `json:"SalesCurrencyDescription"`
-	SalesTaxSchedule                    types.GUID      `json:"SalesTaxSchedule"`
+	SalesTaxSchedule                    types.Guid      `json:"SalesTaxSchedule"`
 	SalesTaxScheduleCode                string          `json:"SalesTaxScheduleCode"`
 	SalesTaxScheduleDescription         string          `json:"SalesTaxScheduleDescription"`
 	SalesVATCode                        string          `json:"SalesVATCode"`
@@ -151,7 +151,7 @@ type Account struct {
 	SeparateInvPerProject               byte            `json:"SeparateInvPerProject"`
 	SeparateInvPerSubscription          byte            `json:"SeparateInvPerSubscription"`
 	ShippingLeadDays                    int32           `json:"ShippingLeadDays"`
-	ShippingMethod                      types.GUID      `json:"ShippingMethod"`
+	ShippingMethod                      types.Guid      `json:"ShippingMethod"`
 	StartDate                           *types.Date     `json:"StartDate"`
 	State                               string          `json:"State"`
 	StateName                           string          `json:"StateName"`
@@ -253,10 +253,10 @@ type AccountUpdate struct {
 	LeadPurpose                         *string     `json:"LeadPurpose,omitempty"`
 	LeadSource                          *string     `json:"LeadSource,omitempty"`
 	LogoFileName                        *string     `json:"LogoFileName,omitempty"`
-	LogoThumbnailURL                    *string     `json:"LogoThumbnailUrl,omitempty"`
-	LogoURL                             *string     `json:"LogoUrl,omitempty"`
+	LogoThumbnailUrl                    *string     `json:"LogoThumbnailUrl,omitempty"`
+	LogoUrl                             *string     `json:"LogoUrl,omitempty"`
 	Longitude                           *float64    `json:"Longitude,omitempty"`
-	MainContact                         *types.GUID `json:"MainContact,omitempty"`
+	MainContact                         *types.Guid `json:"MainContact,omitempty"`
 	Modified                            *string     `json:"Modified,omitempty"`
 	Name                                *string     `json:"Name,omitempty"`
 	OINNumber                           *string     `json:"OINNumber,omitempty"`
@@ -377,7 +377,7 @@ func (call *GetAccountsCall) DoAll() (*[]Account, *errortools.Error) {
 	return &accounts, nil
 }
 
-func (service *Service) GetAccount(id types.GUID) (*Account, *errortools.Error) {
+func (service *Service) GetAccount(id types.Guid) (*Account, *errortools.Error) {
 	url := service.url(fmt.Sprintf("Accounts(guid'%s')", id.String()))
 
 	accountNew := Account{}
@@ -401,9 +401,9 @@ func (service *Service) CreateAccount(account *AccountUpdate) (*Account, *errort
 	return &accountNew, nil
 }
 
-func (service *Service) UpdateAccount(id types.GUID, account *AccountUpdate, returnUpdated bool) (*Account, *errortools.Error) {
+func (service *Service) UpdateAccount(id types.Guid, account *AccountUpdate, returnUpdated bool) (*Account, *errortools.Error) {
 	requestConfig := go_http.RequestConfig{
-		URL:       service.url(fmt.Sprintf("Accounts(guid'%s')", id.String())),
+		Url:       service.url(fmt.Sprintf("Accounts(guid'%s')", id.String())),
 		BodyModel: account,
 	}
 
@@ -424,7 +424,7 @@ func (service *Service) UpdateAccount(id types.GUID, account *AccountUpdate, ret
 	return accountUpdated, nil
 }
 
-func (service *Service) DeleteAccount(id types.GUID) *errortools.Error {
+func (service *Service) DeleteAccount(id types.Guid) *errortools.Error {
 	url := service.url(fmt.Sprintf("Accounts(guid'%s')", id.String()))
 
 	err := service.Delete(url)

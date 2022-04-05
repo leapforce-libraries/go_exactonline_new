@@ -22,5 +22,5 @@ func (service *Service) Get(url string, responseModel interface{}) (string, *err
 }
 
 func (service *Service) url(path string) string {
-	return service.httpService.URL(fmt.Sprintf("%s/%s", servicePath, path))
+	return service.httpService.Url(fmt.Sprintf("%s/%s", servicePath, path))
 }

@@ -22,7 +22,7 @@ type ReportingBalance struct {
 	CostUnitDescription   string     `json:"CostUnitDescription"`
 	Count                 int32      `json:"Count"`
 	Division              int32      `json:"Division"`
-	GLAccount             types.GUID `json:"GLAccount"`
+	GLAccount             types.Guid `json:"GLAccount"`
 	GLAccountCode         string     `json:"GLAccountCode"`
 	GLAccountDescription  string     `json:"GLAccountDescription"`
 	ReportingPeriod       int32      `json:"ReportingPeriod"`

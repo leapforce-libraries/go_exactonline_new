@@ -14,11 +14,11 @@ import (
 // Contact stores Contact from exactonline
 //
 type Contact struct {
-	ID                        types.GUID  `json:"ID"`
-	Account                   types.GUID  `json:"Account"`
+	ID                        types.Guid  `json:"ID"`
+	Account                   types.Guid  `json:"Account"`
 	AccountIsCustomer         bool        `json:"AccountIsCustomer"`
 	AccountIsSupplier         bool        `json:"AccountIsSupplier"`
-	AccountMainContact        types.GUID  `json:"AccountMainContact"`
+	AccountMainContact        types.Guid  `json:"AccountMainContact"`
 	AccountName               string      `json:"AccountName"`
 	AddressLine2              string      `json:"AddressLine2"`
 	AddressStreet             string      `json:"AddressStreet"`
@@ -38,7 +38,7 @@ type Contact struct {
 	Code                      string      `json:"Code"`
 	Country                   string      `json:"Country"`
 	Created                   *types.Date `json:"Created"`
-	Creator                   types.GUID  `json:"Creator"`
+	Creator                   types.Guid  `json:"Creator"`
 	CreatorFullName           string      `json:"CreatorFullName"`
 	Division                  int32       `json:"Division"`
 	Email                     string      `json:"Email"`
@@ -48,8 +48,8 @@ type Contact struct {
 	Gender                    string      `json:"Gender"`
 	HID                       int32       `json:"HID"`
 	IdentificationDate        *types.Date `json:"IdentificationDate"`
-	IdentificationDocument    types.GUID  `json:"IdentificationDocument"`
-	IdentificationUser        types.GUID  `json:"IdentificationUser"`
+	IdentificationDocument    types.Guid  `json:"IdentificationDocument"`
+	IdentificationUser        types.Guid  `json:"IdentificationUser"`
 	Initials                  string      `json:"Initials"`
 	IsAnonymised              byte        `json:"IsAnonymised"`
 	IsMailingExcluded         bool        `json:"IsMailingExcluded"`
@@ -57,19 +57,19 @@ type Contact struct {
 	JobTitleDescription       string      `json:"JobTitleDescription"`
 	Language                  string      `json:"Language"`
 	LastName                  string      `json:"LastName"`
-	LeadPurpose               types.GUID  `json:"LeadPurpose"`
-	LeadSource                types.GUID  `json:"LeadSource"`
+	LeadPurpose               types.Guid  `json:"LeadPurpose"`
+	LeadSource                types.Guid  `json:"LeadSource"`
 	MarketingNotes            string      `json:"MarketingNotes"`
 	MiddleName                string      `json:"MiddleName"`
 	Mobile                    string      `json:"Mobile"`
 	Modified                  *types.Date `json:"Modified"`
-	Modifier                  types.GUID  `json:"Modifier"`
+	Modifier                  types.Guid  `json:"Modifier"`
 	ModifierFullName          string      `json:"ModifierFullName"`
 	Nationality               string      `json:"Nationality"`
 	Notes                     string      `json:"Notes"`
 	PartnerName               string      `json:"PartnerName"`
 	PartnerNamePrefix         string      `json:"PartnerNamePrefix"`
-	Person                    types.GUID  `json:"Person"`
+	Person                    types.Guid  `json:"Person"`
 	Phone                     string      `json:"Phone"`
 	PhoneExtension            string      `json:"PhoneExtension"`
 	PictureName               string      `json:"PictureName"`
@@ -148,7 +148,7 @@ type GetContactsCall struct {
 }
 
 type GetContactsCallParams struct {
-	Account       *types.GUID
+	Account       *types.Guid
 	Email         *string
 	FullName      *string
 	ModifiedAfter *time.Time
@@ -224,7 +224,7 @@ func (call *GetContactsCall) DoAll() (*[]Contact, *errortools.Error) {
 	return &contacts, nil
 }
 
-func (service *Service) GetContact(id types.GUID) (*Contact, *errortools.Error) {
+func (service *Service) GetContact(id types.Guid) (*Contact, *errortools.Error) {
 	url := service.url(fmt.Sprintf("Contacts(guid'%s')", id.String()))
 
 	contactNew := Contact{}
@@ -248,9 +248,9 @@ func (service *Service) CreateContact(contact *ContactUpdate) (*Contact, *errort
 	return &contactNew, nil
 }
 
-func (service *Service) UpdateContact(id types.GUID, contact *ContactUpdate, returnUpdated bool) (*Contact, *errortools.Error) {
+func (service *Service) UpdateContact(id types.Guid, contact *ContactUpdate, returnUpdated bool) (*Contact, *errortools.Error) {
 	requestConfig := go_http.RequestConfig{
-		URL:       service.url(fmt.Sprintf("Contacts(guid'%s')", id.String())),
+		Url:       service.url(fmt.Sprintf("Contacts(guid'%s')", id.String())),
 		BodyModel: contact,
 	}
 
@@ -271,7 +271,7 @@ func (service *Service) UpdateContact(id types.GUID, contact *ContactUpdate, ret
 	return contactUpdated, nil
 }
 
-func (service *Service) DeleteContact(id types.GUID) *errortools.Error {
+func (service *Service) DeleteContact(id types.Guid) *errortools.Error {
 	url := service.url(fmt.Sprintf("Contacts(guid'%s')", id.String()))
 
 	err := service.Delete(url)

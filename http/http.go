@@ -14,12 +14,12 @@ import (
 )
 
 const (
-	APIName            string = "ExactOnline"
-	APIURL             string = "https://start.exactonline.nl/api/v1"
-	AuthURL            string = "https://start.exactonline.nl/api/oauth2/auth"
-	TokenURL           string = "https://start.exactonline.nl/api/oauth2/token"
+	ApiName            string = "ExactOnline"
+	ApiUrl             string = "https://start.exactonline.nl/api/v1"
+	AuthUrl            string = "https://start.exactonline.nl/api/oauth2/auth"
+	TokenUrl           string = "https://start.exactonline.nl/api/oauth2/token"
 	TokenHttpMethod    string = http.MethodPost
-	RedirectURL        string = "http://localhost:8080/oauth/redirect"
+	RedirectUrl        string = "http://localhost:8080/oauth/redirect"
 	LastModifiedFormat string = "2006-01-02T15:04:05"
 )
 
@@ -47,8 +47,8 @@ func NewService(division int32, oauth2Service *oauth2.Service) *Service {
 	}
 }
 
-func (service *Service) URL(path string) string {
-	return fmt.Sprintf("%s/%v/%s", APIURL, service.division, path)
+func (service *Service) Url(path string) string {
+	return fmt.Sprintf("%s/%v/%s", ApiUrl, service.division, path)
 }
 
 func (service *Service) LastModifiedFormat() string {
@@ -176,7 +176,7 @@ retry:
 	exactOnlineError := ExactOnlineError{}
 	requestConfig.ErrorModel = &exactOnlineError
 
-	request, response, e := service.oAuth2Service.HTTPRequest(requestConfig)
+	request, response, e := service.oAuth2Service.HttpRequest(requestConfig)
 	init := service.readRateLimitHeaders(response)
 	if response != nil {
 		if response.StatusCode == http.StatusTooManyRequests && init {
@@ -200,7 +200,7 @@ func (service *Service) getResponseSingle(url string) (*ResponseSingle, *errorto
 
 	requestConfig := go_http.RequestConfig{
 		Method:        http.MethodGet,
-		URL:           url,
+		Url:           url,
 		ResponseModel: &responseSingle,
 	}
 
@@ -217,7 +217,7 @@ func (service *Service) getResponse(url string) (*Response, *errortools.Error) {
 
 	requestConfig := go_http.RequestConfig{
 		Method:        http.MethodGet,
-		URL:           url,
+		Url:           url,
 		ResponseModel: &_response,
 	}
 
@@ -291,7 +291,7 @@ func (service *Service) Put(requestConfig *go_http.RequestConfig) *errortools.Er
 	maxRetries := uint(0) // no retries to prevent errors like "stream error: stream ID 25; PROTOCOL_ERROR exactonline"
 	_requestConfig := go_http.RequestConfig{
 		Method:     http.MethodPut,
-		URL:        requestConfig.URL,
+		Url:        requestConfig.Url,
 		BodyModel:  requestConfig.BodyModel,
 		MaxRetries: &maxRetries,
 	}
@@ -315,7 +315,7 @@ func (service *Service) Post(url string, bodyModel interface{}, responseModel in
 
 	requestConfig := go_http.RequestConfig{
 		Method:        http.MethodPost,
-		URL:           url,
+		Url:           url,
 		BodyModel:     bodyModel,
 		ResponseModel: &responseSingle,
 	}
@@ -336,7 +336,7 @@ func (service *Service) Post(url string, bodyModel interface{}, responseModel in
 func (service *Service) Delete(url string) *errortools.Error {
 	requestConfig := go_http.RequestConfig{
 		Method: http.MethodDelete,
-		URL:    url,
+		Url:    url,
 	}
 
 	return service.httpRequest(&requestConfig)

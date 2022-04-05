@@ -12,29 +12,29 @@ import (
 // Payment stores Payment from exactonline
 //
 type Payment struct {
-	ID                           types.GUID  `json:"ID"`
-	Account                      types.GUID  `json:"Account"`
-	AccountBankAccountID         types.GUID  `json:"AccountBankAccountID"`
+	ID                           types.Guid  `json:"ID"`
+	Account                      types.Guid  `json:"Account"`
+	AccountBankAccountID         types.Guid  `json:"AccountBankAccountID"`
 	AccountBankAccountNumber     string      `json:"AccountBankAccountNumber"`
 	AccountCode                  string      `json:"AccountCode"`
-	AccountContact               types.GUID  `json:"AccountContact"`
+	AccountContact               types.Guid  `json:"AccountContact"`
 	AccountContactName           string      `json:"AccountContactName"`
 	AccountName                  string      `json:"AccountName"`
 	AmountDC                     float64     `json:"AmountDC"`
 	AmountDiscountDC             float64     `json:"AmountDiscountDC"`
 	AmountDiscountFC             float64     `json:"AmountDiscountFC"`
 	AmountFC                     float64     `json:"AmountFC"`
-	BankAccountID                types.GUID  `json:"BankAccountID"`
+	BankAccountID                types.Guid  `json:"BankAccountID"`
 	BankAccountNumber            string      `json:"BankAccountNumber"`
 	CashflowTransactionBatchCode string      `json:"CashflowTransactionBatchCode"`
 	Created                      *types.Date `json:"Created"`
-	Creator                      types.GUID  `json:"Creator"`
+	Creator                      types.Guid  `json:"Creator"`
 	CreatorFullName              string      `json:"CreatorFullName"`
 	Currency                     string      `json:"Currency"`
 	Description                  string      `json:"Description"`
 	DiscountDueDate              *types.Date `json:"DiscountDueDate"`
 	Division                     int32       `json:"Division"`
-	Document                     types.GUID  `json:"Document"`
+	Document                     types.Guid  `json:"Document"`
 	DocumentNumber               int32       `json:"DocumentNumber"`
 	DocumentSubject              string      `json:"DocumentSubject"`
 	DueDate                      *types.Date `json:"DueDate"`
@@ -42,9 +42,9 @@ type Payment struct {
 	EndPeriod                    int16       `json:"EndPeriod"`
 	EndYear                      int16       `json:"EndYear"`
 	EntryDate                    *types.Date `json:"EntryDate"`
-	EntryID                      types.GUID  `json:"EntryID"`
+	EntryID                      types.Guid  `json:"EntryID"`
 	EntryNumber                  int32       `json:"EntryNumber"`
-	GLAccount                    types.GUID  `json:"GLAccount"`
+	GLAccount                    types.Guid  `json:"GLAccount"`
 	GLAccountCode                string      `json:"GLAccountCode"`
 	GLAccountDescription         string      `json:"GLAccountDescription"`
 	InvoiceDate                  *types.Date `json:"InvoiceDate"`
@@ -53,7 +53,7 @@ type Payment struct {
 	Journal                      string      `json:"Journal"`
 	JournalDescription           string      `json:"JournalDescription"`
 	Modified                     *types.Date `json:"Modified"`
-	Modifier                     types.GUID  `json:"Modifier"`
+	Modifier                     types.Guid  `json:"Modifier"`
 	ModifierFullName             string      `json:"ModifierFullName"`
 	PaymentBatchNumber           int32       `json:"PaymentBatchNumber"`
 	PaymentCondition             string      `json:"PaymentCondition"`
@@ -64,7 +64,7 @@ type Payment struct {
 	PaymentMethod                string      `json:"PaymentMethod"`
 	PaymentReference             string      `json:"PaymentReference"`
 	PaymentSelected              *types.Date `json:"PaymentSelected"`
-	PaymentSelector              types.GUID  `json:"PaymentSelector"`
+	PaymentSelector              types.Guid  `json:"PaymentSelector"`
 	PaymentSelectorFullName      string      `json:"PaymentSelectorFullName"`
 	RateFC                       float64     `json:"RateFC"`
 	Source                       int32       `json:"Source"`
@@ -72,8 +72,8 @@ type Payment struct {
 	TransactionAmountDC          float64     `json:"TransactionAmountDC"`
 	TransactionAmountFC          float64     `json:"TransactionAmountFC"`
 	TransactionDueDate           *types.Date `json:"TransactionDueDate"`
-	TransactionEntryID           types.GUID  `json:"TransactionEntryID"`
-	TransactionID                types.GUID  `json:"TransactionID"`
+	TransactionEntryID           types.Guid  `json:"TransactionEntryID"`
+	TransactionID                types.Guid  `json:"TransactionID"`
 	TransactionIsReversal        bool        `json:"TransactionIsReversal"`
 	TransactionReportingPeriod   int16       `json:"TransactionReportingPeriod"`
 	TransactionReportingYear     int16       `json:"TransactionReportingYear"`

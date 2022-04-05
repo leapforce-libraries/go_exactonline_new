@@ -13,9 +13,9 @@ import (
 // BankEntry stores BankEntry from exactonline
 //
 type BankEntry struct {
-	EntryID                      types.GUID      `json:"EntryID"`
+	EntryID                      types.Guid      `json:"EntryID"`
 	BankEntryLines               json.RawMessage `json:"BankEntryLines"` //to be implemented when needed
-	BankStatementDocument        types.GUID      `json:"BankStatementDocument"`
+	BankStatementDocument        types.Guid      `json:"BankStatementDocument"`
 	BankStatementDocumentNumber  int32           `json:"BankStatementDocumentNumber"`
 	BankStatementDocumentSubject string          `json:"BankStatementDocumentSubject"`
 	ClosingBalanceFC             float64         `json:"ClosingBalanceFC"`

@@ -12,27 +12,27 @@ import (
 // StockCountLine stores StockCountLine from exactonline
 //
 type StockCountLine struct {
-	ID                         types.GUID  `json:"ID"`
+	ID                         types.Guid  `json:"ID"`
 	CostPrice                  float64     `json:"CostPrice"`
 	Created                    *types.Date `json:"Created"`
-	Creator                    types.GUID  `json:"Creator"`
+	Creator                    types.Guid  `json:"Creator"`
 	CreatorFullName            string      `json:"CreatorFullName"`
 	Division                   int32       `json:"Division"`
-	Item                       types.GUID  `json:"Item"`
+	Item                       types.Guid  `json:"Item"`
 	ItemCode                   string      `json:"ItemCode"`
 	ItemCostPrice              float64     `json:"ItemCostPrice"`
 	ItemDescription            string      `json:"ItemDescription"`
 	ItemDivisable              bool        `json:"ItemDivisable"`
 	LineNumber                 int32       `json:"LineNumber"`
 	Modified                   *types.Date `json:"Modified"`
-	Modifier                   types.GUID  `json:"Modifier"`
+	Modifier                   types.Guid  `json:"Modifier"`
 	ModifierFullName           string      `json:"ModifierFullName"`
 	QuantityDifference         float64     `json:"QuantityDifference"`
 	QuantityInStock            float64     `json:"QuantityInStock"`
 	QuantityNew                float64     `json:"QuantityNew"`
-	StockCountID               types.GUID  `json:"StockCountID"`
+	StockCountID               types.Guid  `json:"StockCountID"`
 	StockKeepingUnit           string      `json:"StockKeepingUnit"`
-	StorageLocation            types.GUID  `json:"StorageLocation"`
+	StorageLocation            types.Guid  `json:"StorageLocation"`
 	StorageLocationCode        string      `json:"StorageLocationCode"`
 	StorageLocationDescription string      `json:"StorageLocationDescription"`
 }

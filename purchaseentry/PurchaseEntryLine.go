@@ -12,10 +12,10 @@ import (
 // PurchaseEntryLine stores PurchaseEntryLine from exactonline
 //
 type PurchaseEntryLine struct {
-	ID                         types.GUID  `json:"ID"`
+	ID                         types.Guid  `json:"ID"`
 	AmountDC                   float64     `json:"AmountDC"`
 	AmountFC                   float64     `json:"AmountFC"`
-	Asset                      types.GUID  `json:"Asset"`
+	Asset                      types.Guid  `json:"Asset"`
 	AssetDescription           string      `json:"AssetDescription"`
 	CostCenter                 string      `json:"CostCenter"`
 	CostCenterDescription      string      `json:"CostCenterDescription"`
@@ -23,9 +23,9 @@ type PurchaseEntryLine struct {
 	CostUnitDescription        string      `json:"CostUnitDescription"`
 	Description                string      `json:"Description"`
 	Division                   int32       `json:"Division"`
-	EntryID                    types.GUID  `json:"EntryID"`
+	EntryID                    types.Guid  `json:"EntryID"`
 	From                       *types.Date `json:"From"`
-	GLAccount                  types.GUID  `json:"GLAccount"`
+	GLAccount                  types.Guid  `json:"GLAccount"`
 	GLAccountCode              string      `json:"GLAccountCode"`
 	GLAccountDescription       string      `json:"GLAccountDescription"`
 	IntraStatArea              string      `json:"IntraStatArea"`
@@ -37,7 +37,7 @@ type PurchaseEntryLine struct {
 	LineNumber                 int32       `json:"LineNumber"`
 	Notes                      string      `json:"Notes"`
 	PrivateUsePercentage       float64     `json:"PrivateUsePercentage"`
-	Project                    types.GUID  `json:"Project"`
+	Project                    types.Guid  `json:"Project"`
 	ProjectDescription         string      `json:"ProjectDescription"`
 	Quantity                   float64     `json:"Quantity"`
 	SerialNumber               string      `json:"SerialNumber"`
@@ -45,10 +45,10 @@ type PurchaseEntryLine struct {
 	StatisticalNumber          string      `json:"StatisticalNumber"`
 	StatisticalQuantity        float64     `json:"StatisticalQuantity"`
 	StatisticalValue           float64     `json:"StatisticalValue"`
-	Subscription               types.GUID  `json:"Subscription"`
+	Subscription               types.Guid  `json:"Subscription"`
 	SubscriptionDescription    string      `json:"SubscriptionDescription"`
 	To                         *types.Date `json:"To"`
-	TrackingNumber             types.GUID  `json:"TrackingNumber"`
+	TrackingNumber             types.Guid  `json:"TrackingNumber"`
 	TrackingNumberDescription  string      `json:"TrackingNumberDescription"`
 	Type                       int32       `json:"Type"`
 	VATAmountDC                float64     `json:"VATAmountDC"`

@@ -12,21 +12,21 @@ import (
 // PlannedSalesReturn stores PlannedSalesReturn from exactonline
 //
 type PlannedSalesReturn struct {
-	PlannedSalesReturnID             types.GUID  `json:"PlannedSalesReturnID"`
+	PlannedSalesReturnID             types.Guid  `json:"PlannedSalesReturnID"`
 	Created                          *types.Date `json:"Created"`
-	Creator                          types.GUID  `json:"Creator"`
+	Creator                          types.Guid  `json:"Creator"`
 	CreatorFullName                  string      `json:"CreatorFullName"`
-	DeliveredTo                      types.GUID  `json:"DeliveredTo"`
-	DeliveredToContactPerson         types.GUID  `json:"DeliveredToContactPerson"`
+	DeliveredTo                      types.Guid  `json:"DeliveredTo"`
+	DeliveredToContactPerson         types.Guid  `json:"DeliveredToContactPerson"`
 	DeliveredToContactPersonFullName string      `json:"DeliveredToContactPersonFullName"`
 	DeliveredToName                  string      `json:"DeliveredToName"`
-	DeliveryAddress                  types.GUID  `json:"DeliveryAddress"`
+	DeliveryAddress                  types.Guid  `json:"DeliveryAddress"`
 	Description                      string      `json:"Description"`
 	Division                         int32       `json:"Division"`
-	Document                         types.GUID  `json:"Document"`
+	Document                         types.Guid  `json:"Document"`
 	DocumentSubject                  string      `json:"DocumentSubject"`
 	Modified                         *types.Date `json:"Modified"`
-	Modifier                         types.GUID  `json:"Modifier"`
+	Modifier                         types.Guid  `json:"Modifier"`
 	ModifierFullName                 string      `json:"ModifierFullName"`
 	//PlannedSalesReturnLines          []PlannedSalesReturnLine `json:"PlannedSalesReturnLines"`
 	Remarks              string      `json:"Remarks"`
@@ -34,7 +34,7 @@ type PlannedSalesReturn struct {
 	ReturnNumber         int32       `json:"ReturnNumber"`
 	Source               int16       `json:"Source"`
 	Status               int16       `json:"Status"`
-	Warehouse            types.GUID  `json:"Warehouse"`
+	Warehouse            types.Guid  `json:"Warehouse"`
 	WarehouseCode        string      `json:"WarehouseCode"`
 	WarehouseDescription string      `json:"WarehouseDescription"`
 }

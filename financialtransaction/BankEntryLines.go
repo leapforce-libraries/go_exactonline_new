@@ -12,14 +12,14 @@ import (
 // BankEntryLine stores BankEntryLine from exactonline
 //
 type BankEntryLine struct {
-	ID                    types.GUID  `json:"ID"`
-	Account               types.GUID  `json:"Account"`
+	ID                    types.Guid  `json:"ID"`
+	Account               types.Guid  `json:"Account"`
 	AccountCode           string      `json:"AccountCode"`
 	AccountName           string      `json:"AccountName"`
 	AmountDC              float64     `json:"AmountDC"`
 	AmountFC              float64     `json:"AmountFC"`
 	AmountVATFC           float64     `json:"AmountVATFC"`
-	Asset                 types.GUID  `json:"Asset"`
+	Asset                 types.Guid  `json:"Asset"`
 	AssetCode             string      `json:"AssetCode"`
 	AssetDescription      string      `json:"AssetDescription"`
 	CostCenter            string      `json:"CostCenter"`
@@ -27,28 +27,28 @@ type BankEntryLine struct {
 	CostUnit              string      `json:"CostUnit"`
 	CostUnitDescription   string      `json:"CostUnitDescription"`
 	Created               *types.Date `json:"Created"`
-	Creator               types.GUID  `json:"Creator"`
+	Creator               types.Guid  `json:"Creator"`
 	CreatorFullName       string      `json:"CreatorFullName"`
 	Date                  *types.Date `json:"Date"`
 	Description           string      `json:"Description"`
 	Division              int32       `json:"Division"`
-	Document              types.GUID  `json:"Document"`
+	Document              types.Guid  `json:"Document"`
 	DocumentNumber        int32       `json:"DocumentNumber"`
 	DocumentSubject       string      `json:"DocumentSubject"`
-	EntryID               types.GUID  `json:"EntryID"`
+	EntryID               types.Guid  `json:"EntryID"`
 	EntryNumber           int32       `json:"EntryNumber"`
 	ExchangeRate          float64     `json:"ExchangeRate"`
-	GLAccount             types.GUID  `json:"GLAccount"`
+	GLAccount             types.Guid  `json:"GLAccount"`
 	GLAccountCode         string      `json:"GLAccountCode"`
 	GLAccountDescription  string      `json:"GLAccountDescription"`
 	LineNumber            int32       `json:"LineNumber"`
 	Modified              *types.Date `json:"Modified"`
-	Modifier              types.GUID  `json:"Modifier"`
+	Modifier              types.Guid  `json:"Modifier"`
 	ModifierFullName      string      `json:"ModifierFullName"`
 	Notes                 string      `json:"Notes"`
-	OffsetID              types.GUID  `json:"OffsetID"`
+	OffsetID              types.Guid  `json:"OffsetID"`
 	OurRef                int32       `json:"OurRef"`
-	Project               types.GUID  `json:"Project"`
+	Project               types.Guid  `json:"Project"`
 	ProjectCode           string      `json:"ProjectCode"`
 	ProjectDescription    string      `json:"ProjectDescription"`
 	Quantity              float64     `json:"Quantity"`

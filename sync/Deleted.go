@@ -36,9 +36,9 @@ const (
 type Deleted struct {
 	Timestamp  types.Int64String `json:"Timestamp"`
 	Division   int32             `json:"Division"`
-	EntityKey  types.GUID        `json:"EntityKey"`
+	EntityKey  types.Guid        `json:"EntityKey"`
 	EntityType int32             `json:"EntityType"`
-	ID         types.GUID        `json:"ID"`
+	ID         types.Guid        `json:"ID"`
 }
 
 type SyncDeletedCall struct {

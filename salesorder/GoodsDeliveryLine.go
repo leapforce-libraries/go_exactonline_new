@@ -13,31 +13,31 @@ import (
 // GoodsDeliveryLine stores GoodsDeliveryLine from exactonline
 //
 type GoodsDeliveryLine struct {
-	ID                         types.GUID      `json:"ID"`
+	ID                         types.Guid      `json:"ID"`
 	BatchNumbers               json.RawMessage `json:"BatchNumbers"` //to be implemented when needed
 	Created                    *types.Date     `json:"Created"`
-	Creator                    types.GUID      `json:"Creator"`
+	Creator                    types.Guid      `json:"Creator"`
 	CreatorFullName            string          `json:"CreatorFullName"`
 	CustomerItemCode           string          `json:"CustomerItemCode"`
 	DeliveryDate               *types.Date     `json:"DeliveryDate"`
 	Description                string          `json:"Description"`
 	Division                   int32           `json:"Division"`
-	EntryID                    types.GUID      `json:"EntryID"`
-	Item                       types.GUID      `json:"Item"`
+	EntryID                    types.Guid      `json:"EntryID"`
+	Item                       types.Guid      `json:"Item"`
 	ItemCode                   string          `json:"ItemCode"`
 	ItemDescription            string          `json:"ItemDescription"`
 	LineNumber                 int32           `json:"LineNumber"`
 	Modified                   *types.Date     `json:"Modified"`
-	Modifier                   types.GUID      `json:"Modifier"`
+	Modifier                   types.Guid      `json:"Modifier"`
 	ModifierFullName           string          `json:"ModifierFullName"`
 	Notes                      string          `json:"Notes"`
 	QuantityDelivered          float64         `json:"QuantityDelivered"`
 	QuantityOrdered            float64         `json:"QuantityOrdered"`
-	SalesOrderLineID           types.GUID      `json:"SalesOrderLineID"`
+	SalesOrderLineID           types.Guid      `json:"SalesOrderLineID"`
 	SalesOrderLineNumber       int32           `json:"SalesOrderLineNumber"`
 	SalesOrderNumber           int32           `json:"SalesOrderNumber"`
 	SerialNumbers              json.RawMessage `json:"SerialNumbers"` //to be implemented when needed
-	StorageLocation            types.GUID      `json:"StorageLocation"`
+	StorageLocation            types.Guid      `json:"StorageLocation"`
 	StorageLocationCode        string          `json:"StorageLocationCode"`
 	StorageLocationDescription string          `json:"StorageLocationDescription"`
 	TrackingNumber             string          `json:"TrackingNumber"`

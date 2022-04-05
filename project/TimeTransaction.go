@@ -12,45 +12,45 @@ import (
 // TimeTransaction stores TimeTransaction from exactonline
 //
 type TimeTransaction struct {
-	ID                      types.GUID  `json:"ID"`
-	Account                 types.GUID  `json:"Account"`
+	ID                      types.Guid  `json:"ID"`
+	Account                 types.Guid  `json:"Account"`
 	AccountName             string      `json:"AccountName"`
-	Activity                types.GUID  `json:"Activity"`
+	Activity                types.Guid  `json:"Activity"`
 	ActivityDescription     string      `json:"ActivityDescription"`
 	Amount                  float64     `json:"Amount"`
 	AmountFC                float64     `json:"AmountFC"`
-	Attachment              types.GUID  `json:"Attachment"`
+	Attachment              types.Guid  `json:"Attachment"`
 	Created                 *types.Date `json:"Created,omitempty"`
-	Creator                 types.GUID  `json:"Creator"`
+	Creator                 types.Guid  `json:"Creator"`
 	CreatorFullName         string      `json:"CreatorFullName"`
 	Currency                string      `json:"Currency"`
 	Date                    *types.Date `json:"Date,omitempty"`
 	Division                int64       `json:"Division"`
 	DivisionDescription     string      `json:"DivisionDescription"`
-	Employee                types.GUID  `json:"Employee"`
+	Employee                types.Guid  `json:"Employee"`
 	EndTime                 *types.Date `json:"EndTime,omitempty"`
 	EntryNumber             int64       `json:"EntryNumber"`
 	ErrorText               string      `json:"ErrorText"`
 	HourStatus              int64       `json:"HourStatus"`
-	Item                    types.GUID  `json:"Item"`
+	Item                    types.Guid  `json:"Item"`
 	ItemDescription         string      `json:"ItemDescription"`
 	ItemDivisable           bool        `json:"ItemDivisable"`
 	Modified                *types.Date `json:"Modified,omitempty"`
-	Modifier                types.GUID  `json:"Modifier"`
+	Modifier                types.Guid  `json:"Modifier"`
 	ModifierFullName        string      `json:"ModifierFullName"`
 	Notes                   string      `json:"Notes"`
 	Price                   float64     `json:"Price"`
 	PriceFC                 float64     `json:"PriceFC"`
-	Project                 types.GUID  `json:"Project"`
-	ProjectAccount          types.GUID  `json:"ProjectAccount"`
+	Project                 types.Guid  `json:"Project"`
+	ProjectAccount          types.Guid  `json:"ProjectAccount"`
 	ProjectAccountCode      string      `json:"ProjectAccountCode"`
 	ProjectAccountName      string      `json:"ProjectAccountName"`
 	ProjectCode             string      `json:"ProjectCode"`
 	ProjectDescription      string      `json:"ProjectDescription"`
 	Quantity                float64     `json:"Quantity"`
 	StartTime               *types.Date `json:"StartTime,omitempty"`
-	Subscription            types.GUID  `json:"Subscription"`
-	SubscriptionAccount     types.GUID  `json:"SubscriptionAccount"`
+	Subscription            types.Guid  `json:"Subscription"`
+	SubscriptionAccount     types.Guid  `json:"SubscriptionAccount"`
 	SubscriptionAccountCode string      `json:"SubscriptionAccountCode"`
 	SubscriptionAccountName string      `json:"SubscriptionAccountName"`
 	SubscriptionDescription string      `json:"SubscriptionDescription"`

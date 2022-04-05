@@ -12,22 +12,22 @@ import (
 //
 type LogisticsSalesItemPrice struct {
 	Timestamp                  types.Int64String `json:"Timestamp"`
-	Account                    types.GUID        `json:"Account"`
+	Account                    types.Guid        `json:"Account"`
 	AccountName                string            `json:"AccountName"`
 	Created                    *types.Date       `json:"Created"`
-	Creator                    types.GUID        `json:"Creator"`
+	Creator                    types.Guid        `json:"Creator"`
 	CreatorFullName            string            `json:"CreatorFullName"`
 	Currency                   string            `json:"Currency"`
 	DefaultItemUnit            string            `json:"DefaultItemUnit"`
 	DefaultItemUnitDescription string            `json:"DefaultItemUnitDescription"`
 	Division                   int32             `json:"Division"`
 	EndDate                    *types.Date       `json:"EndDate"`
-	ID                         types.GUID        `json:"ID"`
-	Item                       types.GUID        `json:"Item"`
+	ID                         types.Guid        `json:"ID"`
+	Item                       types.Guid        `json:"Item"`
 	ItemCode                   string            `json:"ItemCode"`
 	ItemDescription            string            `json:"ItemDescription"`
 	Modified                   *types.Date       `json:"Modified"`
-	Modifier                   types.GUID        `json:"Modifier"`
+	Modifier                   types.Guid        `json:"Modifier"`
 	ModifierFullName           string            `json:"ModifierFullName"`
 	NumberOfItemsPerUnit       float64           `json:"NumberOfItemsPerUnit"`
 	Price                      float64           `json:"Price"`

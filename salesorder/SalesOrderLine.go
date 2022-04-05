@@ -11,7 +11,7 @@ import (
 // SalesOrderLine stores SalesOrderLine from exactonline
 //
 type SalesOrderLine struct {
-	ID                      types.GUID  `json:"ID"`
+	ID                      types.Guid  `json:"ID"`
 	AmountDC                float64     `json:"AmountDC"`
 	AmountFC                float64     `json:"AmountFC"`
 	CostCenter              string      `json:"CostCenter"`
@@ -24,26 +24,26 @@ type SalesOrderLine struct {
 	Description             string      `json:"Description"`
 	Discount                float64     `json:"Discount"`
 	Division                int32       `json:"Division"`
-	Item                    types.GUID  `json:"Item"`
+	Item                    types.Guid  `json:"Item"`
 	ItemCode                string      `json:"ItemCode"`
 	ItemDescription         string      `json:"ItemDescription"`
-	ItemVersion             types.GUID  `json:"ItemVersion"`
+	ItemVersion             types.Guid  `json:"ItemVersion"`
 	ItemVersionDescription  string      `json:"ItemVersionDescription"`
 	LineNumber              int32       `json:"LineNumber"`
 	NetPrice                float64     `json:"NetPrice"`
 	Notes                   string      `json:"Notes"`
-	OrderID                 types.GUID  `json:"OrderID"`
+	OrderID                 types.Guid  `json:"OrderID"`
 	OrderNumber             int32       `json:"OrderNumber"`
-	Pricelist               types.GUID  `json:"Pricelist"`
+	Pricelist               types.Guid  `json:"Pricelist"`
 	PricelistDescription    string      `json:"PricelistDescription"`
-	Project                 types.GUID  `json:"Project"`
+	Project                 types.Guid  `json:"Project"`
 	ProjectDescription      string      `json:"ProjectDescription"`
-	PurchaseOrder           types.GUID  `json:"PurchaseOrder"`
-	PurchaseOrderLine       types.GUID  `json:"PurchaseOrderLine"`
+	PurchaseOrder           types.Guid  `json:"PurchaseOrder"`
+	PurchaseOrderLine       types.Guid  `json:"PurchaseOrderLine"`
 	PurchaseOrderLineNumber int32       `json:"PurchaseOrderLineNumber"`
 	PurchaseOrderNumber     int32       `json:"PurchaseOrderNumber"`
 	Quantity                float64     `json:"Quantity"`
-	ShopOrder               types.GUID  `json:"ShopOrder"`
+	ShopOrder               types.Guid  `json:"ShopOrder"`
 	UnitCode                string      `json:"UnitCode"`
 	UnitDescription         string      `json:"UnitDescription"`
 	UnitPrice               float64     `json:"UnitPrice"`

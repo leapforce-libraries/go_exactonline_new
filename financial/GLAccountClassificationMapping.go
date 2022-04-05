@@ -11,17 +11,17 @@ import (
 // GLAccountClassificationMapping stores GLAccountClassificationMapping from exactonline
 //
 type GLAccountClassificationMapping struct {
-	ID                        types.GUID `json:"ID"`
-	Classification            types.GUID `json:"Classification"`
+	ID                        types.Guid `json:"ID"`
+	Classification            types.Guid `json:"Classification"`
 	ClassificationCode        string     `json:"ClassificationCode"`
 	ClassificationDescription string     `json:"ClassificationDescription"`
 	Division                  int64      `json:"Division"`
-	GLAccount                 types.GUID `json:"GLAccount"`
+	GLAccount                 types.Guid `json:"GLAccount"`
 	GLAccountCode             string     `json:"GLAccountCode"`
 	GLAccountDescription      string     `json:"GLAccountDescription"`
 	GLSchemeCode              string     `json:"GLSchemeCode"`
 	GLSchemeDescription       string     `json:"GLSchemeDescription"`
-	GLSchemeID                types.GUID `json:"GLSchemeID"`
+	GLSchemeID                types.Guid `json:"GLSchemeID"`
 }
 
 type GetGLAccountClassificationMappingsCall struct {

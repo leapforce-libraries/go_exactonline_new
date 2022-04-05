@@ -14,14 +14,14 @@ import (
 // Subscription stores Subscription from exactonline
 //
 type Subscription struct {
-	EntryID                        types.GUID  `json:"EntryID"`
+	EntryID                        types.Guid  `json:"EntryID"`
 	BlockEntry                     bool        `json:"BlockEntry"`
 	CancellationDate               *types.Date `json:"CancellationDate"`
-	Classification                 types.GUID  `json:"Classification"`
+	Classification                 types.Guid  `json:"Classification"`
 	ClassificationCode             string      `json:"ClassificationCode"`
 	ClassificationDescription      string      `json:"ClassificationDescription"`
 	Created                        *types.Date `json:"Created"`
-	Creator                        types.GUID  `json:"Creator"`
+	Creator                        types.Guid  `json:"Creator"`
 	CreatorFullName                string      `json:"CreatorFullName"`
 	Currency                       string      `json:"Currency"`
 	CustomerPONumber               string      `json:"CustomerPONumber"`
@@ -30,28 +30,28 @@ type Subscription struct {
 	EndDate                        *types.Date `json:"EndDate"`
 	InvoiceDay                     byte        `json:"InvoiceDay"`
 	InvoicedTo                     *types.Date `json:"InvoicedTo"`
-	InvoiceTo                      types.GUID  `json:"InvoiceTo"`
-	InvoiceToContactPerson         types.GUID  `json:"InvoiceToContactPerson"`
+	InvoiceTo                      types.Guid  `json:"InvoiceTo"`
+	InvoiceToContactPerson         types.Guid  `json:"InvoiceToContactPerson"`
 	InvoiceToContactPersonFullName string      `json:"InvoiceToContactPersonFullName"`
 	InvoiceToName                  string      `json:"InvoiceToName"`
 	InvoicingStartDate             *types.Date `json:"InvoicingStartDate"`
 	Modified                       *types.Date `json:"Modified"`
-	Modifier                       types.GUID  `json:"Modifier"`
+	Modifier                       types.Guid  `json:"Modifier"`
 	ModifierFullName               string      `json:"ModifierFullName"`
 	Notes                          string      `json:"Notes"`
 	Number                         int32       `json:"Number"`
-	OrderedBy                      types.GUID  `json:"OrderedBy"`
-	OrderedByContactPerson         types.GUID  `json:"OrderedByContactPerson"`
+	OrderedBy                      types.Guid  `json:"OrderedBy"`
+	OrderedByContactPerson         types.Guid  `json:"OrderedByContactPerson"`
 	OrderedByContactPersonFullName string      `json:"OrderedByContactPersonFullName"`
 	OrderedByName                  string      `json:"OrderedByName"`
 	PaymentCondition               string      `json:"PaymentCondition"`
 	PaymentConditionDescription    string      `json:"PaymentConditionDescription"`
 	Printed                        bool        `json:"Printed"`
-	ReasonCancelled                types.GUID  `json:"ReasonCancelled"`
+	ReasonCancelled                types.Guid  `json:"ReasonCancelled"`
 	ReasonCancelledCode            string      `json:"ReasonCancelledCode"`
 	ReasonCancelledDescription     string      `json:"ReasonCancelledDescription"`
 	StartDate                      *types.Date `json:"StartDate"`
-	SubscriptionType               types.GUID  `json:"SubscriptionType"`
+	SubscriptionType               types.Guid  `json:"SubscriptionType"`
 	SubscriptionTypeCode           string      `json:"SubscriptionTypeCode"`
 	SubscriptionTypeDescription    string      `json:"SubscriptionTypeDescription"`
 }
@@ -90,7 +90,7 @@ type GetSubscriptionsCall struct {
 }
 
 type GetSubscriptionsCallParams struct {
-	OrderedBy     *types.GUID
+	OrderedBy     *types.Guid
 	ModifiedAfter *time.Time
 }
 
@@ -158,7 +158,7 @@ func (call *GetSubscriptionsCall) DoAll() (*[]Subscription, *errortools.Error) {
 	return &subscriptions, nil
 }
 
-func (service *Service) GetSubscription(entryID types.GUID) (*Subscription, *errortools.Error) {
+func (service *Service) GetSubscription(entryID types.Guid) (*Subscription, *errortools.Error) {
 	url := service.url(fmt.Sprintf("Subscriptions(guid'%s')", entryID.String()))
 
 	subscription := Subscription{}
@@ -182,9 +182,9 @@ func (service *Service) CreateSubscription(subscription *SubscriptionUpdate) (*S
 	return &subscriptionNew, nil
 }
 
-func (service *Service) UpdateSubscription(entryID types.GUID, subscription *SubscriptionUpdate, returnUpdated bool) (*Subscription, *errortools.Error) {
+func (service *Service) UpdateSubscription(entryID types.Guid, subscription *SubscriptionUpdate, returnUpdated bool) (*Subscription, *errortools.Error) {
 	requestConfig := go_http.RequestConfig{
-		URL:       service.url(fmt.Sprintf("Subscriptions(guid'%s')", entryID.String())),
+		Url:       service.url(fmt.Sprintf("Subscriptions(guid'%s')", entryID.String())),
 		BodyModel: subscription,
 	}
 
@@ -205,7 +205,7 @@ func (service *Service) UpdateSubscription(entryID types.GUID, subscription *Sub
 	return subscriptionUpdated, nil
 }
 
-func (service *Service) DeleteSubscription(entryID types.GUID) *errortools.Error {
+func (service *Service) DeleteSubscription(entryID types.Guid) *errortools.Error {
 	url := service.url(fmt.Sprintf("Subscriptions(guid'%s')", entryID.String()))
 
 	err := service.Delete(url)

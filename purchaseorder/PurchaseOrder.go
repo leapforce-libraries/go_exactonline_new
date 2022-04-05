@@ -13,55 +13,55 @@ import (
 // PurchaseOrder stores PurchaseOrder from exactonline
 //
 type PurchaseOrder struct {
-	PurchaseOrderID               types.GUID      `json:"PurchaseOrderID"`
+	PurchaseOrderID               types.Guid      `json:"PurchaseOrderID"`
 	AmountDC                      float64         `json:"AmountDC"`
 	AmountFC                      float64         `json:"AmountFC"`
 	Created                       *types.Date     `json:"Created"`
-	Creator                       types.GUID      `json:"Creator"`
+	Creator                       types.Guid      `json:"Creator"`
 	CreatorFullName               string          `json:"CreatorFullName"`
 	Currency                      string          `json:"Currency"`
-	DeliveryAccount               types.GUID      `json:"DeliveryAccount"`
+	DeliveryAccount               types.Guid      `json:"DeliveryAccount"`
 	DeliveryAccountCode           string          `json:"DeliveryAccountCode"`
 	DeliveryAccountName           string          `json:"DeliveryAccountName"`
-	DeliveryAddress               types.GUID      `json:"DeliveryAddress"`
-	DeliveryContact               types.GUID      `json:"DeliveryContact"`
+	DeliveryAddress               types.Guid      `json:"DeliveryAddress"`
+	DeliveryContact               types.Guid      `json:"DeliveryContact"`
 	DeliveryContactPersonFullName string          `json:"DeliveryContactPersonFullName"`
 	Description                   string          `json:"Description"`
 	Division                      int32           `json:"Division"`
-	Document                      types.GUID      `json:"Document"`
+	Document                      types.Guid      `json:"Document"`
 	DocumentSubject               string          `json:"DocumentSubject"`
 	DropShipment                  bool            `json:"DropShipment"`
 	ExchangeRate                  float64         `json:"ExchangeRate"`
 	InvoiceStatus                 int32           `json:"InvoiceStatus"`
 	Modified                      *types.Date     `json:"Modified"`
-	Modifier                      types.GUID      `json:"Modifier"`
+	Modifier                      types.Guid      `json:"Modifier"`
 	ModifierFullName              string          `json:"ModifierFullName"`
 	OrderDate                     *types.Date     `json:"OrderDate"`
 	OrderNumber                   int32           `json:"OrderNumber"`
 	OrderStatus                   int32           `json:"OrderStatus"`
 	PaymentCondition              string          `json:"PaymentCondition"`
 	PaymentConditionDescription   string          `json:"PaymentConditionDescription"`
-	PurchaseAgent                 types.GUID      `json:"PurchaseAgent"`
+	PurchaseAgent                 types.Guid      `json:"PurchaseAgent"`
 	PurchaseAgentFullName         string          `json:"PurchaseAgentFullName"`
 	PurchaseOrderLines            json.RawMessage `json:"PurchaseOrderLines"`
 	ReceiptDate                   *types.Date     `json:"ReceiptDate"`
 	ReceiptStatus                 int32           `json:"ReceiptStatus"`
 	Remarks                       string          `json:"Remarks"`
-	SalesOrder                    types.GUID      `json:"SalesOrder"`
+	SalesOrder                    types.Guid      `json:"SalesOrder"`
 	SalesOrderNumber              int32           `json:"SalesOrderNumber"`
-	SelectionCode                 types.GUID      `json:"SelectionCode"`
+	SelectionCode                 types.Guid      `json:"SelectionCode"`
 	SelectionCodeCode             string          `json:"SelectionCodeCode"`
 	SelectionCodeDescription      string          `json:"SelectionCodeDescription"`
-	ShippingMethod                types.GUID      `json:"ShippingMethod"`
+	ShippingMethod                types.Guid      `json:"ShippingMethod"`
 	ShippingMethodDescription     string          `json:"ShippingMethodDescription"`
 	Source                        int16           `json:"Source"`
-	Supplier                      types.GUID      `json:"Supplier"`
+	Supplier                      types.Guid      `json:"Supplier"`
 	SupplierCode                  string          `json:"SupplierCode"`
-	SupplierContact               types.GUID      `json:"SupplierContact"`
+	SupplierContact               types.Guid      `json:"SupplierContact"`
 	SupplierContactPersonFullName string          `json:"SupplierContactPersonFullName"`
 	SupplierName                  string          `json:"SupplierName"`
 	VATAmount                     float64         `json:"VATAmount"`
-	Warehouse                     types.GUID      `json:"Warehouse"`
+	Warehouse                     types.Guid      `json:"Warehouse"`
 	WarehouseCode                 string          `json:"WarehouseCode"`
 	WarehouseDescription          string          `json:"WarehouseDescription"`
 	YourRef                       string          `json:"YourRef"`

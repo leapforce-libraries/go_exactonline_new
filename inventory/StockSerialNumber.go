@@ -12,34 +12,34 @@ import (
 // StockSerialNumber stores StockSerialNumber from exactonline
 //
 type StockSerialNumber struct {
-	ID                         types.GUID  `json:"ID"`
+	ID                         types.Guid  `json:"ID"`
 	Created                    *types.Date `json:"Created"`
-	Creator                    types.GUID  `json:"Creator"`
+	Creator                    types.Guid  `json:"Creator"`
 	CreatorFullName            string      `json:"CreatorFullName"`
 	Division                   int32       `json:"Division"`
-	DraftStockTransactionID    types.GUID  `json:"DraftStockTransactionID"`
+	DraftStockTransactionID    types.Guid  `json:"DraftStockTransactionID"`
 	EndDate                    *types.Date `json:"EndDate"`
 	IsBlocked                  byte        `json:"IsBlocked"`
 	IsDraft                    byte        `json:"IsDraft"`
-	Item                       types.GUID  `json:"Item"`
+	Item                       types.Guid  `json:"Item"`
 	ItemCode                   string      `json:"ItemCode"`
 	ItemDescription            string      `json:"ItemDescription"`
 	Modified                   *types.Date `json:"Modified"`
-	Modifier                   types.GUID  `json:"Modifier"`
+	Modifier                   types.Guid  `json:"Modifier"`
 	ModifierFullName           string      `json:"ModifierFullName"`
-	PickOrderLine              types.GUID  `json:"PickOrderLine"`
+	PickOrderLine              types.Guid  `json:"PickOrderLine"`
 	Remarks                    string      `json:"Remarks"`
-	SalesReturnLine            types.GUID  `json:"SalesReturnLine"`
+	SalesReturnLine            types.Guid  `json:"SalesReturnLine"`
 	SerialNumber               string      `json:"SerialNumber"`
-	SerialNumberID             types.GUID  `json:"SerialNumberID"`
+	SerialNumberID             types.Guid  `json:"SerialNumberID"`
 	StartDate                  *types.Date `json:"StartDate"`
-	StockCountLine             types.GUID  `json:"StockCountLine"`
-	StockTransactionID         types.GUID  `json:"StockTransactionID"`
+	StockCountLine             types.Guid  `json:"StockCountLine"`
+	StockTransactionID         types.Guid  `json:"StockTransactionID"`
 	StockTransactionType       int32       `json:"StockTransactionType"`
-	StorageLocation            types.GUID  `json:"StorageLocation"`
+	StorageLocation            types.Guid  `json:"StorageLocation"`
 	StorageLocationCode        string      `json:"StorageLocationCode"`
 	StorageLocationDescription string      `json:"StorageLocationDescription"`
-	Warehouse                  types.GUID  `json:"Warehouse"`
+	Warehouse                  types.Guid  `json:"Warehouse"`
 	WarehouseCode              string      `json:"WarehouseCode"`
 	WarehouseDescription       string      `json:"WarehouseDescription"`
 }

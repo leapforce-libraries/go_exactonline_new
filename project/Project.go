@@ -12,10 +12,10 @@ import (
 // Project stores Project from exactonline
 //
 type Project struct {
-	ID                        types.GUID  `json:"ID"`
-	Account                   types.GUID  `json:"Account"`
+	ID                        types.Guid  `json:"ID"`
+	Account                   types.Guid  `json:"Account"`
 	AccountCode               string      `json:"AccountCode"`
-	AccountContact            types.GUID  `json:"AccountContact"`
+	AccountContact            types.Guid  `json:"AccountContact"`
 	AccountName               string      `json:"AccountName"`
 	AllowAdditionalInvoicing  bool        `json:"AllowAdditionalInvoicing"`
 	BlockEntry                bool        `json:"BlockEntry"`
@@ -26,36 +26,36 @@ type Project struct {
 	BudgetOverrunHours        byte        `json:"BudgetOverrunHours"`
 	BudgetType                int64       `json:"BudgetType"`
 	BudgetTypeDescription     string      `json:"BudgetTypeDescription"`
-	Classification            types.GUID  `json:"Classification"`
+	Classification            types.Guid  `json:"Classification"`
 	ClassificationDescription string      `json:"ClassificationDescription"`
 	Code                      string      `json:"Code"`
 	CostsAmountFC             float64     `json:"CostsAmountFC"`
 	Created                   *types.Date `json:"Created,omitempty"`
-	Creator                   types.GUID  `json:"Creator"`
+	Creator                   types.Guid  `json:"Creator"`
 	CreatorFullName           string      `json:"CreatorFullName"`
 	CustomerPONumber          string      `json:"CustomerPOnumber"`
 	Description               string      `json:"Description"`
 	Division                  int64       `json:"Division"`
 	DivisionName              string      `json:"DivisionName"`
 	EndDate                   *types.Date `json:"EndDate,omitempty"`
-	FixedPriceItem            types.GUID  `json:"FixedPriceItem"`
+	FixedPriceItem            types.Guid  `json:"FixedPriceItem"`
 	FixedPriceItemDescription string      `json:"FixedPriceItemDescription"`
 	HasWBSLines               bool        `json:"HasWBSLines"`
 	InternalNotes             string      `json:"InternalNotes"`
 	InvoiceAsQuoted           bool        `json:"InvoiceAsQuoted"`
-	Manager                   types.GUID  `json:"Manager"`
+	Manager                   types.Guid  `json:"Manager"`
 	ManagerFullname           string      `json:"ManagerFullname"`
 	MarkupPercentage          float64     `json:"MarkupPercentage"`
 	Modified                  *types.Date `json:"Modified,omitempty"`
-	Modifier                  types.GUID  `json:"Modifier"`
+	Modifier                  types.Guid  `json:"Modifier"`
 	ModifierFullName          string      `json:"ModifierFullName"`
 	Notes                     string      `json:"Notes"`
-	PrepaidItem               types.GUID  `json:"PrepaidItem"`
+	PrepaidItem               types.Guid  `json:"PrepaidItem"`
 	PrepaidItemDescription    string      `json:"PrepaidItemDescription"`
 	PrepaidType               int64       `json:"PrepaidType"`
 	PrepaidTypeDescription    string      `json:"PrepaidTypeDescription"`
 	SalesTimeQuantity         float64     `json:"SalesTimeQuantity"`
-	SourceQuotation           types.GUID  `json:"SourceQuotation"`
+	SourceQuotation           types.Guid  `json:"SourceQuotation"`
 	StartDate                 *types.Date `json:"StartDate,omitempty"`
 	TimeQuantityToAlert       float64     `json:"TimeQuantityToAlert"`
 	Type                      int64       `json:"Type"`

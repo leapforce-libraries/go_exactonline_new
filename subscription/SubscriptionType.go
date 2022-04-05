@@ -14,15 +14,15 @@ import (
 // SubscriptionType stores SubscriptionType from exactonline
 //
 type SubscriptionType struct {
-	ID               types.GUID  `json:"ID"`
+	ID               types.Guid  `json:"ID"`
 	Code             string      `json:"Code"`
 	Created          *types.Date `json:"Created"`
-	Creator          types.GUID  `json:"Creator"`
+	Creator          types.Guid  `json:"Creator"`
 	CreatorFullName  string      `json:"CreatorFullName"`
 	Description      string      `json:"Description"`
 	Division         int32       `json:"Division"`
 	Modified         *types.Date `json:"Modified"`
-	Modifier         types.GUID  `json:"Modifier"`
+	Modifier         types.Guid  `json:"Modifier"`
 	ModifierFullName string      `json:"ModifierFullName"`
 }
 
@@ -103,7 +103,7 @@ func (call *GetSubscriptionTypesCall) DoAll() (*[]SubscriptionType, *errortools.
 	return &subscriptionTypes, nil
 }
 
-func (service *Service) GetSubscriptionType(id types.GUID) (*SubscriptionType, *errortools.Error) {
+func (service *Service) GetSubscriptionType(id types.Guid) (*SubscriptionType, *errortools.Error) {
 	url := service.url(fmt.Sprintf("SubscriptionTypes(guid'%s')", id.String()))
 
 	subscriptionType := SubscriptionType{}
@@ -127,9 +127,9 @@ func (service *Service) CreateSubscriptionType(subscriptionType *SubscriptionTyp
 	return &subscriptionTypeNew, nil
 }
 
-func (service *Service) UpdateSubscriptionType(id types.GUID, subscriptionType *SubscriptionTypeUpdate, returnUpdated bool) (*SubscriptionType, *errortools.Error) {
+func (service *Service) UpdateSubscriptionType(id types.Guid, subscriptionType *SubscriptionTypeUpdate, returnUpdated bool) (*SubscriptionType, *errortools.Error) {
 	requestConfig := go_http.RequestConfig{
-		URL:       service.url(fmt.Sprintf("SubscriptionTypes(guid'%s')", id.String())),
+		Url:       service.url(fmt.Sprintf("SubscriptionTypes(guid'%s')", id.String())),
 		BodyModel: subscriptionType,
 	}
 
@@ -150,7 +150,7 @@ func (service *Service) UpdateSubscriptionType(id types.GUID, subscriptionType *
 	return subscriptionTypeUpdated, nil
 }
 
-func (service *Service) DeleteSubscriptionType(id types.GUID) *errortools.Error {
+func (service *Service) DeleteSubscriptionType(id types.Guid) *errortools.Error {
 	url := service.url(fmt.Sprintf("SubscriptionTypes(guid'%s')", id.String()))
 
 	err := service.Delete(url)

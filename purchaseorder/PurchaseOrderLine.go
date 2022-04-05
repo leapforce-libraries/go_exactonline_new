@@ -12,7 +12,7 @@ import (
 // PurchaseOrderLine stores PurchaseOrderLine from exactonline
 //
 type PurchaseOrderLine struct {
-	ID                      types.GUID  `json:"ID"`
+	ID                      types.Guid  `json:"ID"`
 	AmountDC                float64     `json:"AmountDC"`
 	AmountFC                float64     `json:"AmountFC"`
 	CostCenter              string      `json:"CostCenter"`
@@ -20,37 +20,37 @@ type PurchaseOrderLine struct {
 	CostUnit                string      `json:"CostUnit"`
 	CostUnitDescription     string      `json:"CostUnitDescription"`
 	Created                 *types.Date `json:"Created"`
-	Creator                 types.GUID  `json:"Creator"`
+	Creator                 types.Guid  `json:"Creator"`
 	CreatorFullName         string      `json:"CreatorFullName"`
 	Description             string      `json:"Description"`
 	Discount                float64     `json:"Discount"`
 	Division                int32       `json:"Division"`
-	Expense                 types.GUID  `json:"Expense"`
+	Expense                 types.Guid  `json:"Expense"`
 	ExpenseDescription      string      `json:"ExpenseDescription"`
 	InStock                 float64     `json:"InStock"`
 	InvoicedQuantity        float64     `json:"InvoicedQuantity"`
-	Item                    types.GUID  `json:"Item"`
+	Item                    types.Guid  `json:"Item"`
 	ItemCode                string      `json:"ItemCode"`
 	ItemDescription         string      `json:"ItemDescription"`
 	ItemDivisable           bool        `json:"ItemDivisable"`
 	LineNumber              int32       `json:"LineNumber"`
 	Modified                *types.Date `json:"Modified"`
-	Modifier                types.GUID  `json:"Modifier"`
+	Modifier                types.Guid  `json:"Modifier"`
 	ModifierFullName        string      `json:"ModifierFullName"`
 	NetPrice                float64     `json:"NetPrice"`
 	Notes                   string      `json:"Notes"`
-	Project                 types.GUID  `json:"Project"`
+	Project                 types.Guid  `json:"Project"`
 	ProjectCode             string      `json:"ProjectCode"`
 	ProjectDescription      string      `json:"ProjectDescription"`
 	ProjectedStock          float64     `json:"ProjectedStock"`
-	PurchaseOrderID         types.GUID  `json:"PurchaseOrderID"`
+	PurchaseOrderID         types.Guid  `json:"PurchaseOrderID"`
 	Quantity                float64     `json:"Quantity"`
 	QuantityInPurchaseUnits float64     `json:"QuantityInPurchaseUnits"`
 	Rebill                  bool        `json:"Rebill"`
 	ReceiptDate             *types.Date `json:"ReceiptDate"`
 	ReceivedQuantity        float64     `json:"ReceivedQuantity"`
-	SalesOrder              types.GUID  `json:"SalesOrder"`
-	SalesOrderLine          types.GUID  `json:"SalesOrderLine"`
+	SalesOrder              types.Guid  `json:"SalesOrder"`
+	SalesOrderLine          types.Guid  `json:"SalesOrderLine"`
 	SalesOrderLineNumber    int32       `json:"SalesOrderLineNumber"`
 	SalesOrderNumber        int32       `json:"SalesOrderNumber"`
 	SupplierItemCode        string      `json:"SupplierItemCode"`

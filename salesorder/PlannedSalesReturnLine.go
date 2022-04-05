@@ -12,30 +12,30 @@ import (
 // PlannedSalesReturnLine stores PlannedSalesReturnLine from exactonline
 //
 type PlannedSalesReturnLine struct {
-	ID types.GUID `json:"ID"`
+	ID types.Guid `json:"ID"`
 	//BatchNumbers               []inventory.StockBatchNumber  `json:"BatchNumbers"`
 	CreateCredit          byte        `json:"CreateCredit"`
 	Created               *types.Date `json:"Created"`
-	Creator               types.GUID  `json:"Creator"`
+	Creator               types.Guid  `json:"Creator"`
 	CreatorFullName       string      `json:"CreatorFullName"`
 	Division              int32       `json:"Division"`
-	GoodDeliveryLineID    types.GUID  `json:"GoodDeliveryLineID"`
-	Item                  types.GUID  `json:"Item"`
+	GoodDeliveryLineID    types.Guid  `json:"GoodDeliveryLineID"`
+	Item                  types.Guid  `json:"Item"`
 	ItemCode              string      `json:"ItemCode"`
 	ItemDescription       string      `json:"ItemDescription"`
 	LineNumber            int32       `json:"LineNumber"`
 	Modified              *types.Date `json:"Modified"`
-	Modifier              types.GUID  `json:"Modifier"`
+	Modifier              types.Guid  `json:"Modifier"`
 	ModifierFullName      string      `json:"ModifierFullName"`
 	Notes                 string      `json:"Notes"`
 	PlannedReturnQuantity float64     `json:"PlannedReturnQuantity"`
-	PlannedSalesReturnID  types.GUID  `json:"PlannedSalesReturnID"`
+	PlannedSalesReturnID  types.Guid  `json:"PlannedSalesReturnID"`
 	ReceivedQuantity      float64     `json:"ReceivedQuantity"`
-	SalesOrderLineID      types.GUID  `json:"SalesOrderLineID"`
+	SalesOrderLineID      types.Guid  `json:"SalesOrderLineID"`
 	SalesOrderNumber      int32       `json:"SalesOrderNumber"`
 	//SerialNumbers              []inventory.StockSerialNumber `json:"SerialNumbers"`
-	StockTransactionEntryID    types.GUID `json:"StockTransactionEntryID"`
-	StorageLocation            types.GUID `json:"StorageLocation"`
+	StockTransactionEntryID    types.Guid `json:"StockTransactionEntryID"`
+	StorageLocation            types.Guid `json:"StorageLocation"`
 	StorageLocationCode        string     `json:"StorageLocationCode"`
 	StorageLocationDescription string     `json:"StorageLocationDescription"`
 	UnitCode                   string     `json:"UnitCode"`

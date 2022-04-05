@@ -30,7 +30,7 @@ type LogisticsItem struct {
 	CostPriceNew            float64           `json:"CostPriceNew"`
 	CostPriceStandard       float64           `json:"CostPriceStandard"`
 	Created                 *types.Date       `json:"Created"`
-	Creator                 types.GUID        `json:"Creator"`
+	Creator                 types.Guid        `json:"Creator"`
 	CreatorFullName         string            `json:"CreatorFullName"`
 	Description             string            `json:"Description"`
 	Division                int32             `json:"Division"`
@@ -64,17 +64,17 @@ type LogisticsItem struct {
 	FreeTextField08         string            `json:"FreeTextField_08"`
 	FreeTextField09         string            `json:"FreeTextField_09"`
 	FreeTextField10         string            `json:"FreeTextField_10"`
-	GLCosts                 types.GUID        `json:"GLCosts"`
+	GLCosts                 types.Guid        `json:"GLCosts"`
 	GLCostsCode             string            `json:"GLCostsCode"`
 	GLCostsDescription      string            `json:"GLCostsDescription"`
-	GLRevenue               types.GUID        `json:"GLRevenue"`
+	GLRevenue               types.Guid        `json:"GLRevenue"`
 	GLRevenueCode           string            `json:"GLRevenueCode"`
 	GLRevenueDescription    string            `json:"GLRevenueDescription"`
-	GLStock                 types.GUID        `json:"GLStock"`
+	GLStock                 types.Guid        `json:"GLStock"`
 	GLStockCode             string            `json:"GLStockCode"`
 	GLStockDescription      string            `json:"GLStockDescription"`
 	GrossWeight             float64           `json:"GrossWeight"`
-	ID                      types.GUID        `json:"ID"`
+	ID                      types.Guid        `json:"ID"`
 	IsBatchItem             byte              `json:"IsBatchItem"`
 	IsFractionAllowedItem   bool              `json:"IsFractionAllowedItem"`
 	IsMakeItem              byte              `json:"IsMakeItem"`
@@ -89,11 +89,11 @@ type LogisticsItem struct {
 	IsTaxableItem           byte              `json:"IsTaxableItem"`
 	IsTime                  byte              `json:"IsTime"`
 	IsWebshopItem           byte              `json:"IsWebshopItem"`
-	ItemGroup               types.GUID        `json:"ItemGroup"`
+	ItemGroup               types.Guid        `json:"ItemGroup"`
 	ItemGroupCode           string            `json:"ItemGroupCode"`
 	ItemGroupDescription    string            `json:"ItemGroupDescription"`
 	Modified                *types.Date       `json:"Modified"`
-	Modifier                types.GUID        `json:"Modifier"`
+	Modifier                types.Guid        `json:"Modifier"`
 	ModifierFullName        string            `json:"ModifierFullName"`
 	NetWeight               float64           `json:"NetWeight"`
 	NetWeightUnit           string            `json:"NetWeightUnit"`

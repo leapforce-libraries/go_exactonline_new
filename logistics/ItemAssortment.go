@@ -13,7 +13,7 @@ import (
 // ItemAssortment stores ItemAssortment from exactonline
 //
 type ItemAssortment struct {
-	ID          types.GUID `json:"ID"`
+	ID          types.Guid `json:"ID"`
 	Code        int32      `json:"Code"`
 	Description string     `json:"Description"`
 	Division    int32      `json:"Division"`

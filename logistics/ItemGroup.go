@@ -13,34 +13,34 @@ import (
 // ItemGroup stores ItemGroup from exactonline
 //
 type ItemGroup struct {
-	ID                             types.GUID  `json:"ID"`
+	ID                             types.Guid  `json:"ID"`
 	Code                           string      `json:"Code"`
 	Created                        *types.Date `json:"Created"`
-	Creator                        types.GUID  `json:"Creator"`
+	Creator                        types.Guid  `json:"Creator"`
 	CreatorFullName                string      `json:"CreatorFullName"`
 	Description                    string      `json:"Description"`
 	Division                       int32       `json:"Division"`
-	GLCosts                        types.GUID  `json:"GLCosts"`
+	GLCosts                        types.Guid  `json:"GLCosts"`
 	GLCostsCode                    string      `json:"GLCostsCode"`
 	GLCostsDescription             string      `json:"GLCostsDescription"`
-	GLPurchaseAccount              types.GUID  `json:"GLPurchaseAccount"`
+	GLPurchaseAccount              types.Guid  `json:"GLPurchaseAccount"`
 	GLPurchaseAccountCode          string      `json:"GLPurchaseAccountCode"`
 	GLPurchaseAccountDescription   string      `json:"GLPurchaseAccountDescription"`
-	GLPurchasePriceDifference      types.GUID  `json:"GLPurchasePriceDifference"`
+	GLPurchasePriceDifference      types.Guid  `json:"GLPurchasePriceDifference"`
 	GLPurchasePriceDifferenceCode  string      `json:"GLPurchasePriceDifferenceCode"`
 	GLPurchasePriceDifferenceDescr string      `json:"GLPurchasePriceDifferenceDescr"`
-	GLRevenue                      types.GUID  `json:"GLRevenue"`
+	GLRevenue                      types.Guid  `json:"GLRevenue"`
 	GLRevenueCode                  string      `json:"GLRevenueCode"`
 	GLRevenueDescription           string      `json:"GLRevenueDescription"`
-	GLStock                        types.GUID  `json:"GLStock"`
+	GLStock                        types.Guid  `json:"GLStock"`
 	GLStockCode                    string      `json:"GLStockCode"`
 	GLStockDescription             string      `json:"GLStockDescription"`
-	GLStockVariance                types.GUID  `json:"GLStockVariance"`
+	GLStockVariance                types.Guid  `json:"GLStockVariance"`
 	GLStockVarianceCode            string      `json:"GLStockVarianceCode"`
 	GLStockVarianceDescription     string      `json:"GLStockVarianceDescription"`
 	IsDefault                      byte        `json:"IsDefault"`
 	Modified                       *types.Date `json:"Modified"`
-	Modifier                       types.GUID  `json:"Modifier"`
+	Modifier                       types.Guid  `json:"Modifier"`
 	ModifierFullName               string      `json:"ModifierFullName"`
 	Notes                          string      `json:"Notes"`
 }

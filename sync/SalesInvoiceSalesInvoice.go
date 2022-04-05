@@ -12,7 +12,7 @@ import (
 //
 type SalesInvoiceSalesInvoice struct {
 	Timestamp                            types.Int64String `json:"Timestamp"`
-	ID                                   types.GUID        `json:"ID"`
+	ID                                   types.Guid        `json:"ID"`
 	AmountDC                             float64           `json:"AmountDC"`
 	AmountDiscount                       float64           `json:"AmountDiscount"`
 	AmountDiscountExclVat                float64           `json:"AmountDiscountExclVat"`
@@ -23,13 +23,13 @@ type SalesInvoiceSalesInvoice struct {
 	CostUnit                             string            `json:"CostUnit"`
 	CostUnitDescription                  string            `json:"CostUnitDescription"`
 	Created                              *types.Date       `json:"Created"`
-	Creator                              types.GUID        `json:"Creator"`
+	Creator                              types.Guid        `json:"Creator"`
 	CreatorFullName                      string            `json:"CreatorFullName"`
 	Currency                             string            `json:"Currency"`
 	CustomerItemCode                     string            `json:"CustomerItemCode"`
-	DeliverTo                            types.GUID        `json:"DeliverTo"`
-	DeliverToAddress                     types.GUID        `json:"DeliverToAddress"`
-	DeliverToContactPerson               types.GUID        `json:"DeliverToContactPerson"`
+	DeliverTo                            types.Guid        `json:"DeliverTo"`
+	DeliverToAddress                     types.Guid        `json:"DeliverToAddress"`
+	DeliverToContactPerson               types.Guid        `json:"DeliverToContactPerson"`
 	DeliverToContactPersonFullName       string            `json:"DeliverToContactPersonFullName"`
 	DeliverToName                        string            `json:"DeliverToName"`
 	DeliveryDate                         string            `json:"DeliveryDate"`
@@ -37,66 +37,66 @@ type SalesInvoiceSalesInvoice struct {
 	Discount                             float64           `json:"Discount"`
 	DiscountType                         int16             `json:"DiscountType"`
 	Division                             int32             `json:"Division"`
-	Document                             types.GUID        `json:"Document"`
+	Document                             types.Guid        `json:"Document"`
 	DocumentNumber                       int32             `json:"DocumentNumber"`
 	DocumentSubject                      string            `json:"DocumentSubject"`
 	DueDate                              *types.Date       `json:"DueDate"`
-	Employee                             types.GUID        `json:"Employee"`
+	Employee                             types.Guid        `json:"Employee"`
 	EmployeeFullName                     string            `json:"EmployeeFullName"`
 	EndTime                              *types.Date       `json:"EndTime"`
 	ExtraDutyAmountFC                    float64           `json:"ExtraDutyAmountFC"`
 	ExtraDutyPercentage                  float64           `json:"ExtraDutyPercentage"`
 	GAccountAmountFC                     float64           `json:"GAccountAmountFC"`
-	GLAccount                            types.GUID        `json:"GLAccount"`
+	GLAccount                            types.Guid        `json:"GLAccount"`
 	GLAccountDescription                 string            `json:"GLAccountDescription"`
 	InvoiceDate                          *types.Date       `json:"InvoiceDate"`
-	InvoiceID                            types.GUID        `json:"InvoiceID"`
+	InvoiceID                            types.Guid        `json:"InvoiceID"`
 	InvoiceNumber                        int32             `json:"InvoiceNumber"`
-	InvoiceTo                            types.GUID        `json:"InvoiceTo"`
-	InvoiceToContactPerson               types.GUID        `json:"InvoiceToContactPerson"`
+	InvoiceTo                            types.Guid        `json:"InvoiceTo"`
+	InvoiceToContactPerson               types.Guid        `json:"InvoiceToContactPerson"`
 	InvoiceToContactPersonFullName       string            `json:"InvoiceToContactPersonFullName"`
 	InvoiceToName                        string            `json:"InvoiceToName"`
 	IsExtraDuty                          bool              `json:"IsExtraDuty"`
-	Item                                 types.GUID        `json:"Item"`
+	Item                                 types.Guid        `json:"Item"`
 	ItemCode                             string            `json:"ItemCode"`
 	ItemDescription                      string            `json:"ItemDescription"`
 	Journal                              string            `json:"Journal"`
 	JournalDescription                   string            `json:"JournalDescription"`
 	LineNumber                           int32             `json:"LineNumber"`
 	Modified                             *types.Date       `json:"Modified"`
-	Modifier                             types.GUID        `json:"Modifier"`
+	Modifier                             types.Guid        `json:"Modifier"`
 	ModifierFullName                     string            `json:"ModifierFullName"`
 	NetPrice                             float64           `json:"NetPrice"`
 	OrderDate                            *types.Date       `json:"OrderDate"`
-	OrderedBy                            types.GUID        `json:"OrderedBy"`
-	OrderedByContactPerson               types.GUID        `json:"OrderedByContactPerson"`
+	OrderedBy                            types.Guid        `json:"OrderedBy"`
+	OrderedByContactPerson               types.Guid        `json:"OrderedByContactPerson"`
 	OrderedByContactPersonFullName       string            `json:"OrderedByContactPersonFullName"`
 	OrderedByName                        string            `json:"OrderedByName"`
 	OrderNumber                          int32             `json:"OrderNumber"`
 	PaymentCondition                     string            `json:"PaymentCondition"`
 	PaymentConditionDescription          string            `json:"PaymentConditionDescription"`
 	PaymentReference                     string            `json:"PaymentReference"`
-	Pricelist                            types.GUID        `json:"Pricelist"`
+	Pricelist                            types.Guid        `json:"Pricelist"`
 	PricelistDescription                 string            `json:"PricelistDescription"`
-	Project                              types.GUID        `json:"Project"`
+	Project                              types.Guid        `json:"Project"`
 	ProjectDescription                   string            `json:"ProjectDescription"`
-	ProjectWBS                           types.GUID        `json:"ProjectWBS"`
+	ProjectWBS                           types.Guid        `json:"ProjectWBS"`
 	ProjectWBSDescription                string            `json:"ProjectWBSDescription"`
 	Quantity                             float64           `json:"Quantity"`
 	Remarks                              string            `json:"Remarks"`
-	SalesOrder                           types.GUID        `json:"SalesOrder"`
-	SalesOrderLine                       types.GUID        `json:"SalesOrderLine"`
+	SalesOrder                           types.Guid        `json:"SalesOrder"`
+	SalesOrderLine                       types.Guid        `json:"SalesOrderLine"`
 	SalesOrderLineNumber                 int32             `json:"SalesOrderLineNumber"`
 	SalesOrderNumber                     int32             `json:"SalesOrderNumber"`
-	SalesPerson                          types.GUID        `json:"Salesperson"`
+	SalesPerson                          types.Guid        `json:"Salesperson"`
 	SalesPersonFullName                  string            `json:"SalespersonFullName"`
 	StarterSalesInvoiceStatus            int16             `json:"StarterSalesInvoiceStatus"`
 	StarterSalesInvoiceStatusDescription string            `json:"StarterSalesInvoiceStatusDescription"`
 	Status                               int16             `json:"Status"`
 	StatusDescription                    string            `json:"StatusDescription"`
-	Subscription                         types.GUID        `json:"Subscription"`
+	Subscription                         types.Guid        `json:"Subscription"`
 	SubscriptionDescription              string            `json:"SubscriptionDescription"`
-	TaxSchedule                          types.GUID        `json:"TaxSchedule"`
+	TaxSchedule                          types.Guid        `json:"TaxSchedule"`
 	TaxScheduleCode                      string            `json:"TaxScheduleCode"`
 	TaxScheduleDescription               string            `json:"TaxScheduleDescription"`
 	Type                                 int32             `json:"Type"`
@@ -109,7 +109,7 @@ type SalesInvoiceSalesInvoice struct {
 	VATCode                              string            `json:"VATCode"`
 	VATCodeDescription                   string            `json:"VATCodeDescription"`
 	VATPercentage                        float64           `json:"VATPercentage"`
-	Warehouse                            types.GUID        `json:"Warehouse"`
+	Warehouse                            types.Guid        `json:"Warehouse"`
 	WithholdingTaxAmountFC               float64           `json:"WithholdingTaxAmountFC"`
 	WithholdingTaxBaseAmount             float64           `json:"WithholdingTaxBaseAmount"`
 	WithholdingTaxPercentage             float64           `json:"WithholdingTaxPercentage"`

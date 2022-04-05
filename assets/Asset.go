@@ -12,11 +12,11 @@ import (
 // Asset stores Asset from exactonline
 //
 type Asset struct {
-	ID                            types.GUID  `json:"ID"`
+	ID                            types.Guid  `json:"ID"`
 	AlreadyDepreciated            byte        `json:"AlreadyDepreciated"`
-	AssetFrom                     types.GUID  `json:"AssetFrom"`
+	AssetFrom                     types.Guid  `json:"AssetFrom"`
 	AssetFromDescription          string      `json:"AssetFromDescription"`
-	AssetGroup                    types.GUID  `json:"AssetGroup"`
+	AssetGroup                    types.Guid  `json:"AssetGroup"`
 	AssetGroupCode                string      `json:"AssetGroupCode"`
 	AssetGroupDescription         string      `json:"AssetGroupDescription"`
 	CatalogueValue                float64     `json:"CatalogueValue"`
@@ -26,7 +26,7 @@ type Asset struct {
 	Costunit                      string      `json:"Costunit"`
 	CostunitDescription           string      `json:"CostunitDescription"`
 	Created                       *types.Date `json:"Created"`
-	Creator                       types.GUID  `json:"Creator"`
+	Creator                       types.Guid  `json:"Creator"`
 	CreatorFullName               string      `json:"CreatorFullName"`
 	DeductionPercentage           float64     `json:"DeductionPercentage"`
 	DepreciatedAmount             float64     `json:"DepreciatedAmount"`
@@ -37,9 +37,9 @@ type Asset struct {
 	EndDate                       *types.Date `json:"EndDate"`
 	EngineEmission                int16       `json:"EngineEmission"`
 	EngineType                    int16       `json:"EngineType"`
-	GLTransactionLine             types.GUID  `json:"GLTransactionLine"`
+	GLTransactionLine             types.Guid  `json:"GLTransactionLine"`
 	GLTransactionLineDescription  string      `json:"GLTransactionLineDescription"`
-	InvestmentAccount             types.GUID  `json:"InvestmentAccount"`
+	InvestmentAccount             types.Guid  `json:"InvestmentAccount"`
 	InvestmentAccountCode         string      `json:"InvestmentAccountCode"`
 	InvestmentAccountName         string      `json:"InvestmentAccountName"`
 	InvestmentAmountDC            float64     `json:"InvestmentAmountDC"`
@@ -49,20 +49,20 @@ type Asset struct {
 	InvestmentDate                *types.Date `json:"InvestmentDate"`
 	InvestmentDeduction           int16       `json:"InvestmentDeduction"`
 	Modified                      *types.Date `json:"Modified"`
-	Modifier                      types.GUID  `json:"Modifier"`
+	Modifier                      types.Guid  `json:"Modifier"`
 	ModifierFullName              string      `json:"ModifierFullName"`
 	Notes                         string      `json:"Notes"`
-	Parent                        types.GUID  `json:"Parent"`
+	Parent                        types.Guid  `json:"Parent"`
 	ParentCode                    string      `json:"ParentCode"`
 	ParentDescription             string      `json:"ParentDescription"`
 	PictureFileName               string      `json:"PictureFileName"`
-	PrimaryMethod                 types.GUID  `json:"PrimaryMethod"`
+	PrimaryMethod                 types.Guid  `json:"PrimaryMethod"`
 	PrimaryMethodCode             string      `json:"PrimaryMethodCode"`
 	PrimaryMethodDescription      string      `json:"PrimaryMethodDescription"`
 	ResidualValue                 float64     `json:"ResidualValue"`
 	StartDate                     *types.Date `json:"StartDate"`
 	Status                        int16       `json:"Status"`
-	TransactionEntryID            types.GUID  `json:"TransactionEntryID"`
+	TransactionEntryID            types.Guid  `json:"TransactionEntryID"`
 	TransactionEntryNo            int32       `json:"TransactionEntryNo"`
 }
 

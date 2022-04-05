@@ -14,7 +14,7 @@ import (
 // SubscriptionLine stores SubscriptionLine from exactonline
 //
 type SubscriptionLine struct {
-	ID                  types.GUID  `json:"ID"`
+	ID                  types.Guid  `json:"ID"`
 	AmountDC            float64     `json:"AmountDC"`
 	AmountFC            float64     `json:"AmountFC"`
 	Costcenter          string      `json:"Costcenter"`
@@ -22,9 +22,9 @@ type SubscriptionLine struct {
 	Description         string      `json:"Description"`
 	Discount            float64     `json:"Discount"`
 	Division            int32       `json:"Division"`
-	EntryID             types.GUID  `json:"EntryID"`
+	EntryID             types.Guid  `json:"EntryID"`
 	FromDate            *types.Date `json:"FromDate"`
-	Item                types.GUID  `json:"Item"`
+	Item                types.Guid  `json:"Item"`
 	ItemDescription     string      `json:"ItemDescription"`
 	LineNumber          int32       `json:"LineNumber"`
 	LineType            int16       `json:"LineType"`
@@ -75,7 +75,7 @@ type GetSubscriptionLinesCall struct {
 }
 
 type GetSubscriptionLinesCallParams struct {
-	EntryID       *types.GUID
+	EntryID       *types.Guid
 	ModifiedAfter *time.Time
 }
 
@@ -144,7 +144,7 @@ func (call *GetSubscriptionLinesCall) DoAll() (*[]SubscriptionLine, *errortools.
 	return &subscriptionLines, nil
 }
 
-func (service *Service) GetSubscriptionLine(id types.GUID) (*SubscriptionLine, *errortools.Error) {
+func (service *Service) GetSubscriptionLine(id types.Guid) (*SubscriptionLine, *errortools.Error) {
 	url := service.url(fmt.Sprintf("SubscriptionLines(guid'%s')", id.String()))
 
 	subscriptionLine := SubscriptionLine{}
@@ -168,9 +168,9 @@ func (service *Service) CreateSubscriptionLine(subscriptionLine *SubscriptionLin
 	return &subscriptionLineNew, nil
 }
 
-func (service *Service) UpdateSubscriptionLine(id types.GUID, subscriptionLine *SubscriptionLineUpdate, returnUpdated bool) (*SubscriptionLine, *errortools.Error) {
+func (service *Service) UpdateSubscriptionLine(id types.Guid, subscriptionLine *SubscriptionLineUpdate, returnUpdated bool) (*SubscriptionLine, *errortools.Error) {
 	requestConfig := go_http.RequestConfig{
-		URL:       service.url(fmt.Sprintf("SubscriptionLines(guid'%s')", id.String())),
+		Url:       service.url(fmt.Sprintf("SubscriptionLines(guid'%s')", id.String())),
 		BodyModel: subscriptionLine,
 	}
 
@@ -191,7 +191,7 @@ func (service *Service) UpdateSubscriptionLine(id types.GUID, subscriptionLine *
 	return subscriptionLineUpdated, nil
 }
 
-func (service *Service) DeleteSubscriptionLine(id types.GUID) *errortools.Error {
+func (service *Service) DeleteSubscriptionLine(id types.Guid) *errortools.Error {
 	url := service.url(fmt.Sprintf("SubscriptionLines(guid'%s')", id.String()))
 
 	err := service.Delete(url)

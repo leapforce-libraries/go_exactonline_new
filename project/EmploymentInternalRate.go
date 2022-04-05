@@ -12,20 +12,20 @@ import (
 // EmploymentInternalRate stores EmploymentInternalRate from exactonline
 //
 type EmploymentInternalRate struct {
-	ID               types.GUID  `json:"ID"`
+	ID               types.Guid  `json:"ID"`
 	Created          *types.Date `json:"Created,omitempty"`
-	Creator          types.GUID  `json:"Creator"`
+	Creator          types.Guid  `json:"Creator"`
 	CreatorFullName  string      `json:"CreatorFullName"`
 	Division         int64       `json:"Division"`
-	Employee         types.GUID  `json:"Employee"`
+	Employee         types.Guid  `json:"Employee"`
 	EmployeeFullName string      `json:"EmployeeFullName"`
 	EmployeeHID      int64       `json:"EmployeeHID"`
-	Employment       types.GUID  `json:"Employment"`
+	Employment       types.Guid  `json:"Employment"`
 	EmploymentHID    int64       `json:"EmploymentHID"`
 	EndDate          *types.Date `json:"EndDate,omitempty"`
 	InternalRate     float64     `json:"InternalRate"`
 	Modified         *types.Date `json:"Modified,omitempty"`
-	Modifier         types.GUID  `json:"Modifier"`
+	Modifier         types.Guid  `json:"Modifier"`
 	ModifierFullName string      `json:"ModifierFullName"`
 	StartDate        *types.Date `json:"StartDate,omitempty"`
 }

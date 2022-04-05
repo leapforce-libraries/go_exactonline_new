@@ -12,24 +12,24 @@ import (
 // EmploymentContract stores EmploymentContract from exactonline
 //
 type EmploymentContract struct {
-	ID                           types.GUID  `json:"ID"`
+	ID                           types.Guid  `json:"ID"`
 	ContractFlexPhase            int32       `json:"ContractFlexPhase"`
 	ContractFlexPhaseDescription string      `json:"ContractFlexPhaseDescription"`
 	Created                      *types.Date `json:"Created"`
-	Creator                      types.GUID  `json:"Creator"`
+	Creator                      types.Guid  `json:"Creator"`
 	CreatorFullName              string      `json:"CreatorFullName"`
 	Division                     int32       `json:"Division"`
-	Document                     types.GUID  `json:"Document"`
-	Employee                     types.GUID  `json:"Employee"`
+	Document                     types.Guid  `json:"Document"`
+	Employee                     types.Guid  `json:"Employee"`
 	EmployeeFullName             string      `json:"EmployeeFullName"`
 	EmployeeHID                  int32       `json:"EmployeeHID"`
 	EmployeeType                 int32       `json:"EmployeeType"`
 	EmployeeTypeDescription      string      `json:"EmployeeTypeDescription"`
-	Employment                   types.GUID  `json:"Employment"`
+	Employment                   types.Guid  `json:"Employment"`
 	EmploymentHID                int32       `json:"EmploymentHID"`
 	EndDate                      *types.Date `json:"EndDate"`
 	Modified                     *types.Date `json:"Modified"`
-	Modifier                     types.GUID  `json:"Modifier"`
+	Modifier                     types.Guid  `json:"Modifier"`
 	ModifierFullName             string      `json:"ModifierFullName"`
 	Notes                        string      `json:"Notes"`
 	ProbationEndDate             *types.Date `json:"ProbationEndDate"`

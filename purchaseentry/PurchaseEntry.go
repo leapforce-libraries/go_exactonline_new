@@ -13,17 +13,17 @@ import (
 // PurchaseEntry stores PurchaseEntry from exactonline
 //
 type PurchaseEntry struct {
-	EntryID                     types.GUID      `json:"EntryID"`
+	EntryID                     types.Guid      `json:"EntryID"`
 	AmountDC                    float64         `json:"AmountDC"`
 	AmountFC                    float64         `json:"AmountFC"`
 	BatchNumber                 int32           `json:"BatchNumber"`
 	Created                     *types.Date     `json:"Created"`
-	Creator                     types.GUID      `json:"Creator"`
+	Creator                     types.Guid      `json:"Creator"`
 	CreatorFullName             string          `json:"CreatorFullName"`
 	Currency                    string          `json:"Currency"`
 	Description                 string          `json:"Description"`
 	Division                    int32           `json:"Division"`
-	Document                    types.GUID      `json:"Document"`
+	Document                    types.Guid      `json:"Document"`
 	DocumentNumber              int32           `json:"DocumentNumber"`
 	DocumentSubject             string          `json:"DocumentSubject"`
 	DueDate                     *types.Date     `json:"DueDate"`
@@ -36,7 +36,7 @@ type PurchaseEntry struct {
 	Journal                     string          `json:"Journal"`
 	JournalDescription          string          `json:"JournalDescription"`
 	Modified                    *types.Date     `json:"Modified"`
-	Modifier                    types.GUID      `json:"Modifier"`
+	Modifier                    types.Guid      `json:"Modifier"`
 	ModifierFullName            string          `json:"ModifierFullName"`
 	OrderNumber                 int32           `json:"OrderNumber"`
 	PaymentCondition            string          `json:"PaymentCondition"`
@@ -50,7 +50,7 @@ type PurchaseEntry struct {
 	Reversal                    bool            `json:"Reversal"`
 	Status                      int16           `json:"Status"`
 	StatusDescription           string          `json:"StatusDescription"`
-	Supplier                    types.GUID      `json:"Supplier"`
+	Supplier                    types.Guid      `json:"Supplier"`
 	SupplierName                string          `json:"SupplierName"`
 	Type                        int32           `json:"Type"`
 	TypeDescription             string          `json:"TypeDescription"`
