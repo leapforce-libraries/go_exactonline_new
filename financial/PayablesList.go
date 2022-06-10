@@ -11,7 +11,7 @@ import (
 // PayablesList stores PayablesList from exactonline
 //
 type PayablesList struct {
-	HID                int64       `json:"HID"`
+	HID                string      `json:"HID"`
 	AccountCode        string      `json:"AccountCode"`
 	AccountId          types.Guid  `json:"AccountId"`
 	AccountName        string      `json:"AccountName"`
