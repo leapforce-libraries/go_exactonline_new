@@ -22,7 +22,6 @@ import (
 	salesorder "github.com/leapforce-libraries/go_exactonline_new/salesorder"
 	subscription "github.com/leapforce-libraries/go_exactonline_new/subscription"
 	sync "github.com/leapforce-libraries/go_exactonline_new/sync"
-	bigquery "github.com/leapforce-libraries/go_google/bigquery"
 	oauth2 "github.com/leapforce-libraries/go_oauth2"
 	tokensource "github.com/leapforce-libraries/go_oauth2/tokensource"
 )
@@ -71,7 +70,7 @@ type ServiceConfig struct {
 
 // methods
 //
-func NewService(serviceConfig *ServiceConfig, bigQueryService *bigquery.Service) (*Service, *errortools.Error) {
+func NewService(serviceConfig *ServiceConfig) (*Service, *errortools.Error) {
 	if serviceConfig == nil {
 		return nil, errortools.ErrorMessage("ServiceConfig must not be a nil pointer")
 	}
