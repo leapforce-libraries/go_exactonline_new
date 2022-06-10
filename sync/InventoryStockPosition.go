@@ -11,24 +11,24 @@ import (
 // InventoryStockPosition stores InventoryStockPosition from exactonline
 //
 type InventoryStockPosition struct {
-	Timestamp            int64      `json:"Timestamp"`
-	CurrentStock         float64    `json:"CurrentStock"`
-	Division             int32      `json:"Division"`
-	FreeStock            float64    `json:"FreeStock"`
-	ID                   types.Guid `json:"ID"`
-	ItemCode             string     `json:"ItemCode"`
-	ItemDescription      string     `json:"ItemDescription"`
-	ItemId               types.Guid `json:"ItemId"`
-	PlanningIn           float64    `json:"PlanningIn"`
-	PlanningOut          float64    `json:"PlanningOut"`
-	ProjectedStock       float64    `json:"ProjectedStock"`
-	ReorderPoint         float64    `json:"ReorderPoint"`
-	ReservedStock        float64    `json:"ReservedStock"`
-	UnitCode             string     `json:"UnitCode"`
-	UnitDescription      string     `json:"UnitDescription"`
-	Warehouse            types.Guid `json:"Warehouse"`
-	WarehouseCode        string     `json:"WarehouseCode"`
-	WarehouseDescription string     `json:"WarehouseDescription"`
+	Timestamp            types.Int64String `json:"Timestamp"`
+	CurrentStock         float64           `json:"CurrentStock"`
+	Division             int32             `json:"Division"`
+	FreeStock            float64           `json:"FreeStock"`
+	ID                   types.Guid        `json:"ID"`
+	ItemCode             string            `json:"ItemCode"`
+	ItemDescription      string            `json:"ItemDescription"`
+	ItemId               types.Guid        `json:"ItemId"`
+	PlanningIn           float64           `json:"PlanningIn"`
+	PlanningOut          float64           `json:"PlanningOut"`
+	ProjectedStock       float64           `json:"ProjectedStock"`
+	ReorderPoint         float64           `json:"ReorderPoint"`
+	ReservedStock        float64           `json:"ReservedStock"`
+	UnitCode             string            `json:"UnitCode"`
+	UnitDescription      string            `json:"UnitDescription"`
+	Warehouse            types.Guid        `json:"Warehouse"`
+	WarehouseCode        string            `json:"WarehouseCode"`
+	WarehouseDescription string            `json:"WarehouseDescription"`
 }
 
 type SyncInventoryStockPositionsCall struct {
