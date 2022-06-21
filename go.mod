@@ -4,7 +4,6 @@ go 1.18
 
 require (
 	github.com/leapforce-libraries/go_errortools v0.0.0-20211119145736-7b9b61c20618
-	github.com/leapforce-libraries/go_google v0.0.0-20220413201030-24cf0717d89e
 	github.com/leapforce-libraries/go_http v0.0.0-20220406191830-0235c3965bb8
 	github.com/leapforce-libraries/go_oauth2 v0.0.0-20220413200941-bf4bdcd63fbd
 	github.com/leapforce-libraries/go_types v0.0.0-20220220161618-e9b1045c3ef2
@@ -24,6 +23,7 @@ require (
 	github.com/google/go-cmp v0.5.7 // indirect
 	github.com/googleapis/gax-go/v2 v2.3.0 // indirect
 	github.com/googleapis/go-type-adapters v1.0.0 // indirect
+	github.com/leapforce-libraries/go_google v0.0.0-20220413201030-24cf0717d89e // indirect
 	github.com/leapforce-libraries/go_googlecloudstorage v0.0.0-20220220163255-cbfe4f06b7b6 // indirect
 	github.com/leapforce-libraries/go_integration v0.0.0-20220220163349-c13b3f3aa9d5 // indirect
 	go.opencensus.io v0.23.0 // indirect
