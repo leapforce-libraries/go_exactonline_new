@@ -18,17 +18,18 @@ const (
 	EntityTypeContacts             EntityType = 5
 	EntityTypeDocuments            EntityType = 6
 	EntityTypeGLAccounts           EntityType = 7
-	EntityTypeGLClassifications    EntityType = 0 // ??
 	EntityTypeSalesItemPrices      EntityType = 8
 	EntityTypeItems                EntityType = 9
 	EntityTypePaymentTerms         EntityType = 10
 	EntityTypeQuotations           EntityType = 11
 	EntityTypeSalesOrders          EntityType = 12
-	EntityTypeGoodsDeliveries      EntityType = 0 // ??
-	EntityTypeGoodsDeliveryLines   EntityType = 0 // ??
 	EntityTypeSalesInvoices        EntityType = 13
 	EntityTypeTimeCostTransactions EntityType = 14
 	EntityTypeStockPositions       EntityType = 15
+	EntityTypeGoodsDeliveries      EntityType = 16
+	EntityTypeGoodsDeliveryLines   EntityType = 17
+	EntityTypeGLClassifications    EntityType = 18
+	EntityTypePurchaseOrders       EntityType = 22
 )
 
 // Deleted stores Deleted from exactonline
