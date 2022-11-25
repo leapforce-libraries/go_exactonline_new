@@ -27,12 +27,12 @@ import (
 )
 
 const (
-	apiName         string = "ExactOnline"
-	apiUrl          string = "https://start.exactonline.nl/api/v1"
-	authUrl         string = "https://start.exactonline.nl/api/oauth2/auth"
-	tokenUrl        string = "https://start.exactonline.nl/api/oauth2/token"
-	tokenHTTPMethod string = http.MethodPost
-	redirectUrl     string = "http://localhost:8080/oauth/redirect"
+	apiName            string = "ExactOnline"
+	apiUrl             string = "https://start.exactonline.nl/api/v1"
+	authUrl            string = "https://start.exactonline.nl/api/oauth2/auth"
+	tokenUrl           string = "https://start.exactonline.nl/api/oauth2/token"
+	tokenHTTPMethod    string = http.MethodPost
+	defaultRedirectUrl string = "http://localhost:8080/oauth/redirect"
 	// You can only request for a new access token after 570 seconds from the time you successfully received the previous access token.
 	// see: https://support.exactonline.com/community/s/knowledge-base#All-All-DNO-Simulation-gen-apilimits
 	refreshMargin time.Duration = 30 * time.Second
@@ -66,6 +66,7 @@ type ServiceConfig struct {
 	ClientID     string
 	ClientSecret string
 	TokenSource  tokensource.TokenSource
+	RedirectUrl  *string
 }
 
 // methods
@@ -81,6 +82,11 @@ func NewService(serviceConfig *ServiceConfig) (*Service, *errortools.Error) {
 
 	if serviceConfig.ClientSecret == "" {
 		return nil, errortools.ErrorMessage("ClientSecret not provided")
+	}
+
+	redirectUrl := defaultRedirectUrl
+	if serviceConfig.RedirectUrl != nil {
+		redirectUrl = *serviceConfig.RedirectUrl
 	}
 
 	_refreshMargin := refreshMargin
@@ -122,6 +128,10 @@ func NewService(serviceConfig *ServiceConfig) (*Service, *errortools.Error) {
 	}, nil
 }
 
+func (service *Service) AuthorizeUrl(scope string, accessType *string, prompt *string, state *string) string {
+	return service.oAuth2Service.AuthorizeUrl(scope, accessType, prompt, state)
+}
+
 /*func (service *Service) ValidateToken() (*oauth2.Token, *errortools.Error) {
 	return service.oAuth2Service.ValidateToken()
 }
@@ -129,6 +139,10 @@ func NewService(serviceConfig *ServiceConfig) (*Service, *errortools.Error) {
 func (service *Service) InitToken(scope string, accessType *string, prompt *string, state *string) *errortools.Error {
 	return service.oAuth2Service.InitToken(scope, accessType, prompt, state)
 }*/
+
+func (service *Service) GetTokenFromCode(r *http.Request) *errortools.Error {
+	return service.oAuth2Service.GetTokenFromCode(r, nil)
+}
 
 func ParseDateString(date string) *time.Time {
 	if len(date) >= 19 {
