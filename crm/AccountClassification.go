@@ -32,8 +32,7 @@ type GetAccountClassificationsCall struct {
 }
 
 type GetAccountClassificationsCallParams struct {
-	ChamberOfCommerce *string
-	ModifiedAfter     *time.Time
+	ModifiedAfter *time.Time
 }
 
 func (service *Service) NewGetAccountClassificationsCall(params *GetAccountClassificationsCallParams) *GetAccountClassificationsCall {
@@ -45,9 +44,6 @@ func (service *Service) NewGetAccountClassificationsCall(params *GetAccountClass
 	filter := []string{}
 
 	if params != nil {
-		if params.ChamberOfCommerce != nil {
-			filter = append(filter, fmt.Sprintf("ChamberOfCommerce eq '%s'", *params.ChamberOfCommerce))
-		}
 		if params.ModifiedAfter != nil {
 			filter = append(filter, service.DateFilter("Modified", "gt", params.ModifiedAfter, false, ""))
 		}
