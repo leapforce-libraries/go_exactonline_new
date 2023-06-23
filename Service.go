@@ -39,7 +39,6 @@ const (
 )
 
 // Service stores Service configuration
-//
 type Service struct {
 	clientID                    string
 	AssetsService               *assets.Service
@@ -70,7 +69,6 @@ type ServiceConfig struct {
 }
 
 // methods
-//
 func NewService(serviceConfig *ServiceConfig) (*Service, *errortools.Error) {
 	if serviceConfig == nil {
 		return nil, errortools.ErrorMessage("ServiceConfig must not be a nil pointer")
@@ -129,7 +127,7 @@ func NewService(serviceConfig *ServiceConfig) (*Service, *errortools.Error) {
 }
 
 func (service *Service) AuthorizeUrl(scope string, accessType *string, prompt *string, state *string) string {
-	return service.oAuth2Service.AuthorizeUrl(scope, accessType, prompt, state)
+	return service.oAuth2Service.AuthorizeUrl(&scope, accessType, prompt, state)
 }
 
 /*func (service *Service) ValidateToken() (*oauth2.Token, *errortools.Error) {
